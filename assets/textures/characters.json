@@ -1,0 +1,9 @@
+{
+  "type": "Texture",
+  "filepath": "data/textures/characters.png",
+  "format": "RGBA8888",
+  "size": {
+    "w": 64,
+    "h": 64
+  }
+}

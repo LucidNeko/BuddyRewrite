@@ -1,0 +1,12 @@
+player.png
+player.ass
+
+assets.db
+
+{
+ type: "SpriteSheet",
+ filepath: "assets/player/player.png",
+ 
+}
+
+player.ass -> json;

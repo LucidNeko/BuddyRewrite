@@ -1,0 +1,111 @@
+{
+    "type": "SpriteSheet",
+	"dependencies": {
+		"texture": "textures/characters.json"
+	},
+	"frames": {
+		"enemy/walk_right_0":
+		{
+			"frame": {"x":0,"y":0,"w":16,"h":16},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
+			"sourceSize": {"w":16,"h":16},
+			"pivot": {"x":0.5,"y":0.5}
+		},
+		"enemy/walk_right_1":
+		{
+			"frame": {"x":16,"y":0,"w":16,"h":16},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
+			"sourceSize": {"w":16,"h":16},
+			"pivot": {"x":0.5,"y":0.5}
+		},
+		"enemy/walk_right_2":
+		{
+			"frame": {"x":32,"y":0,"w":16,"h":16},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
+			"sourceSize": {"w":16,"h":16},
+			"pivot": {"x":0.5,"y":0.5}
+		},
+		"enemy/walk_right_3":
+		{
+			"frame": {"x":48,"y":0,"w":16,"h":16},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
+			"sourceSize": {"w":16,"h":16},
+			"pivot": {"x":0.5,"y":0.5}
+		},
+		"player/walk_right_0":
+		{
+			"frame": {"x":0,"y":16,"w":16,"h":16},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
+			"sourceSize": {"w":16,"h":16},
+			"pivot": {"x":0.5,"y":0.5}
+		},
+		"player/walk_right_1":
+		{
+			"frame": {"x":16,"y":16,"w":16,"h":16},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
+			"sourceSize": {"w":16,"h":16},
+			"pivot": {"x":0.5,"y":0.5}
+		},
+		"player/walk_right_2":
+		{
+			"frame": {"x":32,"y":16,"w":16,"h":16},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
+			"sourceSize": {"w":16,"h":16},
+			"pivot": {"x":0.5,"y":0.5}
+		}
+	},
+	"animations": {
+		"enemy_walk_right": {
+			"flip_horizontal": false,
+			"milliseconds_per_frame": 250,
+			"frames": [
+			  "enemy/walk_right_0",
+			  "enemy/walk_right_1",
+			  "enemy/walk_right_2",
+			  "enemy/walk_right_3"
+			]
+		},
+		"enemy_walk_left": {
+			"flip_horizontal": true,
+			"milliseconds_per_frame": 250,
+			"frames": [
+			  "enemy/walk_right_0",
+			  "enemy/walk_right_1",
+			  "enemy/walk_right_2",
+			  "enemy/walk_right_3"
+			]
+		},
+		"player_walk_right": {
+			"flip_horizontal": false,
+			"milliseconds_per_frame": 250,
+			"frames": [
+			  "player/walk_right_0",
+			  "player/walk_right_1",
+			  "player/walk_right_2"
+			]
+		},
+		"player_walk_left": {
+			"flip_horizontal": true,
+			"milliseconds_per_frame": 250,
+			"frames": [
+			  "player/walk_right_0",
+			  "player/walk_right_1",
+			  "player/walk_right_2"
+			]
+		}
+	}
+}
