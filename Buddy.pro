@@ -43,17 +43,15 @@ SOURCES += src/glad/glad.c \
     src/resources/io/filebackedresources.cpp \
     src/resources/io/resources.cpp \
     src/resources/shaderprogram.cpp \
-    src/resources/spritesheet.cpp \
-    src/resources/texture.cpp \
     src/resources/resourcelocator.cpp \
     src/resources/jsonfile.cpp \
     src/input.cpp \
     src/components/script.cpp \
     src/assets/texture2.cpp \
     src/assets/spritesheet2.cpp \
-    src/assets/texture2_loader.cpp \
-    src/assets/spritesheet2_loader.cpp \
-    src/assets/assets.cpp
+    src/assets/assets.cpp \
+    src/assets/loaders/spritesheet2_loader.cpp \
+    src/assets/loaders/texture2_loader.cpp
 
 HEADERS  += src/glad/glad.h \
     src/services.h \
@@ -88,8 +86,6 @@ HEADERS  += src/glad/glad.h \
     src/resources/io/filebackedresources.h \
     src/resources/io/resources.h \
     src/resources/shaderprogram.h \
-    src/resources/spritesheet.h \
-    src/resources/texture.h \
     src/resources/resourcelocator.h \
     src/assets/assettype.h \
     src/utilities/time/gametime.h \

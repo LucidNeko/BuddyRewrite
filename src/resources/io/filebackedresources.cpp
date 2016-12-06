@@ -5,7 +5,6 @@
 #include <QImage>
 
 #include "logging.h"
-#include "resources/texture.h"
 
 FileBackedResources::FileBackedResources(std::string assetDirectory)
     : _assetDirectory(assetDirectory)

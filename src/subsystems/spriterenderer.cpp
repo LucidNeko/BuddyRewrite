@@ -17,9 +17,9 @@
 #include "logging.h"
 #include "resources/io/resources.h"
 #include "resources/shaderprogram.h"
-#include "resources/spritesheet.h"
+#include "assets/spritesheet2.h"
 #include "services.h"
-#include "resources/texture.h"
+#include "assets/texture2.h"
 
 const unsigned int SpriteRenderer::MAX_BATCH_SIZE = 5000;
 
@@ -129,11 +129,12 @@ void SpriteRenderer::_render(EntityHandle entity)
 
     if(transform == nullptr) { return; }
     if(sprite == nullptr) { return; }
+    if(sprite->spriteSheet() == nullptr) { return; }
 
-    if(_activeTexture != sprite->spriteSheet() || _queuedSprites.size() == MAX_BATCH_SIZE)
+    if(_activeTexture != sprite->spriteSheet()->texture() || _queuedSprites.size() == MAX_BATCH_SIZE)
     {
         flush();
-        _activeTexture = sprite->spriteSheet();
+        _activeTexture = sprite->spriteSheet()->texture();
     }
 
     glm::vec2 centerBottom = transform->position() - (sprite->size() * glm::vec2(0.5f, 1));

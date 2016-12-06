@@ -22,7 +22,6 @@
 #include "scenes/testscene.h"
 #include "subsystems/physicssystem.h"
 #include "subsystems/spriterenderer.h"
-#include "resources/texture.h"
 #include "input.h"
 
 Game::Game()

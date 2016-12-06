@@ -15,8 +15,8 @@
 Assets::Assets()
     : _assetDirectory("assets/")
 {
-    setLoader<Texture2>(Texture2::load);
-    setLoader<SpriteSheet2>(SpriteSheet2::load);
+    setLoader<Texture>(Texture::load);
+    setLoader<SpriteSheet>(SpriteSheet::load);
 }
 
 Assets::~Assets()

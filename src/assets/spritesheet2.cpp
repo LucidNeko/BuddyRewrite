@@ -2,26 +2,26 @@
 
 #include "logging.h"
 
-SpriteSheet2::SpriteSheet2()
+SpriteSheet::SpriteSheet()
 {
 }
 
-SpriteSheet2::SpriteSheet2(Texture2Handle texture)
+SpriteSheet::SpriteSheet(TextureHandle texture)
     : _texture(texture)
 {
 }
 
-SpriteSheet2::~SpriteSheet2()
+SpriteSheet::~SpriteSheet()
 {
-    LOG_INFO("SS2 Destroyed");
+    LOG_INFO("SpriteSheet Destroyed");
 }
 
-Texture2Handle SpriteSheet2::texture() const
+TextureHandle SpriteSheet::texture() const
 {
     return _texture;
 }
 
-bool SpriteSheet2::frame(const std::string& name, SpriteSheet2::Frame& out)
+bool SpriteSheet::frame(const std::string& name, SpriteSheet::Frame& out)
 {
     auto it = _frames.find(name);
     if(it != _frames.end())
@@ -32,7 +32,7 @@ bool SpriteSheet2::frame(const std::string& name, SpriteSheet2::Frame& out)
     return false;
 }
 
-bool SpriteSheet2::sequence(const std::string& name, Sequence& out)
+bool SpriteSheet::sequence(const std::string& name, Sequence& out)
 {
     auto it = _sequences.find(name);
     if(it != _sequences.end())

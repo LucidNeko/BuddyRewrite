@@ -10,7 +10,6 @@
 #include "resources/resource.h"
 #include "resources/io/resources.h"
 #include "resources/io/filebackedresources.h"
-#include "resources/texture.h"
 #include "utilities/io/io.h"
 #include "utilities/logging/consolelogger.h"
 #include "utilities/logging/nulllogger.h"

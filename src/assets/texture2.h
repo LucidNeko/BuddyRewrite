@@ -10,13 +10,13 @@
 #include "types.h"
 #include "assets/asset.h"
 
-class Texture2 : public Asset
+class Texture : public Asset
 {
 public:
-    static Texture2Handle load(const std::string& filepath, class Assets* loader);
+    static TextureHandle load(const std::string& filepath, class Assets* loader);
 
 public:
-    ~Texture2();
+    ~Texture();
 
     void bind();
     void unbind();
@@ -26,7 +26,7 @@ public:
     GLuint height() const;
 
 private:
-    Texture2();
+    Texture();
 
     bool isCreated();
     void create();

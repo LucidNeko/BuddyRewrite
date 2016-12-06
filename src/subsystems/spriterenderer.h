@@ -44,7 +44,7 @@ private:
     GLuint _vbo;
     GLuint _quadVBO;
 
-    std::shared_ptr<class Texture> _activeTexture;
+    TextureHandle _activeTexture;
 
     std::vector<SpriteData> _queuedSprites;
 };

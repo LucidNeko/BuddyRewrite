@@ -10,7 +10,7 @@
 #include "assets/asset.h"
 #include "types.h"
 
-class SpriteSheet2 : public Asset
+class SpriteSheet : public Asset
 {
 public:
     class Frame
@@ -29,25 +29,25 @@ public:
     };
 
 public:
-    typedef std::unordered_map<std::string, SpriteSheet2::Frame> FrameMap;
-    typedef std::unordered_map<std::string, SpriteSheet2::Sequence> SequenceMap;
+    typedef std::unordered_map<std::string, SpriteSheet::Frame> FrameMap;
+    typedef std::unordered_map<std::string, SpriteSheet::Sequence> SequenceMap;
 
 public:
-    static SpriteSheet2Handle load(const std::string& filepath, class Assets* loader);
+    static SpriteSheetHandle load(const std::string& filepath, class Assets* loader);
 
 public:
-    ~SpriteSheet2();
+    ~SpriteSheet();
 
-    Texture2Handle texture() const;
+    TextureHandle texture() const;
 
     bool frame(const std::string& name, Frame& out);
-    bool sequence(const std::string& name, SpriteSheet2::Sequence& out);
+    bool sequence(const std::string& name, SpriteSheet::Sequence& out);
 
 private:
-    SpriteSheet2();
-    SpriteSheet2(Texture2Handle texture);
+    SpriteSheet();
+    SpriteSheet(TextureHandle texture);
 
-    Texture2Handle _texture;
+    TextureHandle _texture;
 
     FrameMap _frames;
     SequenceMap _sequences;

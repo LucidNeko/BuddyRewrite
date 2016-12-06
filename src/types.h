@@ -36,17 +36,11 @@ typedef std::shared_ptr<class Resource> ResourceHandle;
 typedef std::weak_ptr<class Component> ComponentWeakHandle;
 typedef std::shared_ptr<class Component> ComponentHandle;
 
-typedef std::weak_ptr<class Texture> TextureWeakHandle;
-typedef std::shared_ptr<class Texture> TextureHandle;
-
-typedef std::weak_ptr<class SpriteSheet> SpriteSheetWeakHandle;
-typedef std::shared_ptr<class SpriteSheet> SpriteSheetHandle;
-
 typedef std::weak_ptr<class JsonFile> JsonFileWeakHandle;
 typedef std::shared_ptr<class JsonFile> JsonFileHandle;
 
 // NEW ASSET TYPES
-typedef std::shared_ptr<class Texture2> Texture2Handle;
-typedef std::shared_ptr<class SpriteSheet2> SpriteSheet2Handle;
+typedef std::shared_ptr<class Texture> TextureHandle;
+typedef std::shared_ptr<class SpriteSheet> SpriteSheetHandle;
 
 #endif // TYPES_H

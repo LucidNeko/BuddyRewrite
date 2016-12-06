@@ -7,12 +7,14 @@
 #include "entityfactory.h"
 #include "logging.h"
 #include "resources/io/resources.h"
-#include "resources/spritesheet.h"
+#include "assets/spritesheet2.h"
 #include "services.h"
-#include "resources/texture.h"
+#include "assets/texture2.h"
+#include "utilities/io/io.h"
 
 TestScene::TestScene()
 {
+    _assets.setAssetDirectory(IO::assetDirectory());
 }
 
 TestScene::~TestScene()
@@ -21,11 +23,7 @@ TestScene::~TestScene()
 
 void TestScene::onEnter()
 {
-    Services::get<Resources>()->load<SpriteSheet>("player.png");
-    Services::get<Resources>()->load<SpriteSheet>("enemy.png");
-    Services::get<Resources>()->load<SpriteSheet>("tiles.png");
-
-    Services::get<Resources>()->load<Texture>("debug.png");
+    _assets.load<SpriteSheet>("spritesheets/characters.json");
 
     {
         EntityHandle e = EntityFactory::create();
@@ -39,9 +37,7 @@ void TestScene::onEnter()
         Scene::add(e);
     }
 
-    auto enemy = Services::get<Resources>()->get<SpriteSheet>("enemy.png");
-    auto player = Services::get<Resources>()->get<SpriteSheet>("player.png");
-    auto tiles = Services::get<Resources>()->get<SpriteSheet>("tiles.png");
+    auto characters = _assets.get<SpriteSheet>("spritesheets/characters.json");
 
     {
         EntityHandle e = EntityFactory::create();
@@ -53,7 +49,8 @@ void TestScene::onEnter()
 
         auto sprite = e->addComponent<Sprite>();
 
-        sprite->setSpriteSheet(tiles);
+        sprite->setSpriteSheet(characters);
+        sprite->setCurrentFrame("enemy/walk_right_0");
 
         sprite->setSize(glm::vec2(100, 100));
 
@@ -70,7 +67,8 @@ void TestScene::onEnter()
 
         auto sprite = e->addComponent<Sprite>();
 
-        sprite->setSpriteSheet(player);
+        sprite->setSpriteSheet(characters);
+        sprite->setCurrentFrame("enemy/walk_right_1");
 
         sprite->setSize(glm::vec2(100, 100));
 
@@ -87,7 +85,8 @@ void TestScene::onEnter()
 
         auto sprite = e->addComponent<Sprite>();
 
-        sprite->setSpriteSheet(enemy);
+        sprite->setSpriteSheet(characters);
+        sprite->setCurrentFrame("player/walk_right_1");
 
         sprite->setSize(glm::vec2(100, 100));
 

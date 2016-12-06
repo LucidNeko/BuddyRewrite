@@ -1,8 +1,8 @@
 #include "sprite.h"
 
 #include "logging.h"
-#include "resources/spritesheet.h"
-#include "resources/texture.h"
+#include "assets/spritesheet2.h"
+#include "assets/texture2.h"
 
 Sprite::Sprite(EntityHandle entity)
     : Component(entity),
@@ -10,7 +10,7 @@ Sprite::Sprite(EntityHandle entity)
       _textureCoords(),
       _color(1, 1, 1),
       _size(),
-      _currentFrame(0)
+      _currentFrame("")
 {
 }
 
@@ -35,26 +35,13 @@ void Sprite::setSpriteSheet(SpriteSheetHandle spriteSheet)
 
 glm::vec4 Sprite::textureCoords() const
 {
-    if(!_spriteSheet) { return glm::vec4(); }
+    SpriteSheet::Frame frame;
 
-    SpriteSheet::Info info = _spriteSheet->info();
-
-    U32 columns = info.columns;
-    U32 rows = info.rows;
-
-    U32 row = _currentFrame / columns;
-    U32 col = _currentFrame - row * columns;
-
-    F32 dx = F32(col) / F32(columns);
-    F32 dy = F32(row) / F32(rows);
-
-    F32 w = 1.0f / F32(columns);
-    F32 h = 1.0f / F32(rows);
-
-    F32 x = dx + w*col;
-    F32 y = dy + h*row;
-
-    return glm::vec4(x, y, x + w, y + h);
+    if(_spriteSheet && _spriteSheet->frame(_currentFrame, frame))
+    {
+        return frame.texInfo;
+    }
+    return glm::vec4();
 }
 
 glm::vec3 Sprite::color() const
@@ -77,12 +64,12 @@ void Sprite::setSize(glm::vec2 size)
     _size = size;
 }
 
-U32 Sprite::currentFrame() const
+std::string Sprite::currentFrame() const
 {
     return _currentFrame;
 }
 
-void Sprite::setCurrentFrame(U32 frame)
+void Sprite::setCurrentFrame(std::string frame)
 {
     _currentFrame = frame;
 }

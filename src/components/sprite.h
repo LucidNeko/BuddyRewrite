@@ -2,6 +2,7 @@
 #define SPRITE_H
 
 #include <memory>
+#include <string>
 
 #include <glm/vec4.hpp>
 #include <glm/vec3.hpp>
@@ -31,8 +32,8 @@ public:
     glm::vec2 size() const;
     void setSize(glm::vec2 size);
 
-    U32 currentFrame() const;
-    void setCurrentFrame(U32 frame);
+    std::string currentFrame() const;
+    void setCurrentFrame(std::string frame);
 
     //TODO: Alignment alignment() const;
 
@@ -42,7 +43,7 @@ private:
     glm::vec3 _color;
     glm::vec2 _size;
 
-    U32 _currentFrame;
+    std::string _currentFrame;
 };
 
 #endif // SPRITE_H

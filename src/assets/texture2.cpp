@@ -2,7 +2,7 @@
 
 #include "logging.h"
 
-Texture2::Texture2()
+Texture::Texture()
     : _textureId(0),
       _target(GL_TEXTURE_2D),
       _level(0),
@@ -18,19 +18,19 @@ Texture2::Texture2()
 {
 }
 
-Texture2::~Texture2()
+Texture::~Texture()
 {
-    LOG_INFO("Texture2 Destroyed");
+    LOG_INFO("Texture Destroyed");
     glDeleteTextures(1, &_textureId);
     _textureId = 0;
 }
 
-bool Texture2::isCreated()
+bool Texture::isCreated()
 {
     return _textureId != 0;
 }
 
-void Texture2::create()
+void Texture::create()
 {
     //TODO: Check that _data contains _width * _height bytes taking into account _format
 
@@ -60,27 +60,27 @@ void Texture2::create()
     glBindTexture(_target, 0);
 }
 
-void Texture2::bind()
+void Texture::bind()
 {
     glBindTexture(_target, _textureId);
 }
 
-void Texture2::unbind()
+void Texture::unbind()
 {
     glBindTexture(_target, 0);
 }
 
-GLuint Texture2::textureId() const
+GLuint Texture::textureId() const
 {
     return _textureId;
 }
 
-GLuint Texture2::width() const
+GLuint Texture::width() const
 {
     return _width;
 }
 
-GLuint Texture2::height() const
+GLuint Texture::height() const
 {
     return _height;
 }

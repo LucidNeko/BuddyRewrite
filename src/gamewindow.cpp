@@ -45,8 +45,8 @@ void GameWindow::initializeGL()
 
     Assets& a = *Services::get<Assets>();
     a.setAssetDirectory(IO::assetDirectory());
-    a.load<SpriteSheet2>("spritesheets/characters.json");
-    AssetHandle ass = a.get<SpriteSheet2>("spritesheets/characters.json");
+    a.load<SpriteSheet>("spritesheets/characters.json");
+    AssetHandle ass = a.get<SpriteSheet>("spritesheets/characters.json");
     a.freeUnreferencedResources();
 }
 
