@@ -1,72 +1,8 @@
 {
     "type": "SpriteSheet",
 	"dependencies": {
-		"texture": "textures/characters.json"
-	},
-	"frames": {
-		"enemy/walk_right_0":
-		{
-			"frame": {"x":0,"y":0,"w":16,"h":16},
-			"rotated": false,
-			"trimmed": false,
-			"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
-			"sourceSize": {"w":16,"h":16},
-			"pivot": {"x":0.5,"y":0.5}
-		},
-		"enemy/walk_right_1":
-		{
-			"frame": {"x":16,"y":0,"w":16,"h":16},
-			"rotated": false,
-			"trimmed": false,
-			"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
-			"sourceSize": {"w":16,"h":16},
-			"pivot": {"x":0.5,"y":0.5}
-		},
-		"enemy/walk_right_2":
-		{
-			"frame": {"x":32,"y":0,"w":16,"h":16},
-			"rotated": false,
-			"trimmed": false,
-			"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
-			"sourceSize": {"w":16,"h":16},
-			"pivot": {"x":0.5,"y":0.5}
-		},
-		"enemy/walk_right_3":
-		{
-			"frame": {"x":48,"y":0,"w":16,"h":16},
-			"rotated": false,
-			"trimmed": false,
-			"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
-			"sourceSize": {"w":16,"h":16},
-			"pivot": {"x":0.5,"y":0.5}
-		},
-		"player/walk_right_0":
-		{
-			"frame": {"x":0,"y":16,"w":16,"h":16},
-			"rotated": false,
-			"trimmed": false,
-			"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
-			"sourceSize": {"w":16,"h":16},
-			"pivot": {"x":0.5,"y":0.5}
-		},
-		"player/walk_right_1":
-		{
-			"frame": {"x":16,"y":16,"w":16,"h":16},
-			"rotated": false,
-			"trimmed": false,
-			"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
-			"sourceSize": {"w":16,"h":16},
-			"pivot": {"x":0.5,"y":0.5}
-		},
-		"player/walk_right_2":
-		{
-			"frame": {"x":32,"y":16,"w":16,"h":16},
-			"rotated": false,
-			"trimmed": false,
-			"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
-			"sourceSize": {"w":16,"h":16},
-			"pivot": {"x":0.5,"y":0.5}
-		}
+		"texture": "textures/characters.json",
+		"definition": "spritesheets/characters_definition.json"
 	},
 	"animations": {
 		"enemy_walk_right": {
