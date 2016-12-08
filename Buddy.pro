@@ -38,7 +38,6 @@ SOURCES += src/glad/glad.c \
     src/utilities/time/time.cpp \
     src/scenes/testscene.cpp \
     src/scenes/scene.cpp \
-    src/utilities/io/io.cpp \
     src/input.cpp \
     src/components/script.cpp \
     src/assets/assets.cpp \
@@ -78,7 +77,6 @@ HEADERS  += src/glad/glad.h \
     src/utilities/time/time.h \
     src/scenes/testscene.h \
     src/scenes/scene.h \
-    src/utilities/io/io.h \
     src/assets/assettype.h \
     src/utilities/time/gametime.h \
     src/input.h \

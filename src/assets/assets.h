@@ -11,6 +11,9 @@
 
 class Assets
 {
+public:
+    static std::string assetDirPath();
+
 private:
     typedef std::function<AssetHandle(const std::string&, Assets*)> LoaderFunction;
     typedef std::unordered_map<std::string, AssetHandle> AssetCollection;

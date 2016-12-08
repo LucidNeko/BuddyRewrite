@@ -7,12 +7,13 @@
 #include "gamewindow.h"
 #include "logging.h"
 #include "assets/assets.h"
-#include "utilities/io/io.h"
 #include "utilities/logging/consolelogger.h"
 #include "utilities/logging/nulllogger.h"
 #include "utilities/time/systemclock.h"
 #include "services.h"
 #include "input.h"
+
+std::string ASSETS_DIRECTORY;
 
 int main(int argc, char *argv[])
 {
@@ -20,13 +21,8 @@ int main(int argc, char *argv[])
 
     QApplication app(argc, argv);
 
-//    QString assetDir = QCoreApplication::applicationDirPath().append("/../../../assets/");
-
     Services::set<Input>(new Input);
     Services::set<Logger>(new ConsoleLogger());
-
-    Services::set<Assets>(new Assets);
-    Services::get<Assets>()->setAssetDirectory(IO::assetDirectory());
 
     LOG_INFO("argc=%d argv=%s", argc, argv[0]);
 

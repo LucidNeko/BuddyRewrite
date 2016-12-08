@@ -12,7 +12,6 @@
 #include "assets/spritesheet.h"
 #include "assets/assets.h"
 #include "assets/asset.h"
-#include "utilities/io/io.h"
 
 GameWindow::GameWindow(QWidget *parent)
     : QOpenGLWidget(parent),
@@ -42,12 +41,6 @@ void GameWindow::initializeGL()
         LOG_FATAL("Failed to init");
         std::exit(EXIT_FAILURE); //TODO: close window instead so main can exit normally
     }
-
-    Assets& a = *Services::get<Assets>();
-    a.setAssetDirectory(IO::assetDirectory());
-    a.load<SpriteSheet>("spritesheets/characters.json");
-    AssetHandle ass = a.get<SpriteSheet>("spritesheets/characters.json");
-    a.freeUnreferencedResources();
 }
 
 void GameWindow::paintGL()

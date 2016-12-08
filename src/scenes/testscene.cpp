@@ -9,11 +9,10 @@
 #include "assets/spritesheet.h"
 #include "services.h"
 #include "assets/texture.h"
-#include "utilities/io/io.h"
 
 TestScene::TestScene()
 {
-    _assets.setAssetDirectory(IO::assetDirectory());
+    _assets.setAssetDirectory(Assets::assetDirPath());
 }
 
 TestScene::~TestScene()

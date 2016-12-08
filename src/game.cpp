@@ -22,14 +22,13 @@
 #include "subsystems/physicssystem.h"
 #include "subsystems/spriterenderer.h"
 #include "input.h"
-#include "utilities/io/io.h"
 #include "assets/shaderprogram.h"
 
 Game::Game()
     : _physicsSystem(nullptr),
       _spriteRenderer(nullptr)
 {
-    _assets.setAssetDirectory(IO::assetDirectory());
+    _assets.setAssetDirectory(Assets::assetDirPath());
 }
 
 Game::~Game()
