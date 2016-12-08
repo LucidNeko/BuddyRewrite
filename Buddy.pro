@@ -38,12 +38,7 @@ SOURCES += src/glad/glad.c \
     src/utilities/time/time.cpp \
     src/scenes/testscene.cpp \
     src/scenes/scene.cpp \
-    src/resources/resource.cpp \
     src/utilities/io/io.cpp \
-    src/resources/io/filebackedresources.cpp \
-    src/resources/io/resources.cpp \
-    src/resources/resourcelocator.cpp \
-    src/resources/jsonfile.cpp \
     src/input.cpp \
     src/components/script.cpp \
     src/assets/assets.cpp \
@@ -83,14 +78,9 @@ HEADERS  += src/glad/glad.h \
     src/utilities/time/time.h \
     src/scenes/testscene.h \
     src/scenes/scene.h \
-    src/resources/resource.h \
     src/utilities/io/io.h \
-    src/resources/io/filebackedresources.h \
-    src/resources/io/resources.h \
-    src/resources/resourcelocator.h \
     src/assets/assettype.h \
     src/utilities/time/gametime.h \
-    src/resources/jsonfile.h \
     src/input.h \
     src/components/script.h \
     src/assets/asset.h \

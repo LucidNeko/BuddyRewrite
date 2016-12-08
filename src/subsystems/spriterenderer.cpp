@@ -15,7 +15,6 @@
 #include "components/sprite.h"
 #include "entity.h"
 #include "logging.h"
-#include "resources/io/resources.h"
 #include "services.h"
 #include "assets/shaderprogram.h"
 #include "assets/texture.h"

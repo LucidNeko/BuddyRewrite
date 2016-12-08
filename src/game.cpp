@@ -17,7 +17,6 @@
 #include "components/rigidbody.h"
 #include "components/sprite.h"
 #include "logging.h"
-#include "resources/io/resources.h"
 #include "services.h"
 #include "scenes/testscene.h"
 #include "subsystems/physicssystem.h"
@@ -42,9 +41,6 @@ Game::~Game()
 
     delete _physicsSystem;
     delete _spriteRenderer;
-
-    LOG_INFO("Game destructor unloading unused resources");
-    Services::get<Resources>()->unloadFreeResources();
 }
 
 bool Game::initialize()
@@ -118,6 +114,6 @@ void Game::_processNextScene()
         _currentScene->onEnter();
     }
 
-    LOG_INFO("Unloadind unused resources");
-    Services::get<Resources>()->unloadFreeResources();
+    LOG_INFO("Free Unreferenced Resources");
+    _assets.freeUnreferencedResources();
 }

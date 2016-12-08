@@ -6,7 +6,6 @@
 #include "entity.h"
 #include "entityfactory.h"
 #include "logging.h"
-#include "resources/io/resources.h"
 #include "assets/spritesheet.h"
 #include "services.h"
 #include "assets/texture.h"
