@@ -40,8 +40,9 @@ typedef std::weak_ptr<class JsonFile> JsonFileWeakHandle;
 typedef std::shared_ptr<class JsonFile> JsonFileHandle;
 
 // NEW ASSET TYPES
-typedef std::shared_ptr<class ShaderProgram> ShaderProgramHandle;
+typedef std::shared_ptr<class Assets> AssetsHandle;
 typedef std::shared_ptr<class Texture> TextureHandle;
 typedef std::shared_ptr<class SpriteSheet> SpriteSheetHandle;
+typedef std::shared_ptr<class ShaderProgram> ShaderProgramHandle;
 
 #endif // TYPES_H

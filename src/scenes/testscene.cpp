@@ -10,9 +10,9 @@
 #include "services.h"
 #include "assets/texture.h"
 
-TestScene::TestScene()
+TestScene::TestScene(AssetsHandle assets)
+    : Scene(assets)
 {
-    _assets.setAssetDirectory(Assets::assetDirPath());
 }
 
 TestScene::~TestScene()
@@ -21,7 +21,7 @@ TestScene::~TestScene()
 
 void TestScene::onEnter()
 {
-    _assets.load<SpriteSheet>("images/characters_spritesheet.json");
+    _assets->load<SpriteSheet>("images/characters_spritesheet.json");
 
     {
         EntityHandle e = EntityFactory::create();
@@ -35,7 +35,7 @@ void TestScene::onEnter()
         Scene::add(e);
     }
 
-    auto characters = _assets.get<SpriteSheet>("images/characters_spritesheet.json");
+    auto characters = _assets->get<SpriteSheet>("images/characters_spritesheet.json");
 
     {
         EntityHandle e = EntityFactory::create();

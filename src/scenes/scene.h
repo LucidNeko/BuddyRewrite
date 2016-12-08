@@ -9,7 +9,7 @@
 class Scene
 {
 public:
-    Scene();
+    Scene(AssetsHandle assets);
     virtual ~Scene();
 
     void add(EntityHandle entity);
@@ -27,6 +27,7 @@ public:
     virtual void onExit() = 0;
 
 protected:
+    AssetsHandle _assets;
     std::unordered_map<U64, EntityHandle> _entities;
 };
 

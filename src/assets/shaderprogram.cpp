@@ -11,11 +11,12 @@ ShaderProgram::ShaderProgram()
     : Asset(),
       _programId(0)
 {
-
+    LOG_INFO("ShaderProgram Created");
 }
 
 ShaderProgram::~ShaderProgram()
 {
+    LOG_INFO("ShaderProgram Destroyed");
     glDeleteProgram(_programId);
     _programId = 0;
 }

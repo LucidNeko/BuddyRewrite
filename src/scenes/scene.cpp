@@ -4,10 +4,12 @@
 #include <iterator>
 #include <vector>
 
+#include "assets/assets.h"
 #include "entity.h"
 #include "logging.h"
 
-Scene::Scene()
+Scene::Scene(AssetsHandle assets)
+    : _assets(assets)
 {
 }
 

@@ -25,10 +25,10 @@
 #include "assets/shaderprogram.h"
 
 Game::Game()
-    : _physicsSystem(nullptr),
+    : _assets(nullptr),
+      _physicsSystem(nullptr),
       _spriteRenderer(nullptr)
 {
-    _assets.setAssetDirectory(Assets::assetDirPath());
 }
 
 Game::~Game()
@@ -49,12 +49,15 @@ bool Game::initialize()
         return false;
     }
 
+    _assets = std::make_shared<Assets>();
+    _assets->setAssetDirectory(Assets::assetDirPath());
+
     glClearColor(0.0, 0.0, 0.0, 1.0);
 
     _physicsSystem = new PhysicsSystem();
-    _spriteRenderer = new SpriteRenderer(_assets.get<ShaderProgram>("shaders/sprite/program.json"));
+    _spriteRenderer = new SpriteRenderer(_assets->get<ShaderProgram>("shaders/sprite/program.json"));
 
-    queueScene(std::make_shared<TestScene>());
+    queueScene(std::make_shared<TestScene>(_assets));
     _processNextScene();
 
     return true;
@@ -95,7 +98,7 @@ void Game::_processNextScene()
 {
     if(Services::get<Input>()->isKeyDownOnce(Qt::Key_N))
     {
-        queueScene(std::make_shared<TestScene>());
+        queueScene(std::make_shared<TestScene>(_assets));
     }
 
     if(!_nextScene) { return; }
@@ -114,5 +117,5 @@ void Game::_processNextScene()
     }
 
     LOG_INFO("Free Unreferenced Resources");
-    _assets.freeUnreferencedResources();
+    _assets->freeUnreferencedResources();
 }

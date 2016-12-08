@@ -16,6 +16,7 @@ Texture::Texture()
       _minFilter(GL_NEAREST),
       _maxFilter(GL_NEAREST)
 {
+    LOG_INFO("Texture Created");
 }
 
 Texture::~Texture()

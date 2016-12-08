@@ -4,6 +4,7 @@
 
 SpriteSheet::SpriteSheet()
 {
+    LOG_INFO("SpriteSheet Created");
 }
 
 SpriteSheet::SpriteSheet(TextureHandle texture)

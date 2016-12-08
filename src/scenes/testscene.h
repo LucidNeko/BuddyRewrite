@@ -12,14 +12,13 @@
 class TestScene : public Scene
 {
 public:
-    TestScene();
+    TestScene(AssetsHandle assets);
     ~TestScene();
 
     void onEnter() override;
     void onExit() override;
 
 private:
-    Assets _assets;
 };
 
 #endif // TESTSCENE_H
