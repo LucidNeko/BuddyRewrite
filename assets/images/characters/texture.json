@@ -1,6 +1,6 @@
 {
   "type": "Texture",
-  "filepath": "images/characters.png",
+  "filepath": "images/characters/image.png",
   "format": "RGBA8888",
   "size": {
     "w": 64,

@@ -1,8 +1,8 @@
 {
     "type": "SpriteSheet",
 	"dependencies": {
-		"texture": "images/characters_texture.json",
-		"frames": "images/characters_texturepacker.json"
+		"texture": "images/characters/texture.json",
+		"frames": "images/characters/texturepacker.json"
 	},
 	"animations": {
 		"enemy_walk_right": {

@@ -32,16 +32,6 @@ int main(int argc, char *argv[])
 
     LOG_INFO("Time: %f", Services::get<SystemClock>()->now().seconds());
 
-//    SystemClock c;
-
-//    Time a = c.now();
-//    for(int i = 0; i < 10000000; i++) { SystemClock l; }
-//    Time b = c.now();
-
-//    Time dt = (b - a);
-
-//    LOG_INFO("%lld, %lld, %lld, %f", a.nanoseconds(), b.nanoseconds(), dt.nanoseconds(), dt.seconds());
-
     GameWindow w;
     w.show();
 
