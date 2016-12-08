@@ -47,11 +47,14 @@ SOURCES += src/glad/glad.c \
     src/resources/jsonfile.cpp \
     src/input.cpp \
     src/components/script.cpp \
-    src/assets/texture2.cpp \
-    src/assets/spritesheet2.cpp \
     src/assets/assets.cpp \
-    src/assets/loaders/spritesheet2_loader.cpp \
-    src/assets/loaders/texture2_loader.cpp
+    src/assets/spritesheet.cpp \
+    src/assets/texture.cpp \
+    src/assets/loaders/spritesheet_loader.cpp \
+    src/assets/loaders/texture_loader.cpp \
+    src/assets/shader.cpp \
+    src/assets/loaders/shader_loader.cpp \
+    src/jsonutil.cpp
 
 HEADERS  += src/glad/glad.h \
     src/services.h \
@@ -93,9 +96,11 @@ HEADERS  += src/glad/glad.h \
     src/input.h \
     src/components/script.h \
     src/assets/asset.h \
-    src/assets/texture2.h \
-    src/assets/spritesheet2.h \
-    src/assets/assets.h
+    src/assets/assets.h \
+    src/assets/texture.h \
+    src/assets/spritesheet.h \
+    src/assets/shader.h \
+    src/jsonutil.h
 
 DISTFILES += \
     assets/fonts/kenpixel_mini_square.ttf \

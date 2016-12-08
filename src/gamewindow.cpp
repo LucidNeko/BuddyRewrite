@@ -9,7 +9,7 @@
 #include "services.h"
 #include "input.h"
 
-#include "assets/spritesheet2.h"
+#include "assets/spritesheet.h"
 #include "assets/assets.h"
 #include "assets/asset.h"
 #include "utilities/io/io.h"

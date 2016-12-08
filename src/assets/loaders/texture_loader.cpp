@@ -1,5 +1,6 @@
-#include "assets/texture2.h"
+#include "assets/texture.h"
 
+#include <stdexcept>
 #include <fstream>
 
 #include <QImage>
@@ -7,6 +8,7 @@
 #include "json.hpp"
 
 #include "assets/assets.h"
+#include "jsonutil.h"
 #include "logging.h"
 
 TextureHandle Texture::load(const std::string& filepath, Assets* loader)
@@ -18,11 +20,12 @@ TextureHandle Texture::load(const std::string& filepath, Assets* loader)
     U32 size_w;
     U32 size_h;
 
+    JsonUtil jsonLoader;
+
     try
     {
-        std::ifstream ifs(loader->assetDirectory() + filepath);
         nlohmann::json json;
-        ifs >> json;
+        jsonLoader.loadOrThrow(loader->assetDirectory() + filepath, json);
 
         type = json["type"];
 

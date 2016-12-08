@@ -1,4 +1,4 @@
-#include "assets/texture2.h"
+#include "assets/texture.h"
 
 #include "logging.h"
 

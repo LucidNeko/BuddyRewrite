@@ -1,0 +1,5 @@
+{
+  "type": "Shader",
+  "vertex_shader": "shaders/sprite/sprite.vert",
+  "fragment_shader": "shaders/sprite/sprite.frag"
+}

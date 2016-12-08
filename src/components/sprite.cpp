@@ -1,8 +1,8 @@
 #include "sprite.h"
 
 #include "logging.h"
-#include "assets/spritesheet2.h"
-#include "assets/texture2.h"
+#include "assets/spritesheet.h"
+#include "assets/texture.h"
 
 Sprite::Sprite(EntityHandle entity)
     : Component(entity),

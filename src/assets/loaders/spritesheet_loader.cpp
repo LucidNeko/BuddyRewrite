@@ -1,11 +1,13 @@
-#include "assets/spritesheet2.h"
+#include "assets/spritesheet.h"
 
+#include <stdexcept>
 #include <fstream>
 
 #include "json.hpp"
 
 #include "assets/assets.h"
-#include "assets/texture2.h"
+#include "assets/texture.h"
+#include "jsonutil.h"
 
 #include "logging.h"
 
@@ -71,16 +73,17 @@ SpriteSheetHandle SpriteSheet::load(const std::string& filepath, Assets* loader)
 {
     std::string type;
     std::string dependencies_texture;
-    std::string dependencies_definition;
+    std::string dependencies_frames;
     TextureHandle texture;
     SpriteSheet::FrameMap frames;
     SpriteSheet::SequenceMap sequences;
 
+    JsonUtil jsonLoader;
+
     try
     {
-        std::ifstream ifs(loader->assetDirectory() + filepath);
         nlohmann::json json;
-        ifs >> json;
+        jsonLoader.loadOrThrow(loader->assetDirectory() + filepath, json);
 
         type = json["type"];
 
@@ -98,13 +101,12 @@ SpriteSheetHandle SpriteSheet::load(const std::string& filepath, Assets* loader)
             throw std::invalid_argument("Could not load Texture for SpriteSheet: " + dependencies_texture);
         }
 
-        dependencies_definition = json["dependencies"]["definition"];
+        dependencies_frames = json["dependencies"]["frames"];
 
-        std::ifstream definition_ifs(loader->assetDirectory() + dependencies_definition);
-        nlohmann::json definition_json;
-        definition_ifs >> definition_json;
+        nlohmann::json frames_json;
+        jsonLoader.loadOrThrow(loader->assetDirectory() + dependencies_frames, frames_json);
 
-        parseFrames(definition_json["frames"], texture, frames);
+        parseFrames(frames_json["frames"], texture, frames);
         parseSequences(json["animations"], frames, sequences);
     }
     catch(const std::exception& e)

@@ -17,9 +17,9 @@
 #include "logging.h"
 #include "resources/io/resources.h"
 #include "resources/shaderprogram.h"
-#include "assets/spritesheet2.h"
+#include "assets/spritesheet.h"
 #include "services.h"
-#include "assets/texture2.h"
+#include "assets/texture.h"
 
 const unsigned int SpriteRenderer::MAX_BATCH_SIZE = 5000;
 

@@ -7,9 +7,9 @@
 #include "entityfactory.h"
 #include "logging.h"
 #include "resources/io/resources.h"
-#include "assets/spritesheet2.h"
+#include "assets/spritesheet.h"
 #include "services.h"
-#include "assets/texture2.h"
+#include "assets/texture.h"
 #include "utilities/io/io.h"
 
 TestScene::TestScene()
@@ -23,7 +23,7 @@ TestScene::~TestScene()
 
 void TestScene::onEnter()
 {
-    _assets.load<SpriteSheet>("spritesheets/characters.json");
+    _assets.load<SpriteSheet>("images/characters_spritesheet.json");
 
     {
         EntityHandle e = EntityFactory::create();
@@ -37,7 +37,7 @@ void TestScene::onEnter()
         Scene::add(e);
     }
 
-    auto characters = _assets.get<SpriteSheet>("spritesheets/characters.json");
+    auto characters = _assets.get<SpriteSheet>("images/characters_spritesheet.json");
 
     {
         EntityHandle e = EntityFactory::create();

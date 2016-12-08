@@ -1,4 +1,4 @@
-#include "assets/spritesheet2.h"
+#include "assets/spritesheet.h"
 
 #include "logging.h"
 
