@@ -6,7 +6,7 @@
         <key>texturePackerVersion</key>
         <string>4.3.1</string>
         <key>fileName</key>
-        <string>C:/Users/Hamish/Documents/QtProjects/Buddy/assets/textures/characters.tps</string>
+        <string>C:/Users/Hamish/Documents/QtProjects/Buddy/assets/images/tiles/source/characters.tps</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -36,7 +36,7 @@
         <key>dataFormat</key>
         <string>json</string>
         <key>textureFileName</key>
-        <filename></filename>
+        <filename>image.png</filename>
         <key>flipPVR</key>
         <false/>
         <key>pvrCompressionQuality</key>
@@ -150,7 +150,7 @@
             <key>data</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>characters.json</filename>
+                <filename>texturepacker.json</filename>
             </struct>
         </map>
         <key>multiPack</key>
@@ -197,13 +197,40 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">enemy/walk_right_0.png</key>
-            <key type="filename">enemy/walk_right_1.png</key>
-            <key type="filename">enemy/walk_right_2.png</key>
-            <key type="filename">enemy/walk_right_3.png</key>
-            <key type="filename">player/walk_right_0.png</key>
-            <key type="filename">player/walk_right_1.png</key>
-            <key type="filename">player/walk_right_2.png</key>
+            <key type="filename">tiles/0000.png</key>
+            <key type="filename">tiles/0001.png</key>
+            <key type="filename">tiles/0002.png</key>
+            <key type="filename">tiles/0003.png</key>
+            <key type="filename">tiles/0004.png</key>
+            <key type="filename">tiles/0005.png</key>
+            <key type="filename">tiles/0006.png</key>
+            <key type="filename">tiles/0007.png</key>
+            <key type="filename">tiles/0008.png</key>
+            <key type="filename">tiles/0009.png</key>
+            <key type="filename">tiles/0010.png</key>
+            <key type="filename">tiles/0011.png</key>
+            <key type="filename">tiles/0012.png</key>
+            <key type="filename">tiles/0013.png</key>
+            <key type="filename">tiles/0014.png</key>
+            <key type="filename">tiles/0015.png</key>
+            <key type="filename">tiles/0016.png</key>
+            <key type="filename">tiles/0017.png</key>
+            <key type="filename">tiles/0018.png</key>
+            <key type="filename">tiles/0019.png</key>
+            <key type="filename">tiles/0020.png</key>
+            <key type="filename">tiles/0021.png</key>
+            <key type="filename">tiles/0022.png</key>
+            <key type="filename">tiles/0023.png</key>
+            <key type="filename">tiles/0024.png</key>
+            <key type="filename">tiles/0025.png</key>
+            <key type="filename">tiles/0026.png</key>
+            <key type="filename">tiles/0027.png</key>
+            <key type="filename">tiles/0028.png</key>
+            <key type="filename">tiles/0029.png</key>
+            <key type="filename">tiles/0030.png</key>
+            <key type="filename">tiles/0031.png</key>
+            <key type="filename">tiles/0032.png</key>
+            <key type="filename">tiles/0033.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -219,8 +246,7 @@
         </map>
         <key>fileList</key>
         <array>
-            <filename>enemy</filename>
-            <filename>player</filename>
+            <filename>tiles</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

@@ -1,0 +1,9 @@
+{
+  "type": "Texture",
+  "filepath": "images/tiles/image.png",
+  "format": "RGBA8888",
+  "size": {
+    "w": 128,
+    "h": 128
+  }
+}

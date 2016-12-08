@@ -1,0 +1,9 @@
+{
+  "type": "Texture",
+  "filepath": "images/debug/image.png",
+  "format": "RGBA8888",
+  "size": {
+    "w": 512,
+    "h": 512
+  }
+}

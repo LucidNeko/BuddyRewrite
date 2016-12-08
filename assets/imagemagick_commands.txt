@@ -1,0 +1,8 @@
+// Split image.png into 16x16 tiles. Output to tiles directory.
+magick convert image.png -crop 16x16 tiles/tile%04d.png
+
+// Join images into a single image
+magick convert -append "tiles/*.png" out.png
+
+//+repage clears offset information etc
+magick convert +repage out.png -crop 16x16 tiles/%04d.png

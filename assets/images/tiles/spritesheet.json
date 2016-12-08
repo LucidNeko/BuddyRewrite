@@ -1,0 +1,9 @@
+{
+    "type": "SpriteSheet",
+	"dependencies": {
+		"texture": "images/tiles/texture.json",
+		"frames": "images/tiles/texturepacker.json"
+	},
+	"animations": {
+	}
+}
