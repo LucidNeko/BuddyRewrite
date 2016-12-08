@@ -1,4 +1,4 @@
-#include "assets/shader.h"
+#include "assets/shaderprogram.h"
 
 #include <stdexcept>
 #include <string>
@@ -10,7 +10,7 @@
 
 #include "logging.h"
 
-ShaderHandle Shader::load(const std::string& filepath, Assets* loader)
+ShaderProgramHandle ShaderProgram::load(const std::string& filepath, Assets* loader)
 {
 //    "type": "Shader",
 //    "vertex_shader": "shaders/text/text.vert",
@@ -34,10 +34,10 @@ ShaderHandle Shader::load(const std::string& filepath, Assets* loader)
     catch(const std::exception& e)
     {
         LOG_ERROR("Failed to load shader: %s", e.what());
-        return ShaderHandle();
+        return ShaderProgramHandle();
     }
 
-    ShaderHandle handle;
+    ShaderProgramHandle handle(new ShaderProgram());
 
     handle->_vertextPath = loader->assetDirectory() + vertex_shader;
     handle->_fragmentPath = loader->assetDirectory() + fragment_shader;
@@ -48,5 +48,5 @@ ShaderHandle Shader::load(const std::string& filepath, Assets* loader)
     }
 
     LOG_ERROR("Failed to load shader: %s", filepath);
-    return ShaderHandle();
+    return ShaderProgramHandle();
 }

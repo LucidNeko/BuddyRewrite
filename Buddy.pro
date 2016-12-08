@@ -42,7 +42,6 @@ SOURCES += src/glad/glad.c \
     src/utilities/io/io.cpp \
     src/resources/io/filebackedresources.cpp \
     src/resources/io/resources.cpp \
-    src/resources/shaderprogram.cpp \
     src/resources/resourcelocator.cpp \
     src/resources/jsonfile.cpp \
     src/input.cpp \
@@ -52,9 +51,9 @@ SOURCES += src/glad/glad.c \
     src/assets/texture.cpp \
     src/assets/loaders/spritesheet_loader.cpp \
     src/assets/loaders/texture_loader.cpp \
-    src/assets/shader.cpp \
     src/assets/loaders/shader_loader.cpp \
-    src/jsonutil.cpp
+    src/jsonutil.cpp \
+    src/assets/shaderprogram.cpp
 
 HEADERS  += src/glad/glad.h \
     src/services.h \
@@ -88,7 +87,6 @@ HEADERS  += src/glad/glad.h \
     src/utilities/io/io.h \
     src/resources/io/filebackedresources.h \
     src/resources/io/resources.h \
-    src/resources/shaderprogram.h \
     src/resources/resourcelocator.h \
     src/assets/assettype.h \
     src/utilities/time/gametime.h \
@@ -99,8 +97,8 @@ HEADERS  += src/glad/glad.h \
     src/assets/assets.h \
     src/assets/texture.h \
     src/assets/spritesheet.h \
-    src/assets/shader.h \
-    src/jsonutil.h
+    src/jsonutil.h \
+    src/assets/shaderprogram.h
 
 DISTFILES += \
     assets/fonts/kenpixel_mini_square.ttf \

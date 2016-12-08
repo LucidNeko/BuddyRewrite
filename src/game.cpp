@@ -23,11 +23,14 @@
 #include "subsystems/physicssystem.h"
 #include "subsystems/spriterenderer.h"
 #include "input.h"
+#include "utilities/io/io.h"
+#include "assets/shaderprogram.h"
 
 Game::Game()
     : _physicsSystem(nullptr),
       _spriteRenderer(nullptr)
 {
+    _assets.setAssetDirectory(IO::assetDirectory());
 }
 
 Game::~Game()
@@ -54,7 +57,7 @@ bool Game::initialize()
     glClearColor(0.0, 0.0, 0.0, 1.0);
 
     _physicsSystem = new PhysicsSystem();
-    _spriteRenderer = new SpriteRenderer();
+    _spriteRenderer = new SpriteRenderer(_assets.get<ShaderProgram>("shaders/sprite/program.json"));
 
     queueScene(std::make_shared<TestScene>());
     _processNextScene();

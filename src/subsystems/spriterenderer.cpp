@@ -16,24 +16,20 @@
 #include "entity.h"
 #include "logging.h"
 #include "resources/io/resources.h"
-#include "resources/shaderprogram.h"
-#include "assets/spritesheet.h"
 #include "services.h"
+#include "assets/shaderprogram.h"
 #include "assets/texture.h"
+#include "assets/spritesheet.h"
 
 const unsigned int SpriteRenderer::MAX_BATCH_SIZE = 5000;
 
-SpriteRenderer::SpriteRenderer()
-    : _shader(),
+SpriteRenderer::SpriteRenderer(ShaderProgramHandle shader)
+    : _shader(shader),
       _vao(0),
       _vbo(0),
       _quadVBO(0),
       _activeTexture(nullptr)
 {
-    auto R = Services::get<Resources>();
-    R->load<ShaderProgram>("sprite");
-    _shader = R->get<ShaderProgram>("sprite");
-
     glm::mat4 projection = glm::ortho(0.0f, float(640), float(480), 0.0f, -1.0f, 1.0f);
 
     _shader->bind();

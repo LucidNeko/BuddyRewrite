@@ -29,7 +29,7 @@ public:
     };
 
 public:
-    SpriteRenderer();
+    SpriteRenderer(ShaderProgramHandle shader);
     ~SpriteRenderer();
 
     void render(const std::vector<EntityHandle>& entities);
@@ -39,7 +39,7 @@ private:
     void _render(EntityHandle entity);
 
 private:
-    std::shared_ptr<class ShaderProgram> _shader;
+    ShaderProgramHandle _shader;
     GLuint _vao;
     GLuint _vbo;
     GLuint _quadVBO;

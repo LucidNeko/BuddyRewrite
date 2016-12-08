@@ -7,7 +7,7 @@
 
 // Assets
 #include "assets/asset.h"
-#include "assets/shader.h"
+#include "assets/shaderprogram.h"
 #include "assets/texture.h"
 #include "assets/spritesheet.h"
 
@@ -16,7 +16,7 @@
 Assets::Assets()
     : _assetDirectory("assets/")
 {
-    setLoader<Shader>(Shader::load);
+    setLoader<ShaderProgram>(ShaderProgram::load);
     setLoader<Texture>(Texture::load);
     setLoader<SpriteSheet>(SpriteSheet::load);
 }

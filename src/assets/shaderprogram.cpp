@@ -1,39 +1,42 @@
-#include "resources/shaderprogram.h"
+#include "assets/shaderprogram.h"
 
 #include <fstream>
 #include <iostream>
 #include <sstream>
 #include <vector>
 
-#include "utilities/io/io.h"
 #include "logging.h"
 
-ShaderProgram::ShaderProgram(std::string name)
-    : Resource(name),
+ShaderProgram::ShaderProgram()
+    : Asset(),
       _programId(0)
 {
+
 }
 
 ShaderProgram::~ShaderProgram()
 {
+    glDeleteProgram(_programId);
+    _programId = 0;
 }
 
-bool ShaderProgram::load()
+bool ShaderProgram::reload()
 {
-    std::string fullpath(IO::assetDirectory() + "data/shaders/" + Resource::name());
+    if(_programId != 0)
+    {
+        glDeleteProgram(_programId);
+        _programId = 0;
+    }
 
-    std::string vertPath(fullpath + ".vert");
-    std::string fragPath(fullpath + ".frag");
+    std::string vertSource = loadShaderSource(_vertextPath);
+    std::string fragSource = loadShaderSource(_fragmentPath);
 
-    std::string vertSource = _loadShaderSource(vertPath);
-    std::string fragSource = _loadShaderSource(fragPath);
-
-    GLuint vertShader = _compileShader(GL_VERTEX_SHADER, vertSource);
-    GLuint fragShader = _compileShader(GL_FRAGMENT_SHADER, fragSource);
+    GLuint vertShader = compileShader(GL_VERTEX_SHADER, vertSource);
+    GLuint fragShader = compileShader(GL_FRAGMENT_SHADER, fragSource);
 
     if(vertShader == 0 || fragShader == 0)
     {
-        LOG_ERROR("Failed to load shader program \"%s\"", Resource::name().c_str());
+        LOG_ERROR("Failed to load shader program \"%s\" \"%s\"", _vertextPath.c_str(), _fragmentPath.c_str());
         return false;
     }
 
@@ -74,18 +77,6 @@ bool ShaderProgram::load()
     return true;
 }
 
-void ShaderProgram::destroy()
-{
-    glDeleteProgram(_programId);
-    _programId = 0;
-}
-
-void ShaderProgram::reload()
-{
-    destroy();
-    load();
-}
-
 void ShaderProgram::bind()
 {
     glUseProgram(_programId);
@@ -96,7 +87,7 @@ void ShaderProgram::unbind()
     glUseProgram(0);
 }
 
-GLuint ShaderProgram::id() const
+GLuint ShaderProgram::shaderId() const
 {
     return _programId;
 }
@@ -106,7 +97,7 @@ GLint ShaderProgram::getUniformLocation(const char* name)
     return glGetUniformLocation(_programId, name);
 }
 
-std::string ShaderProgram::_loadShaderSource(std::string filepath)
+std::string ShaderProgram::loadShaderSource(std::string filepath)
 {
     std::string line;
     std::ifstream file(filepath);
@@ -130,7 +121,7 @@ std::string ShaderProgram::_loadShaderSource(std::string filepath)
     }
 }
 
-GLuint ShaderProgram::_compileShader(GLenum type, std::string shaderSource)
+GLuint ShaderProgram::compileShader(GLenum type, std::string shaderSource)
 {
     GLuint shader = glCreateShader(type);
 

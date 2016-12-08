@@ -1,6 +1,7 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include "assets/assets.h"
 #include "entitycollection.h"
 #include "types.h"
 #include "utilities/time/time.h"
@@ -31,6 +32,8 @@ private:
 
     PhysicsSystem*  _physicsSystem;
     SpriteRenderer* _spriteRenderer;
+
+    Assets _assets;
 };
 
 #endif // GAME_H
