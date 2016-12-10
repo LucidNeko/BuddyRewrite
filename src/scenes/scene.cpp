@@ -19,6 +19,12 @@ Scene::~Scene()
 
 void Scene::add(EntityHandle entity)
 {
+    if(!entity)
+    {
+        LOG_ERROR("Failed to add entity, because it is null");
+        return;
+    }
+
     U64 key = entity->id();
     if(_entities.find(key) == _entities.end())
     {

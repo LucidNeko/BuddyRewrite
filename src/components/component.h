@@ -1,7 +1,7 @@
 #ifndef COMPONENT_H
 #define COMPONENT_H
 
-//#include <string>
+#include <string>
 
 #include "types.h"
 
@@ -18,6 +18,8 @@ public:
         Script,
         Animation
     };
+
+    static ComponentHandle load(EntityHandle entity, const std::string& filename, class Assets* assets);
 
 public:
     Component(EntityHandle entity = nullptr);

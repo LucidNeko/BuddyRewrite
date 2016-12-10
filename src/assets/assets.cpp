@@ -13,6 +13,7 @@
 #include "assets/shaderprogram.h"
 #include "assets/texture.h"
 #include "assets/spritesheet.h"
+#include "entity.h"
 
 #include "logging.h"
 
@@ -29,6 +30,7 @@ Assets::Assets()
     setLoader<ShaderProgram>(ShaderProgram::load);
     setLoader<Texture>(Texture::load);
     setLoader<SpriteSheet>(SpriteSheet::load);
+    setLoader<Entity>(Entity::load);
 }
 
 Assets::~Assets()

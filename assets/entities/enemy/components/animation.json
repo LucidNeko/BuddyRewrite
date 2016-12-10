@@ -1,0 +1,5 @@
+{
+  "asset_type": "Animation",
+  "spritesheet": "images/characters",
+  "sequence": "enemy_walk_right"
+}

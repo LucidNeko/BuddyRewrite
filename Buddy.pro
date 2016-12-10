@@ -51,7 +51,9 @@ SOURCES += src/glad/glad.c \
     src/stb/stb_image_impl.cpp \
     src/assets/loaders/shaderprogram_loader.cpp \
     src/components/animation.cpp \
-    src/subsystems/animationsystem.cpp
+    src/subsystems/animationsystem.cpp \
+    src/assets/loaders/component_loader.cpp \
+    src/assets/loaders/entity_loader.cpp
 
 HEADERS  += src/glad/glad.h \
     src/services.h \

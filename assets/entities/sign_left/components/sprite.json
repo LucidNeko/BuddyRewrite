@@ -1,0 +1,9 @@
+{
+  "asset_type": "Sprite",
+  "spritesheet": "images/tiles",
+  "frame": "tiles/0000",
+  "size": {
+    "w": 128,
+    "h": 128
+  }
+}

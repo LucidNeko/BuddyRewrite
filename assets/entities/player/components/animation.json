@@ -1,0 +1,5 @@
+{
+  "asset_type": "Animation",
+  "spritesheet": "images/characters",
+  "sequence": "player_walk_left"
+}

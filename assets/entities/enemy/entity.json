@@ -1,0 +1,10 @@
+{
+  "asset_type": "Entity",
+  "id": 43637,
+  "components": [
+    "/components/transform.json",
+    "/components/rigidbody.json",
+    "/components/sprite.json",
+    "/components/animation.json"
+  ]
+}

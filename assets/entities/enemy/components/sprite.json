@@ -1,0 +1,8 @@
+{
+  "asset_type": "Sprite",
+  "spritesheet": "images/characters",
+  "size": {
+    "w": 128,
+    "h": 128
+  }
+}
