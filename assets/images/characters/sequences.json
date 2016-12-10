@@ -1,0 +1,42 @@
+{
+	"sequences": {
+		"enemy_walk_right": {
+			"flip_horizontal": false,
+			"milliseconds_per_frame": 250,
+			"frames": [
+			  "enemy/walk_right_0",
+			  "enemy/walk_right_1",
+			  "enemy/walk_right_2",
+			  "enemy/walk_right_3"
+			]
+		},
+		"enemy_walk_left": {
+			"flip_horizontal": true,
+			"milliseconds_per_frame": 250,
+			"frames": [
+			  "enemy/walk_right_0",
+			  "enemy/walk_right_1",
+			  "enemy/walk_right_2",
+			  "enemy/walk_right_3"
+			]
+		},
+		"player_walk_right": {
+			"flip_horizontal": false,
+			"milliseconds_per_frame": 250,
+			"frames": [
+			  "player/walk_right_0",
+			  "player/walk_right_1",
+			  "player/walk_right_2"
+			]
+		},
+		"player_walk_left": {
+			"flip_horizontal": true,
+			"milliseconds_per_frame": 250,
+			"frames": [
+			  "player/walk_right_0",
+			  "player/walk_right_1",
+			  "player/walk_right_2"
+			]
+		}
+	}
+}

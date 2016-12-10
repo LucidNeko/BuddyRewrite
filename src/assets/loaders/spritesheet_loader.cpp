@@ -71,43 +71,49 @@ namespace
 
 SpriteSheetHandle SpriteSheet::load(const std::string& filepath, Assets* loader)
 {
-    std::string type;
-    std::string dependencies_texture;
-    std::string dependencies_frames;
+    const std::string configFile = "/spritesheet.json";
+    std::string fullpath(loader->assetDirectory() + filepath + configFile);
+
+    std::string config_asset_type;
+    std::string config_texture;
+    std::string config_frames;
+    std::string config_sequences;
+
     TextureHandle texture;
     SpriteSheet::FrameMap frames;
     SpriteSheet::SequenceMap sequences;
 
-    JsonUtil jsonLoader;
-
     try
     {
+        JsonUtil jsonUtil;
+
         nlohmann::json json;
-        jsonLoader.loadOrThrow(loader->assetDirectory() + filepath, json);
+        jsonUtil.loadOrThrow(fullpath, json);
 
-        type = json["type"];
+        config_asset_type = json["asset_type"];
+        config_texture = json["texture"];
+        config_frames = json["frames"];
+        config_sequences = jsonUtil.get<std::string>(json, {"sequences"});
 
-        if(type != "SpriteSheet")
-        {
-            throw std::invalid_argument("Type is not SpriteSheet: " + filepath);
-        }
-
-        dependencies_texture = json["dependencies"]["texture"];
-
-        texture = loader->get<Texture>(dependencies_texture);
+        texture = loader->get<Texture>(config_texture);
 
         if(!texture)
         {
-            throw std::invalid_argument("Could not load Texture for SpriteSheet: " + dependencies_texture);
+            throw std::invalid_argument("Could not load Texture for SpriteSheet: " + config_texture);
         }
 
-        dependencies_frames = json["dependencies"]["frames"];
-
         nlohmann::json frames_json;
-        jsonLoader.loadOrThrow(loader->assetDirectory() + dependencies_frames, frames_json);
+        jsonUtil.loadOrThrow(loader->assetDirectory() + config_frames, frames_json);
 
         parseFrames(frames_json["frames"], texture, frames);
-        parseSequences(json["animations"], frames, sequences);
+
+        if(!config_sequences.empty())
+        {
+            nlohmann::json animations_json;
+            jsonUtil.loadOrThrow(loader->assetDirectory() + config_sequences, animations_json);
+
+            parseSequences(animations_json["sequences"], frames, sequences);
+        }
     }
     catch(const std::exception& e)
     {

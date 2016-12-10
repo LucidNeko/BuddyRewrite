@@ -12,10 +12,11 @@ TEMPLATE = app
 
 INCLUDEPATH += $$PWD/src \
                $$PWD/thirdparty/glm/include \
-               $$PWD/thirdparty/json/include/modified
+               $$PWD/thirdparty/stb/include \
 DEPENDPATH += $$PWD/src \
               $$PWD/thirdparty/glm/include \
-              $$PWD/thirdparty/json/include/modified
+              $$PWD/thirdparty/json/include \
+              $$PWD/thirdparty/stb/include \
 
 SOURCES += src/glad/glad.c \
            src/main.cpp \
@@ -45,9 +46,10 @@ SOURCES += src/glad/glad.c \
     src/assets/texture.cpp \
     src/assets/loaders/spritesheet_loader.cpp \
     src/assets/loaders/texture_loader.cpp \
-    src/assets/loaders/shader_loader.cpp \
     src/jsonutil.cpp \
-    src/assets/shaderprogram.cpp
+    src/assets/shaderprogram.cpp \
+    src/stb/stb_image_impl.cpp \
+    src/assets/loaders/shaderprogram_loader.cpp
 
 HEADERS  += src/glad/glad.h \
     src/services.h \

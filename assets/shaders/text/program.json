@@ -1,5 +1,5 @@
 {
-  "type": "Shader",
+  "asset_type": "ShaderProgram",
   "vertex_shader": "shaders/text/text.vert",
   "fragment_shader": "shaders/text/text.frag"
 }

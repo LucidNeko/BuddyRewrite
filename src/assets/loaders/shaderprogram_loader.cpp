@@ -12,22 +12,21 @@
 
 ShaderProgramHandle ShaderProgram::load(const std::string& filepath, Assets* loader)
 {
-//    "type": "Shader",
-//    "vertex_shader": "shaders/text/text.vert",
-//    "fragment_shader": "shaders/text/text.frag"
+    const std::string configFile = "/program.json";
+    std::string fullpath(loader->assetDirectory() + filepath + configFile);
 
-    std::string type;
+    std::string asset_type;
     std::string vertex_shader;
     std::string fragment_shader;
 
-    JsonUtil jsonLoader;
-
     try
     {
-        nlohmann::json json;
-        jsonLoader.loadOrThrow(loader->assetDirectory() + filepath, json);
+        JsonUtil jsonUtil;
 
-        type = json["type"];
+        nlohmann::json json;
+        jsonUtil.loadOrThrow(fullpath, json);
+
+        asset_type = json["asset_type"];
         vertex_shader = json["vertex_shader"];
         fragment_shader = json["fragment_shader"];
     }
@@ -47,6 +46,6 @@ ShaderProgramHandle ShaderProgram::load(const std::string& filepath, Assets* loa
         return handle;
     }
 
-    LOG_ERROR("Failed to load shader: %s", filepath);
+    LOG_ERROR("Failed to load shader program: %s", fullpath);
     return ShaderProgramHandle();
 }

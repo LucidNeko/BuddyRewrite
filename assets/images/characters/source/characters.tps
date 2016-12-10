@@ -150,7 +150,7 @@
             <key>data</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>texturepacker.json</filename>
+                <filename>frames.json</filename>
             </struct>
         </map>
         <key>multiPack</key>

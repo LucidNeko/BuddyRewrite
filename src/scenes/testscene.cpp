@@ -21,11 +21,11 @@ TestScene::~TestScene()
 
 void TestScene::onEnter()
 {
-    auto characters = _assets->get<SpriteSheet>("images/characters/spritesheet.json");
-    auto tiles = _assets->get<SpriteSheet>("images/tiles/spritesheet.json");
+    auto characters = _assets->get<SpriteSheet>("images/characters");
+    auto tiles = _assets->get<SpriteSheet>("images/tiles");
 
     // Will get freed because no references
-    _assets->load<Texture>("images/debug/texture.json");
+    _assets->load<Texture>("images/debug");
 
     {
         EntityHandle e = EntityFactory::create();

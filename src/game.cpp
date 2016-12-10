@@ -55,7 +55,7 @@ bool Game::initialize()
     glClearColor(0.0, 0.0, 0.0, 1.0);
 
     _physicsSystem = new PhysicsSystem();
-    _spriteRenderer = new SpriteRenderer(_assets->get<ShaderProgram>("shaders/sprite/program.json"));
+    _spriteRenderer = new SpriteRenderer(_assets->get<ShaderProgram>("shaders/sprite"));
 
     queueScene(std::make_shared<TestScene>(_assets));
     _processNextScene();

@@ -25,3 +25,20 @@ void JsonUtil::loadOrThrow(const std::string& file, nlohmann::json& json)
         throw std::invalid_argument(message);
     }
 }
+
+nlohmann::json JsonUtil::get(const nlohmann::json& json, const std::vector<std::string>& keys)
+{
+    if(keys.empty()) { return nlohmann::json(); }
+
+    nlohmann::json object = json;
+    for(size_t i = 0; i < keys.size(); i++)
+    {
+        auto it = object.find(keys.at(i));
+        if(it == object.end())
+        {
+            return nlohmann::json();
+        }
+        object = *it;
+    }
+    return object;
+}

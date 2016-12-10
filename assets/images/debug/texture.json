@@ -1,9 +1,5 @@
 {
-  "type": "Texture",
-  "filepath": "images/debug/image.png",
-  "format": "RGBA8888",
-  "size": {
-    "w": 512,
-    "h": 512
-  }
+  "asset_type": "Texture",
+  "image_path": "images/debug/image.png",
+  "has_alpha": true
 }

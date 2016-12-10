@@ -3,7 +3,7 @@
 #include <stdexcept>
 #include <fstream>
 
-#include <QImage>
+#include "stb_image.h"
 
 #include "json.hpp"
 
@@ -13,46 +13,37 @@
 
 TextureHandle Texture::load(const std::string& filepath, Assets* loader)
 {
-    QImage image;
-    std::string type;
-    std::string image_path;
-    std::string format;
-    U32 size_w;
-    U32 size_h;
+    const std::string configFile = "/texture.json";
+    std::string fullpath(loader->assetDirectory() + filepath + configFile);
 
-    JsonUtil jsonLoader;
+    std::string asset_type = "";
+    std::string image_path = "";
+    bool has_alpha = false;
+
+    U8* image_data = nullptr;
+    I32 image_width = 0;
+    I32 image_height = 0;
+    I32 image_channels = 0;
 
     try
     {
+        JsonUtil jsonUtil;
+
         nlohmann::json json;
-        jsonLoader.loadOrThrow(loader->assetDirectory() + filepath, json);
+        jsonUtil.loadOrThrow(fullpath, json);
 
-        type = json["type"];
-
-        if(type != "Texture")
-        {
-            throw std::invalid_argument("Type is not Texture: " + filepath);
-        }
-
-        image_path = json["filepath"];
-        format = json["format"];
-        size_w = json["size"]["w"];
-        size_h = json["size"]["h"];
+        asset_type = json["asset_type"];
+        image_path = json["image_path"];
+        has_alpha = json["has_alpha"];
 
         std::string image_fullpath = loader->assetDirectory() + image_path;
-        image = QImage(image_fullpath.c_str());
+        I32 desired_channels = has_alpha ? STBI_rgb_alpha : STBI_rgb;
 
-        if(image.isNull())
+        image_data = stbi_load(image_fullpath.c_str(), &image_width, &image_height, &image_channels, desired_channels);
+        if(!image_data)
         {
             throw std::invalid_argument("Could not load image from: " + image_fullpath);
         }
-
-        if(image.width() != size_w || image.height() != size_h)
-        {
-            throw std::invalid_argument("Config size does not match image size: " + filepath);
-        }
-
-        image = image.convertToFormat(QImage::Format_RGBA8888);
     }
     catch(const std::exception& e)
     {
@@ -62,14 +53,15 @@ TextureHandle Texture::load(const std::string& filepath, Assets* loader)
 
     TextureHandle handle(new Texture());
 
-    handle->_width = size_w;
-    handle->_height = size_h;
+    handle->_width = image_width;
+    handle->_height = image_height;
 
-    const I32 byteCount = image.byteCount();
-    const GLubyte* bytes = image.constBits();
+    const I32 byteCount = image_width * image_height * image_channels;
 
     handle->_data.reserve(byteCount);
-    handle->_data = std::vector<GLubyte>(bytes, bytes + byteCount);
+    handle->_data = std::vector<GLubyte>(image_data, image_data + byteCount);
+
+    stbi_image_free(image_data);
 
     handle->create();
 
