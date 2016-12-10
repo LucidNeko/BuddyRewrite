@@ -27,7 +27,6 @@ SOURCES += src/glad/glad.c \
     src/components/component.cpp \
     src/gamewindow.cpp \
     src/game.cpp \
-    src/components/componentfactory.cpp \
     src/components/rigidbody.cpp \
     src/entitycollection.cpp \
     src/components/sprite.cpp \
@@ -66,7 +65,6 @@ HEADERS  += src/glad/glad.h \
     src/systemopengl.h \
     src/gamewindow.h \
     src/game.h \
-    src/components/componentfactory.h \
     src/components/rigidbody.h \
     src/property.h \
     src/entitycollection.h \
