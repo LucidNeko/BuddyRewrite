@@ -49,7 +49,9 @@ SOURCES += src/glad/glad.c \
     src/jsonutil.cpp \
     src/assets/shaderprogram.cpp \
     src/stb/stb_image_impl.cpp \
-    src/assets/loaders/shaderprogram_loader.cpp
+    src/assets/loaders/shaderprogram_loader.cpp \
+    src/components/animation.cpp \
+    src/subsystems/animationsystem.cpp
 
 HEADERS  += src/glad/glad.h \
     src/services.h \
@@ -88,7 +90,9 @@ HEADERS  += src/glad/glad.h \
     src/assets/texture.h \
     src/assets/spritesheet.h \
     src/jsonutil.h \
-    src/assets/shaderprogram.h
+    src/assets/shaderprogram.h \
+    src/components/animation.h \
+    src/subsystems/animationsystem.h
 
 DISTFILES += \
     assets/fonts/kenpixel_mini_square.ttf \

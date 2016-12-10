@@ -3,6 +3,7 @@
 #include "components/transform.h"
 #include "components/rigidbody.h"
 #include "components/sprite.h"
+#include "components/animation.h"
 #include "entity.h"
 #include "entityfactory.h"
 #include "logging.h"
@@ -50,9 +51,16 @@ void TestScene::onEnter()
         auto sprite = e->addComponent<Sprite>();
 
         sprite->setSpriteSheet(characters);
-        sprite->setCurrentFrame("enemy/walk_right_0");
 
         sprite->setSize(glm::vec2(128, 128));
+
+        auto anim = e->addComponent<Animation>();
+
+        SpriteSheetSequence sequence;
+        if(characters->sequence("enemy_walk_right", sequence))
+        {
+            anim->setSequence(sequence);
+        }
 
         Scene::add(e);
     }
@@ -68,7 +76,12 @@ void TestScene::onEnter()
         auto sprite = e->addComponent<Sprite>();
 
         sprite->setSpriteSheet(tiles);
-        sprite->setCurrentFrame("tiles/0000");
+
+        SpriteSheetFrame frame;
+        if(tiles->frame("tiles/0000", frame))
+        {
+            sprite->setCurrentFrame(frame);
+        }
 
         sprite->setSize(glm::vec2(128, 128));
 
@@ -85,7 +98,12 @@ void TestScene::onEnter()
         auto sprite = e->addComponent<Sprite>();
 
         sprite->setSpriteSheet(tiles);
-        sprite->setCurrentFrame("tiles/0001");
+
+        SpriteSheetFrame frame;
+        if(tiles->frame("tiles/0001", frame))
+        {
+            sprite->setCurrentFrame(frame);
+        }
 
         sprite->setSize(glm::vec2(128, 128));
 
@@ -103,7 +121,14 @@ void TestScene::onEnter()
         auto sprite = e->addComponent<Sprite>();
 
         sprite->setSpriteSheet(characters);
-        sprite->setCurrentFrame("player/walk_right_1");
+
+        auto anim = e->addComponent<Animation>();
+
+        SpriteSheetSequence sequence;
+        if(characters->sequence("player_walk_left", sequence))
+        {
+            anim->setSequence(sequence);
+        }
 
         sprite->setSize(glm::vec2(128, 128));
 

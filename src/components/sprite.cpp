@@ -35,13 +35,7 @@ void Sprite::setSpriteSheet(SpriteSheetHandle spriteSheet)
 
 glm::vec4 Sprite::textureCoords() const
 {
-    SpriteSheet::Frame frame;
-
-    if(_spriteSheet && _spriteSheet->frame(_currentFrame, frame))
-    {
-        return frame.texInfo;
-    }
-    return glm::vec4();
+    return _current.textureCoordInfo();
 }
 
 glm::vec3 Sprite::color() const
@@ -64,12 +58,12 @@ void Sprite::setSize(glm::vec2 size)
     _size = size;
 }
 
-std::string Sprite::currentFrame() const
+SpriteSheetFrame Sprite::currentFrame() const
 {
-    return _currentFrame;
+    return _current;
 }
 
-void Sprite::setCurrentFrame(std::string frame)
+void Sprite::setCurrentFrame(const SpriteSheetFrame& frame)
 {
-    _currentFrame = frame;
+    _current = frame;
 }

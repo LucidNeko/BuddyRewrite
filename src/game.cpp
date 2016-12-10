@@ -16,10 +16,12 @@
 #include "components/transform.h"
 #include "components/rigidbody.h"
 #include "components/sprite.h"
+#include "components/animation.h"
 #include "logging.h"
 #include "services.h"
 #include "scenes/testscene.h"
 #include "subsystems/physicssystem.h"
+#include "subsystems/animationsystem.h"
 #include "subsystems/spriterenderer.h"
 #include "input.h"
 #include "assets/shaderprogram.h"
@@ -27,6 +29,7 @@
 Game::Game()
     : _assets(nullptr),
       _physicsSystem(nullptr),
+      _animationSystem(nullptr),
       _spriteRenderer(nullptr)
 {
 }
@@ -39,6 +42,7 @@ Game::~Game()
     }
 
     delete _physicsSystem;
+    delete _animationSystem;
     delete _spriteRenderer;
 }
 
@@ -55,6 +59,7 @@ bool Game::initialize()
     glClearColor(0.0, 0.0, 0.0, 1.0);
 
     _physicsSystem = new PhysicsSystem();
+    _animationSystem = new AnimationSystem();
     _spriteRenderer = new SpriteRenderer(_assets->get<ShaderProgram>("shaders/sprite"));
 
     queueScene(std::make_shared<TestScene>(_assets));
@@ -89,6 +94,8 @@ void Game::_processSubSystems(Time time)
     std::vector<EntityHandle> entities = _currentScene->getAll();
 
     _physicsSystem->update(time, entities);
+
+    _animationSystem->update(time, entities);
 
     _spriteRenderer->render(entities);
     _spriteRenderer->flush();

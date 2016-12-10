@@ -122,14 +122,16 @@ void SpriteRenderer::_render(EntityHandle entity)
     std::shared_ptr<Transform> transform = entity->getComponent<Transform>();
     std::shared_ptr<Sprite> sprite = entity->getComponent<Sprite>();
 
-    if(transform == nullptr) { return; }
-    if(sprite == nullptr) { return; }
-    if(sprite->spriteSheet() == nullptr) { return; }
+    if(!transform) { return; }
+    if(!sprite) { return; }
+    if(!sprite->spriteSheet()) { return; }
 
-    if(_activeTexture != sprite->spriteSheet()->texture() || _queuedSprites.size() == MAX_BATCH_SIZE)
+    TextureHandle texture = sprite->spriteSheet()->texture();
+
+    if(_activeTexture != texture || _queuedSprites.size() == MAX_BATCH_SIZE)
     {
         flush();
-        _activeTexture = sprite->spriteSheet()->texture();
+        _activeTexture = texture;
     }
 
     glm::vec2 centerBottom = transform->position() - (sprite->size() * glm::vec2(0.5f, 1));
@@ -153,16 +155,10 @@ void SpriteRenderer::flush()
 {
     if(_queuedSprites.empty() || _activeTexture == nullptr) { return; }
 
-//    LOG_INFO("Flush");
-
-    //GL_FLUSH_ERROR;
-
     glBindBuffer(GL_ARRAY_BUFFER, _vbo);
     glBufferData(GL_ARRAY_BUFFER, MAX_BATCH_SIZE * sizeof(SpriteData), nullptr, GL_DYNAMIC_DRAW); // Orphan Buffer
     glBufferSubData(GL_ARRAY_BUFFER, 0, _queuedSprites.size() * sizeof(SpriteData), &_queuedSprites[0]);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-//    LOG_INFO("%d %d %d %d", _vao, _vbo, _quadVBO, _queuedSprites.size());
 
     _shader->bind();
 

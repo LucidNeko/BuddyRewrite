@@ -30,16 +30,10 @@ typedef std::shared_ptr<class Entity> EntityHandle;
 typedef std::weak_ptr<class Asset> AssetWeakHandle;
 typedef std::shared_ptr<class Asset> AssetHandle;
 
-typedef std::weak_ptr<class Resource> ResourceWeakHandle;
-typedef std::shared_ptr<class Resource> ResourceHandle;
-
 typedef std::weak_ptr<class Component> ComponentWeakHandle;
 typedef std::shared_ptr<class Component> ComponentHandle;
 
-typedef std::weak_ptr<class JsonFile> JsonFileWeakHandle;
-typedef std::shared_ptr<class JsonFile> JsonFileHandle;
-
-// NEW ASSET TYPES
+// ASSETS
 typedef std::shared_ptr<class Assets> AssetsHandle;
 typedef std::shared_ptr<class Texture> TextureHandle;
 typedef std::shared_ptr<class SpriteSheet> SpriteSheetHandle;

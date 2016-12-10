@@ -5,10 +5,6 @@
 #include "types.h"
 #include "utilities/time/time.h"
 
-class Scene;
-class PhysicsSystem;
-class SpriteRenderer;
-
 class Game
 {
 public:
@@ -31,8 +27,9 @@ private:
     SceneHandle _currentScene;
     SceneHandle _nextScene;
 
-    PhysicsSystem*  _physicsSystem;
-    SpriteRenderer* _spriteRenderer;
+    class PhysicsSystem* _physicsSystem;
+    class AnimationSystem* _animationSystem;
+    class SpriteRenderer* _spriteRenderer;
 };
 
 #endif // GAME_H

@@ -10,27 +10,48 @@
 #include "assets/asset.h"
 #include "types.h"
 
+class SpriteSheetFrame
+{
+public:
+    SpriteSheetFrame();
+    SpriteSheetFrame(glm::vec4 pixelInfo, glm::vec4 textureCoordInfo);
+    SpriteSheetFrame(const SpriteSheetFrame& source);
+
+    glm::vec4 pixelInfo() const;
+    glm::vec4 textureCoordInfo() const;
+
+    SpriteSheetFrame flipped() const;
+
+private:
+    glm::vec4 _pixelInfo;
+    glm::vec4 _textureCoordInfo;
+};
+
+class SpriteSheetSequence
+{
+public:
+    SpriteSheetSequence();
+    SpriteSheetSequence(std::vector<SpriteSheetFrame> frames, U32 millisecondsPerFrame, bool flipHorizontal);
+    SpriteSheetSequence(const SpriteSheetSequence& source);
+
+    bool isValid() const;
+
+    const std::vector<SpriteSheetFrame>& frames() const;
+    U32 millisecondsPerFrame() const;
+    U32 millisecondsTotal() const;
+    bool flipHorizontal() const;
+
+private:
+    std::vector<SpriteSheetFrame> _frames;
+    U32 _millisecondsPerFrame;
+    bool _flipHorizontal;
+};
+
 class SpriteSheet : public Asset
 {
 public:
-    class Frame
-    {
-    public:
-        glm::vec4 pixInfo;
-        glm::vec4 texInfo;
-    };
-
-    class Sequence
-    {
-    public:
-        bool flipHorizontal;
-        U32 millisecondsPerFrame;
-        std::vector<Frame> frames;
-    };
-
-public:
-    typedef std::unordered_map<std::string, SpriteSheet::Frame> FrameMap;
-    typedef std::unordered_map<std::string, SpriteSheet::Sequence> SequenceMap;
+    typedef std::unordered_map<std::string, SpriteSheetFrame> FrameMap;
+    typedef std::unordered_map<std::string, SpriteSheetSequence> SequenceMap;
 
 public:
     static SpriteSheetHandle load(const std::string& filepath, class Assets* loader);
@@ -40,8 +61,8 @@ public:
 
     TextureHandle texture() const;
 
-    bool frame(const std::string& name, Frame& out);
-    bool sequence(const std::string& name, SpriteSheet::Sequence& out);
+    bool frame(const std::string& name, SpriteSheetFrame& out);
+    bool sequence(const std::string& name, SpriteSheetSequence& out);
 
 private:
     SpriteSheet();

@@ -6,7 +6,14 @@
 class Time
 {
 public:
+    static Time fromSeconds(F32 seconds);
+    static Time fromMilliseconds(U64 milliseconds);
+    static Time fromMicroseconds(U64 microseconds);
+    static Time fromNanoseconds(U64 nanoseconds);
+
+public:
     Time(U64 nanoseconds = 0);
+    Time(const Time& source);
 
     F32 seconds() const;
     U64 milliseconds() const;

@@ -1,7 +1,40 @@
 #include "time.h"
 
+/**
+ * Factory Functions.
+ */
+
+Time Time::fromSeconds(F32 seconds)
+{
+    return Time((U64)(seconds * 1000000000));
+}
+
+Time Time::fromMilliseconds(U64 milliseconds)
+{
+    return Time(milliseconds * 1000000);
+}
+
+Time Time::fromMicroseconds(U64 microseconds)
+{
+    return Time(microseconds * 1000);
+}
+
+Time Time::fromNanoseconds(U64 nanoseconds)
+{
+    return Time(nanoseconds);
+}
+
+/**
+ * Class methods.
+ */
+
 Time::Time(U64 nanoseconds)
-    :_nanoseconds(nanoseconds)
+    : _nanoseconds(nanoseconds)
+{
+}
+
+Time::Time(const Time& source)
+    : _nanoseconds(source._nanoseconds)
 {
 }
 

@@ -15,7 +15,8 @@ public:
         Sprite,
         SpriteRenderer,
         Transform,
-        Script
+        Script,
+        Animation
     };
 
 public:

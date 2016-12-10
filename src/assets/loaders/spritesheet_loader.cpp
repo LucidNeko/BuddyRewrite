@@ -25,22 +25,21 @@ namespace
             I32 w = value["frame"]["w"];
             I32 h = value["frame"]["h"];
 
-            SpriteSheet::Frame frame;
-            frame.pixInfo = glm::vec4(x, y, w, h);
-            frame.texInfo = frame.pixInfo;
-            frame.texInfo.x = frame.texInfo.x / texture->width();
-            frame.texInfo.y = frame.texInfo.y / texture->height();
-            frame.texInfo.z = frame.texInfo.x + frame.texInfo.z / texture->width();
-            frame.texInfo.w = frame.texInfo.y + frame.texInfo.w / texture->height();
+            glm::vec4 pixelInfo = glm::vec4(x, y, w, h);
+            glm::vec4 textureCoordInfo = pixelInfo;
+            textureCoordInfo.x = textureCoordInfo.x / texture->width();
+            textureCoordInfo.y = textureCoordInfo.y / texture->height();
+            textureCoordInfo.z = textureCoordInfo.x + textureCoordInfo.z / texture->width();
+            textureCoordInfo.w = textureCoordInfo.y + textureCoordInfo.w / texture->height();
 
             std::string name = it.key();
-            frames[name] = frame;
+            frames[name] = SpriteSheetFrame(pixelInfo, textureCoordInfo);
         }
     }
 
     void parseSequences(nlohmann::json json,
-                         const SpriteSheet::FrameMap& frames,
-                         SpriteSheet::SequenceMap& sequences)
+                        const SpriteSheet::FrameMap& frames,
+                        SpriteSheet::SequenceMap& sequences)
     {
         for(nlohmann::json::iterator it = json.begin(); it != json.end(); it++)
         {
@@ -49,22 +48,21 @@ namespace
             I32 milliseconds_per_frame = value["milliseconds_per_frame"];
             std::vector<std::string> frameNames = value["frames"];
 
-            SpriteSheet::Sequence sequence;
-            sequence.flipHorizontal = flip_horizontal;
-            sequence.millisecondsPerFrame = milliseconds_per_frame;
-
-            sequence.frames.reserve(frameNames.size());
+            std::vector<SpriteSheetFrame> frameList;
+            frameList.reserve(frameNames.size());
             for(auto frameNames_it = frameNames.begin(); frameNames_it != frameNames.end(); frameNames_it++)
             {
                 auto it = frames.find(*frameNames_it);
                 if(it != frames.end())
                 {
-                    sequence.frames.push_back(it->second);
+                    frameList.push_back(it->second);
                 }
             }
 
             std::string name = it.key();
-            sequences[name] = sequence;
+            sequences[name] = SpriteSheetSequence(frameList,
+                                                  milliseconds_per_frame,
+                                                  flip_horizontal);
         }
     }
 }

@@ -27,6 +27,8 @@ const char* Component::typeName() const
         return "Transform";
     case Script:
         return "Script";
+    case Animation:
+        return "Animation";
     default:
         return "Unknown";
     }

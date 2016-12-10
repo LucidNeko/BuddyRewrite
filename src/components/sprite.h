@@ -8,6 +8,7 @@
 #include <glm/vec3.hpp>
 #include <glm/vec2.hpp>
 
+#include "assets/spritesheet.h"
 #include "component.h"
 #include "types.h"
 
@@ -32,8 +33,9 @@ public:
     glm::vec2 size() const;
     void setSize(glm::vec2 size);
 
-    std::string currentFrame() const;
-    void setCurrentFrame(std::string frame);
+    SpriteSheetFrame currentFrame() const;
+    void setCurrentFrame(const SpriteSheetFrame& frame);
+
 
     //TODO: Alignment alignment() const;
 
@@ -44,6 +46,7 @@ private:
     glm::vec2 _size;
 
     std::string _currentFrame;
+    SpriteSheetFrame _current;
 };
 
 #endif // SPRITE_H

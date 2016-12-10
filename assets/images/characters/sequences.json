@@ -1,28 +1,40 @@
 {
 	"sequences": {
-		"enemy_walk_right": {
+		"enemy_idle_right": {
 			"flip_horizontal": false,
-			"milliseconds_per_frame": 250,
+			"milliseconds_per_frame": 200,
 			"frames": [
 			  "enemy/walk_right_0",
-			  "enemy/walk_right_1",
+			  "enemy/walk_right_1"
+			]
+		},
+		"enemy_idle_left": {
+			"flip_horizontal": true,
+			"milliseconds_per_frame": 200,
+			"frames": [
+			  "enemy/walk_right_0",
+			  "enemy/walk_right_1"
+			]
+		},
+		"enemy_walk_right": {
+			"flip_horizontal": false,
+			"milliseconds_per_frame": 200,
+			"frames": [
 			  "enemy/walk_right_2",
 			  "enemy/walk_right_3"
 			]
 		},
 		"enemy_walk_left": {
 			"flip_horizontal": true,
-			"milliseconds_per_frame": 250,
+			"milliseconds_per_frame": 200,
 			"frames": [
-			  "enemy/walk_right_0",
-			  "enemy/walk_right_1",
 			  "enemy/walk_right_2",
 			  "enemy/walk_right_3"
 			]
 		},
 		"player_walk_right": {
 			"flip_horizontal": false,
-			"milliseconds_per_frame": 250,
+			"milliseconds_per_frame": 200,
 			"frames": [
 			  "player/walk_right_0",
 			  "player/walk_right_1",
@@ -31,7 +43,7 @@
 		},
 		"player_walk_left": {
 			"flip_horizontal": true,
-			"milliseconds_per_frame": 250,
+			"milliseconds_per_frame": 200,
 			"frames": [
 			  "player/walk_right_0",
 			  "player/walk_right_1",
