@@ -19,7 +19,7 @@
 
 namespace
 {
-    ComponentHandle loadTransform(EntityHandle entity, nlohmann::json& json, AssetsHandle)
+    void loadTransform(EntityHandle entity, nlohmann::json& json, AssetsHandle)
     {
         std::shared_ptr<Transform> transform = entity->addComponent<Transform>();
 
@@ -29,18 +29,14 @@ namespace
         I32 y = jsonUtil.get(json, {"position", "y"});
 
         transform->setPosition(glm::vec2(x, y));
-
-        return transform;
     }
 
-    ComponentHandle loadRigidBody(EntityHandle entity, nlohmann::json&, AssetsHandle)
+    void loadRigidBody(EntityHandle entity, nlohmann::json&, AssetsHandle)
     {
-        std::shared_ptr<RigidBody> rigidBody = entity->addComponent<RigidBody>();
-
-        return rigidBody;
+        entity->addComponent<RigidBody>();
     }
 
-    ComponentHandle loadSprite(EntityHandle entity, nlohmann::json& json, AssetsHandle assets)
+    void loadSprite(EntityHandle entity, nlohmann::json& json, AssetsHandle assets)
     {
         std::shared_ptr<Sprite> sprite = entity->addComponent<Sprite>();
 
@@ -64,11 +60,9 @@ namespace
                 sprite->setCurrentFrame(frame);
             }
         }
-
-        return sprite;
     }
 
-    ComponentHandle loadAnimation(EntityHandle entity, nlohmann::json& json, AssetsHandle assets)
+    void loadAnimation(EntityHandle entity, nlohmann::json& json, AssetsHandle assets)
     {
         std::shared_ptr<Animation> animation = entity->addComponent<Animation>();
 
@@ -83,15 +77,13 @@ namespace
                 animation->setSequence(sequence);
             }
         }
-
-        return animation;
     }
 }
 
 
-ComponentHandle Component::load(EntityHandle entity, const std::string& filename, AssetsHandle assets)
+void Component::load(EntityHandle entity, const std::string& filename, AssetsHandle assets)
 {
-    static std::unordered_map<std::string, std::function<ComponentHandle(EntityHandle, nlohmann::json&, AssetsHandle)> > _loaders(
+    static std::unordered_map<std::string, std::function<void(EntityHandle, nlohmann::json&, AssetsHandle)> > _loaders(
             {
                 {"Transform", loadTransform},
                 {"RigidBody", loadRigidBody},
@@ -113,7 +105,7 @@ ComponentHandle Component::load(EntityHandle entity, const std::string& filename
         auto it = _loaders.find(asset_type);
         if(it != _loaders.end())
         {
-            return it->second(entity, json, assets);
+            it->second(entity, json, assets);
         }
         else
         {
@@ -123,6 +115,5 @@ ComponentHandle Component::load(EntityHandle entity, const std::string& filename
     catch(const std::exception& e)
     {
         LOG_ERROR("Failed to load Component: %s", e.what());
-        return ComponentHandle();
     }
 }

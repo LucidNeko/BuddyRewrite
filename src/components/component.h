@@ -3,9 +3,10 @@
 
 #include <string>
 
+#include "assets/asset.h"
 #include "types.h"
 
-class Component
+class Component : Asset
 {
 public:
     enum Type
@@ -19,7 +20,7 @@ public:
         Animation
     };
 
-    static ComponentHandle load(EntityHandle entity, const std::string& filename, AssetsHandle assets);
+    static void load(EntityHandle entity, const std::string& filename, AssetsHandle assets);
 
 public:
     Component(EntityHandle entity = nullptr);
