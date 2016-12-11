@@ -3,12 +3,15 @@
 
 #include "types.h"
 
+#include <algorithm>
 #include <memory>
+#include <typeindex>
+#include <typeinfo>
+#include <unordered_map>
 #include <vector>
 
 #include "assets/asset.h"
 #include "assets/component.h"
-#include "components/componentcontainer.h"
 #include "logging.h"
 #include "types.h"
 #include "uuid.h"
@@ -37,19 +40,34 @@ public:
     template<typename T>
     std::shared_ptr<T> getComponent()
     {
-        return _components.get<T>();
+        std::type_index type(typeid(T));
+        return std::dynamic_pointer_cast<T>(getComponent(type));
     }
 
     template<typename T>
     std::vector<std::shared_ptr<T> > getComponents()
     {
-        return _components.getAll<T>();
+        std::type_index type(typeid(T));
+        const std::vector<ComponentHandle>& all = getComponents(type);
+
+        std::vector<std::shared_ptr<T> > out;
+        out.resize(all.size());
+
+        std::transform(std::begin(all), std::end(all), std::begin(out),
+            [](auto& item){ return std::dynamic_pointer_cast<T>(item); });
+
+        return out;
     }
+
+
+private:
+    ComponentHandle getComponent(std::type_index type);
+    const std::vector<ComponentHandle>& getComponents(std::type_index type);
 
 private:
     Uuid _id;
 
-    ComponentContainer _components;
+    std::unordered_map<std::type_index, std::vector<ComponentHandle > > _components;
 };
 
 #endif // ENTITY_H

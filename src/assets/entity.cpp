@@ -29,5 +29,29 @@ void Entity::addComponent(ComponentHandle component)
 
     //TODO: detatch from previous entity?
     component->setEntity(shared_from_this());
-    _components.add(component);
+
+    std::type_index type = component->type();
+    _components[type].push_back(component);
+}
+
+ComponentHandle Entity::getComponent(std::type_index type)
+{
+    auto it = _components.find(type);
+    if(it != _components.end() && !it->second.empty())
+    {
+        return it->second.front();
+    }
+    return ComponentHandle();
+}
+
+const std::vector<ComponentHandle>& Entity::getComponents(std::type_index type)
+{
+    auto it = _components.find(type);
+    if(it != _components.end())
+    {
+        return it->second;
+    }
+
+    static std::vector<ComponentHandle> empty;
+    return empty;
 }

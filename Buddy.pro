@@ -35,7 +35,6 @@ SOURCES += src/glad/glad.c \
     src/assets/loaders/texture_loader.cpp \
     src/components/animation.cpp \
     src/components/collider.cpp \
-    src/components/componentcontainer.cpp \
     src/components/rigidbody.cpp \
     src/components/script.cpp \
     src/components/sprite.cpp \
@@ -67,7 +66,6 @@ HEADERS  += src/glad/glad.h \
     src/assets/texture.h \
     src/components/animation.h \
     src/components/collider.h \
-    src/components/componentcontainer.h \
     src/components/rigidbody.h \
     src/components/script.h \
     src/components/sprite.h \
