@@ -13,6 +13,8 @@
 #include "services.h"
 #include "input.h"
 
+#include "uuid.h"
+
 std::string ASSETS_DIRECTORY;
 
 int main(int argc, char *argv[])
@@ -31,6 +33,11 @@ int main(int argc, char *argv[])
     Services::set<SystemClock>(new SystemClock());
 
     LOG_INFO("Time: %f", Services::get<SystemClock>()->now().seconds());
+
+    Uuid uuid;
+    LOG_INFO("UUID1: %s", uuid.toString().c_str());
+    Uuid uuid2(uuid.toString());
+    LOG_INFO("UUID2: %s", uuid2.toString().c_str());
 
     GameWindow w;
     w.show();

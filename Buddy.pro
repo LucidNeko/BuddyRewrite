@@ -52,7 +52,8 @@ SOURCES += src/glad/glad.c \
     src/subsystems/animationsystem.cpp \
     src/assets/loaders/component_loader.cpp \
     src/assets/loaders/entity_loader.cpp \
-    src/assets/loaders/scene_loader.cpp
+    src/assets/loaders/scene_loader.cpp \
+    src/uuid.cpp
 
 HEADERS  += src/glad/glad.h \
     src/services.h \
@@ -91,7 +92,8 @@ HEADERS  += src/glad/glad.h \
     src/jsonutil.h \
     src/assets/shaderprogram.h \
     src/components/animation.h \
-    src/subsystems/animationsystem.h
+    src/subsystems/animationsystem.h \
+    src/uuid.h
 
 DISTFILES += \
     assets/fonts/kenpixel_mini_square.ttf \
