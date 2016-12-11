@@ -59,7 +59,7 @@ bool Game::initialize()
 
 void Game::tick()
 {
-    Time time(16666667);
+    GameTime time(16666667);
 
     _processSubSystems(time);
     _processNextScene();
@@ -78,7 +78,7 @@ void Game::queueScene(SceneHandle scene)
     _nextScene = scene;
 }
 
-void Game::_processSubSystems(Time time)
+void Game::_processSubSystems(GameTime time)
 {
     std::vector<EntityHandle> entities = _currentScene->getAll();
 

@@ -42,17 +42,16 @@ SOURCES += src/glad/glad.c \
     src/subsystems/animationsystem.cpp \
     src/subsystems/physicssystem.cpp \
     src/subsystems/spriterenderer.cpp \
-    src/utilities/logging/consolelogger.cpp \
-    src/utilities/logging/logger.cpp \
-    src/utilities/time/systemclock.cpp \
-    src/utilities/time/time.cpp \
     src/gamewindow.cpp \
     src/game.cpp \
     src/entitycollection.cpp \
     src/input.cpp \
     src/jsonutil.cpp \
     src/stb/stb_image_impl.cpp \
-    src/uuid.cpp
+    src/uuid.cpp \
+    src/logging/consolelogger.cpp \
+    src/logging/logger.cpp \
+    src/gametime.cpp
 
 HEADERS  += src/glad/glad.h \
     src/assets/asset.h \
@@ -73,12 +72,6 @@ HEADERS  += src/glad/glad.h \
     src/subsystems/animationsystem.h \
     src/subsystems/physicssystem.h \
     src/subsystems/spriterenderer.h \
-    src/utilities/logging/consolelogger.h \
-    src/utilities/logging/logger.h \
-    src/utilities/logging/nulllogger.h \
-    src/utilities/time/systemclock.h \
-    src/utilities/time/time.h \
-    src/utilities/time/gametime.h \
     src/services.h \
     src/types.h \
     src/systemopengl.h \
@@ -90,7 +83,11 @@ HEADERS  += src/glad/glad.h \
     src/logging.h \
     src/input.h \
     src/jsonutil.h \
-    src/uuid.h
+    src/uuid.h \
+    src/logging/consolelogger.h \
+    src/logging/logger.h \
+    src/logging/nulllogger.h \
+    src/gametime.h
 
 DISTFILES += \
     assets/fonts/kenpixel_mini_square.ttf \

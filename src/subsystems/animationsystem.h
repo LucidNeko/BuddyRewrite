@@ -4,7 +4,7 @@
 #include <vector>
 
 #include "types.h"
-#include "utilities/time/time.h"
+#include "gametime.h"
 
 class AnimationSystem
 {
@@ -12,10 +12,10 @@ public:
     AnimationSystem();
     ~AnimationSystem();
 
-    void update(Time time, const std::vector<EntityHandle>& entities);
+    void update(GameTime time, const std::vector<EntityHandle>& entities);
 
 private:
-    void _update(Time time, EntityHandle entity);
+    void _update(GameTime time, EntityHandle entity);
 };
 
 #endif // ANIMATIONSYSTEM_H

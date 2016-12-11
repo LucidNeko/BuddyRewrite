@@ -5,7 +5,7 @@
 
 #include <glm/vec2.hpp>
 
-#include "utilities/time/time.h"
+#include "gametime.h"
 #include "types.h"
 
 class PhysicsSystem
@@ -17,10 +17,10 @@ public:
     glm::vec2 gravity() const;
     void setGravity(glm::vec2 gravity);
 
-    void update(Time time, const std::vector<EntityHandle>& entities);
+    void update(GameTime time, const std::vector<EntityHandle>& entities);
 
 private:
-    void _update(Time time, EntityHandle entity);
+    void _update(GameTime time, EntityHandle entity);
 
 private:
     glm::vec2 _gravity;

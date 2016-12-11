@@ -1,7 +1,7 @@
 #ifndef LOGGING_H
 #define LOGGING_H
 
-#include "utilities/logging/logger.h"
+#include "logging/logger.h"
 #include "services.h"
 
 #define LOG_TRACE(log_format, ...) \

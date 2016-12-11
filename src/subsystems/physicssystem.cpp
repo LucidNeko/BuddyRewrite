@@ -25,7 +25,7 @@ void PhysicsSystem::setGravity(glm::vec2 gravity)
     _gravity = gravity;
 }
 
-void PhysicsSystem::update(Time time, const std::vector<EntityHandle>& entities)
+void PhysicsSystem::update(GameTime time, const std::vector<EntityHandle>& entities)
 {
     for(EntityHandle entity : entities)
     {
@@ -33,7 +33,7 @@ void PhysicsSystem::update(Time time, const std::vector<EntityHandle>& entities)
     }
 }
 
-void PhysicsSystem::_update(Time time, EntityHandle entity)
+void PhysicsSystem::_update(GameTime time, EntityHandle entity)
 {
     std::shared_ptr<Transform> transform = entity->getComponent<Transform>();
     std::shared_ptr<RigidBody> body = entity->getComponent<RigidBody>();

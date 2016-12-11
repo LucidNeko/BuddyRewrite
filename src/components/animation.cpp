@@ -16,14 +16,14 @@ std::type_index Animation::type() const
     return std::type_index(typeid(Animation));
 }
 
-void Animation::update(Time delta)
+void Animation::update(GameTime delta)
 {
     _time += delta;
 
     U64 sequenceTime = _sequence.millisecondsTotal();
     if(sequenceTime != 0)
     {
-        _time = Time::fromMilliseconds(_time.milliseconds() % sequenceTime);
+        _time = GameTime::fromMilliseconds(_time.milliseconds() % sequenceTime);
     }
 }
 
@@ -34,7 +34,7 @@ const SpriteSheetSequence& Animation::sequence() const
 
 void Animation::setSequence(const SpriteSheetSequence& sequence)
 {
-    _time = Time();
+    _time = GameTime();
     _sequence = sequence;
 }
 

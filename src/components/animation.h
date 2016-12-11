@@ -3,7 +3,7 @@
 
 #include "assets/component.h"
 #include "assets/spritesheet.h"
-#include "utilities/time/time.h"
+#include "gametime.h"
 #include "types.h"
 
 class Animation : public Component
@@ -14,7 +14,7 @@ public:
 
     std::type_index type() const override;
 
-    void update(Time delta);
+    void update(GameTime delta);
 
     const SpriteSheetSequence& sequence() const;
     void setSequence(const SpriteSheetSequence& sequence);
@@ -23,7 +23,7 @@ public:
 
 private:
     SpriteSheetSequence _sequence;
-    Time _time;
+    GameTime _time;
 };
 
 #endif // ANIMATION_H

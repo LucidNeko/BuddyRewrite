@@ -143,6 +143,7 @@ AssetHandle Assets::get(std::type_index type, const std::string& name)
         {
             AssetHandle asset = it->second;
 
+            // TODO: Refactor so the _doNotCache assets never end up in the cache.
             if(_doNotCache.find(type) != _doNotCache.end())
             {
                 _assets[type].erase(name);

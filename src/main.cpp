@@ -7,11 +7,11 @@
 #include "gamewindow.h"
 #include "logging.h"
 #include "assets/assets.h"
-#include "utilities/logging/consolelogger.h"
-#include "utilities/logging/nulllogger.h"
-#include "utilities/time/systemclock.h"
+#include "logging/consolelogger.h"
+#include "logging/nulllogger.h"
 #include "services.h"
 #include "input.h"
+#include "gametime.h"
 
 #include "uuid.h"
 
@@ -28,11 +28,9 @@ int main(int argc, char *argv[])
 
     LOG_INFO("argc=%d argv=%s", argc, argv[0]);
 
-    Services::set<SystemClock>(new SystemClock());
-    Services::set<SystemClock>(nullptr);
-    Services::set<SystemClock>(new SystemClock());
+    LOG_INFO("Time: %f", GameTime::now().seconds());
 
-    LOG_INFO("Time: %f", Services::get<SystemClock>()->now().seconds());
+
 
     Uuid uuid;
     LOG_INFO("UUID1: %s", uuid.toString().c_str());

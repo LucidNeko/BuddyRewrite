@@ -12,7 +12,7 @@ AnimationSystem::~AnimationSystem()
 {
 }
 
-void AnimationSystem::update(Time time, const std::vector<EntityHandle>& entities)
+void AnimationSystem::update(GameTime time, const std::vector<EntityHandle>& entities)
 {
     for(EntityHandle entity : entities)
     {
@@ -20,7 +20,7 @@ void AnimationSystem::update(Time time, const std::vector<EntityHandle>& entitie
     }
 }
 
-void AnimationSystem::_update(Time time, EntityHandle entity)
+void AnimationSystem::_update(GameTime time, EntityHandle entity)
 {
     if(auto animation = entity->getComponent<Animation>())
     {

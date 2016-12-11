@@ -3,7 +3,7 @@
 
 #include "entitycollection.h"
 #include "types.h"
-#include "utilities/time/time.h"
+#include "gametime.h"
 
 class Game
 {
@@ -18,7 +18,7 @@ public:
     void queueScene(SceneHandle scene);
 
 private:
-    void _processSubSystems(Time time);
+    void _processSubSystems(GameTime time);
     void _processNextScene();
 
 private:
