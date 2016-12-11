@@ -20,7 +20,7 @@ public:
     Sprite(EntityHandle entity = nullptr);
     ~Sprite();
 
-    Component::Type type() const override;
+    std::type_index type() const override;
 
     SpriteSheetHandle spriteSheet() const;
     void setSpriteSheet(SpriteSheetHandle spriteSheet);

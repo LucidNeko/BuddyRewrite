@@ -11,9 +11,9 @@ Animation::~Animation()
 {
 }
 
-Component::Type Animation::type() const
+std::type_index Animation::type() const
 {
-    return Type::Animation;
+    return std::type_index(typeid(Animation));
 }
 
 void Animation::update(Time delta)

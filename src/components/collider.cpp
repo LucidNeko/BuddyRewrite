@@ -9,7 +9,7 @@ Collider::~Collider()
 {
 }
 
-Component::Type Collider::type() const
+std::type_index Collider::type() const
 {
-    return Type::Collider;
+    return std::type_index(typeid(Collider));
 }

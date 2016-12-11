@@ -9,7 +9,7 @@ public:
     Collider(EntityHandle entity = nullptr);
     ~Collider();
 
-    Type type() const override;
+    std::type_index type() const override;
 };
 
 #endif // COLLIDER_H

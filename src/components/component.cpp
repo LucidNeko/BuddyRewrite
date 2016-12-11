@@ -1,6 +1,16 @@
 #include "components/component.h"
 
+#include <unordered_map>
+
 #include "logging.h"
+
+// Components.
+#include "components/animation.h"
+#include "components/collider.h"
+#include "components/rigidbody.h"
+#include "components/script.h"
+#include "components/sprite.h"
+#include "components/transform.h"
 
 Component::Component(EntityHandle entity)
     : _entity(entity)
@@ -12,26 +22,19 @@ Component::~Component()
 }
 
 // TODO: Can't use typeName in the destructor because it calls type() on extended class.
-const char* Component::typeName() const
+std::string Component::typeName() const
 {
-    switch (type()) {
-    case Collider:
-        return "Collider";
-    case RigidBody:
-        return "RigidBody";
-    case Sprite:
-        return "Sprite";
-    case SpriteRenderer:
-        return "SpriteRenderer";
-    case Transform:
-        return "Transform";
-    case Script:
-        return "Script";
-    case Animation:
-        return "Animation";
-    default:
-        return "Unknown";
-    }
+    static std::unordered_map<std::type_index, std::string> typeNames({
+        {std::type_index(typeid(class Collider )), "Collider"},
+        {std::type_index(typeid(class RigidBody)), "RigidBody"},
+        {std::type_index(typeid(class Sprite   )), "Sprite"},
+        {std::type_index(typeid(class Transform)), "Transform"},
+        {std::type_index(typeid(class Script   )), "Script"},
+        {std::type_index(typeid(class Animation)), "Animation"}
+    });
+
+    auto it = typeNames.find(type());
+    return (it != typeNames.end()) ? it->second : "Unknown";
 }
 
 EntityHandle Component::entity() const

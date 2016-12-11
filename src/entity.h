@@ -9,6 +9,7 @@
 #include "assets/asset.h"
 #include "components/component.h"
 #include "components/componentcontainer.h"
+#include "logging.h"
 #include "types.h"
 #include "uuid.h"
 
@@ -27,6 +28,7 @@ public:
     std::shared_ptr<T> addComponent()
     {
         std::shared_ptr<T> component = std::make_shared<T>(shared_from_this());
+        LOG_INFO("Adding: %s", component->typeName().c_str());
         _components.add(component);
         return component;
     }

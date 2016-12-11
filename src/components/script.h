@@ -9,7 +9,7 @@ public:
     Script(EntityHandle entity = nullptr);
     ~Script();
 
-    Component::Type type() const;
+    std::type_index type() const;
 
     virtual void onUpdate() = 0;
 };

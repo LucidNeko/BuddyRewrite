@@ -12,7 +12,7 @@ Script::~Script()
 
 }
 
-Component::Type Script::type() const
+std::type_index Script::type() const
 {
-    return Component::Script;
+    return std::type_index(typeid(Script));
 }

@@ -12,7 +12,7 @@ public:
     Transform(EntityHandle entity = nullptr);
     ~Transform();
 
-    Type type() const override;
+    std::type_index type() const override;
 
     glm::vec2 position() const;
     void setPosition(glm::vec2 position);

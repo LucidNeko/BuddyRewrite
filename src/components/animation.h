@@ -12,7 +12,7 @@ public:
     Animation(EntityHandle entity = nullptr);
     ~Animation();
 
-    Component::Type type() const override;
+    std::type_index type() const override;
 
     void update(Time delta);
 

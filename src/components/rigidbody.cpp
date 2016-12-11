@@ -9,9 +9,9 @@ RigidBody::~RigidBody()
 {
 }
 
-Component::Type RigidBody::type() const
+std::type_index RigidBody::type() const
 {
-    return Component::RigidBody;
+    return std::type_index(typeid(RigidBody));
 }
 
 glm::vec2 RigidBody::velocity()

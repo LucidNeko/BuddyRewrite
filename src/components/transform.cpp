@@ -12,9 +12,9 @@ Transform::~Transform()
 {
 }
 
-Component::Type Transform::type() const
+std::type_index Transform::type() const
 {
-    return Type::Transform;
+    return std::type_index(typeid(Transform));
 }
 
 glm::vec2 Transform::position() const

@@ -11,7 +11,7 @@ public:
     RigidBody(EntityHandle entity = nullptr);
     ~RigidBody();
 
-    Component::Type type() const override;
+    std::type_index type() const override;
 
     glm::vec2 velocity();
     void setVelocity(glm::vec2 velocity);

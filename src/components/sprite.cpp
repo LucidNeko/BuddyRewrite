@@ -18,9 +18,9 @@ Sprite::~Sprite()
 {
 }
 
-Component::Type Sprite::type() const
+std::type_index Sprite::type() const
 {
-    return Component::Sprite;
+    return std::type_index(typeid(Sprite));
 }
 
 SpriteSheetHandle Sprite::spriteSheet() const

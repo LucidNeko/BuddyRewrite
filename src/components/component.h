@@ -2,6 +2,8 @@
 #define COMPONENT_H
 
 #include <string>
+#include <typeindex>
+#include <typeinfo>
 
 #include "assets/asset.h"
 #include "types.h"
@@ -9,26 +11,15 @@
 class Component : Asset
 {
 public:
-    enum Type
-    {
-        Collider,
-        RigidBody,
-        Sprite,
-        SpriteRenderer,
-        Transform,
-        Script,
-        Animation
-    };
-
     static void load(EntityHandle entity, const std::string& filename, AssetsHandle assets);
 
 public:
     Component(EntityHandle entity = nullptr);
     virtual ~Component();
 
-    virtual Component::Type type() const = 0;
+    virtual std::type_index type() const = 0;
 
-    const char* typeName() const;
+    std::string typeName() const;
 
     EntityHandle entity() const;
 
