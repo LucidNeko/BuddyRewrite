@@ -10,6 +10,7 @@
 #include "components/component.h"
 #include "components/componentcontainer.h"
 #include "types.h"
+#include "uuid.h"
 
 class Entity : public Asset, public std::enable_shared_from_this<Entity>
 {
@@ -17,10 +18,10 @@ public:
     static EntityHandle load(const std::string& filename, AssetsHandle assets);
 
 public:
-    Entity(U64 id);
+    Entity(Uuid id = Uuid());
     ~Entity();
 
-    U64 id() const;
+    Uuid id() const;
 
     template<typename T>
     std::shared_ptr<T> addComponent()
@@ -43,7 +44,7 @@ public:
     }
 
 private:
-    U64 _id;
+    Uuid _id;
 
     ComponentContainer _components;
 };

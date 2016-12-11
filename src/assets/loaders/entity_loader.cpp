@@ -7,6 +7,7 @@
 #include "assets/assets.h"
 #include "jsonutil.h"
 #include "logging.h"
+#include "uuid.h"
 
 EntityHandle Entity::load(const std::string& filename, AssetsHandle assets)
 {
@@ -14,7 +15,7 @@ EntityHandle Entity::load(const std::string& filename, AssetsHandle assets)
     std::string fullpath(assets->assetDirectory() + filename + configFile);
 
     std::string asset_type;
-    U64 id;
+    std::string id;
     std::vector<std::string> components;
 
     try
@@ -34,7 +35,7 @@ EntityHandle Entity::load(const std::string& filename, AssetsHandle assets)
         return EntityHandle();
     }
 
-    EntityHandle entity = std::make_shared<Entity>(id);
+    EntityHandle entity = std::make_shared<Entity>(Uuid(id));
 
     for(const std::string& component : components)
     {

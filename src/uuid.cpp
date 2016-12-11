@@ -38,6 +38,12 @@ Uuid::Uuid(const std::string& string)
     }
 }
 
+Uuid::Uuid(const Uuid& source)
+{
+    _uuid.number.first = source._uuid.number.first;
+    _uuid.number.second = source._uuid.number.second;
+}
+
 std::string Uuid::toString() const
 {
     std::vector<char> uuidBytes(_uuid.bytes, _uuid.bytes + 16);

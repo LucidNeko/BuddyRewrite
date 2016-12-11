@@ -4,6 +4,7 @@
 #include <vector>
 
 #include "types.h"
+#include "uuid.h"
 
 class EntityCollection
 {
@@ -13,9 +14,9 @@ public:
 
     bool add(EntityHandle entity);
 
-    EntityHandle remove(U64 id);
+    EntityHandle remove(Uuid id);
 
-    EntityHandle get(U64 id) const;
+    EntityHandle get(Uuid id) const;
 
     std::vector<EntityHandle>& entities();
 

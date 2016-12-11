@@ -25,7 +25,7 @@ void Scene::add(EntityHandle entity)
         return;
     }
 
-    U64 key = entity->id();
+    Uuid key = entity->id();
     if(_entities.find(key) == _entities.end())
     {
         _entities[key] = entity;
@@ -41,7 +41,7 @@ bool Scene::remove(EntityHandle entity)
     return remove(entity->id());
 }
 
-bool Scene::remove(U64 entityId)
+bool Scene::remove(Uuid entityId)
 {
     return _entities.erase(entityId) != 0;
 }
@@ -51,7 +51,7 @@ void Scene::removeAll()
     _entities.clear();
 }
 
-EntityHandle Scene::get(U64 entityId)
+EntityHandle Scene::get(Uuid entityId)
 {
     if(_entities.find(entityId) != _entities.end())
     {

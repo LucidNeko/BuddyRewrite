@@ -2,18 +2,18 @@
 
 #include "logging.h"
 
-Entity::Entity(U64 id)
+Entity::Entity(Uuid id)
     : _id(id)
 {
-    LOG_INFO("Entity created: %d", _id);
+    LOG_INFO("Entity created: %s", _id.toString().c_str());
 }
 
 Entity::~Entity()
 {
-    LOG_INFO("Entity %d destroyed", _id);
+    LOG_INFO("Entity %s destroyed", _id.toString().c_str());
 }
 
-U64 Entity::id() const
+Uuid Entity::id() const
 {
     return _id;
 }

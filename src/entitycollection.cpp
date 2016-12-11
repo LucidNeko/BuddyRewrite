@@ -29,7 +29,7 @@ bool EntityCollection::add(EntityHandle entity)
     return true;
 }
 
-EntityHandle EntityCollection::remove(U64 id)
+EntityHandle EntityCollection::remove(Uuid id)
 {
     //TODO: Make this efficient
     auto result = std::find_if(std::begin(_entities), std::end(_entities), [id](EntityHandle entity){ return entity->id() == id; });
@@ -45,7 +45,7 @@ EntityHandle EntityCollection::remove(U64 id)
     }
 }
 
-EntityHandle EntityCollection::get(U64 id) const
+EntityHandle EntityCollection::get(Uuid id) const
 {
     //TODO: Make this efficient
     auto result = std::find_if(std::begin(_entities), std::end(_entities), [id](EntityHandle entity){ return entity->id() == id; });

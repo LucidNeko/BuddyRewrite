@@ -7,6 +7,7 @@
 
 #include "assets/asset.h"
 #include "types.h"
+#include "uuid.h"
 
 class Scene : public Asset
 {
@@ -20,10 +21,10 @@ public:
     void add(EntityHandle entity);
 
     bool remove(EntityHandle entity);
-    bool remove(U64 entityId);
+    bool remove(Uuid entityId);
     void removeAll();
 
-    EntityHandle get(U64 entityId);
+    EntityHandle get(Uuid entityId);
 
     std::vector<EntityHandle> getAll();
 
@@ -33,7 +34,7 @@ public:
 
 protected:
     AssetsHandle _assets;
-    std::unordered_map<U64, EntityHandle> _entities;
+    std::unordered_map<Uuid, EntityHandle> _entities;
 };
 
 #endif // SCENE_H

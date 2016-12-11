@@ -39,6 +39,11 @@ int main(int argc, char *argv[])
     Uuid uuid2(uuid.toString());
     LOG_INFO("UUID2: %s", uuid2.toString().c_str());
 
+    for(I32 i = 0; i < 5; i++)
+    {
+        LOG_INFO("%s", Uuid().toString().c_str());
+    }
+
     GameWindow w;
     w.show();
 

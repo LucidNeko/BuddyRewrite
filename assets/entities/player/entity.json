@@ -1,6 +1,6 @@
 {
   "asset_type": "Entity",
-  "id": 34879379,
+  "id": "{0bca7914-8282-4d8e-85aa-811e93c2d581}",
   "components": [
     "/components/transform.json",
     "/components/rigidbody.json",

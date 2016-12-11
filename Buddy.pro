@@ -20,7 +20,6 @@ DEPENDPATH += $$PWD/src \
 
 SOURCES += src/glad/glad.c \
            src/main.cpp \
-    src/entityfactory.cpp \
     src/entity.cpp \
     src/components/transform.cpp \
     src/components/collider.cpp \
@@ -59,7 +58,6 @@ HEADERS  += src/glad/glad.h \
     src/services.h \
     src/types.h \
     src/entity.h \
-    src/entityfactory.h \
     src/components/component.h \
     src/components/transform.h \
     src/components/collider.h \
