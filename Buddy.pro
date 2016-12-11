@@ -52,7 +52,8 @@ SOURCES += src/glad/glad.c \
     src/assets/loaders/component_loader.cpp \
     src/assets/loaders/entity_loader.cpp \
     src/assets/loaders/scene_loader.cpp \
-    src/uuid.cpp
+    src/uuid.cpp \
+    src/components/componentcontainer.cpp
 
 HEADERS  += src/glad/glad.h \
     src/services.h \

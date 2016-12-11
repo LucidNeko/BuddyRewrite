@@ -37,9 +37,12 @@ EntityHandle Entity::load(const std::string& filename, AssetsHandle assets)
 
     EntityHandle entity = std::make_shared<Entity>(Uuid(id));
 
-    for(const std::string& component : components)
+    for(const std::string& component_name : components)
     {
-        Component::load(entity, filename + component, assets);
+        if(ComponentHandle component = assets->get<Component>(filename + component_name))
+        {
+            entity->addComponent(component);
+        }
     }
 
     return entity;

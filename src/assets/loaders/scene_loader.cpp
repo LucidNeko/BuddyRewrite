@@ -54,12 +54,12 @@ SceneHandle Scene::load(const std::string& filepath, AssetsHandle loader)
         return SceneHandle();
     }
 
-    SceneHandle handle = SceneHandle(new Scene(loader));
+    SceneHandle scene = SceneHandle(new Scene(loader));
 
     for(const std::string& entity : entities)
     {
-        handle->add(Entity::load(entity, loader));
+        scene->add(loader->get<Entity>(entity));
     }
 
-    return handle;
+    return scene;
 }

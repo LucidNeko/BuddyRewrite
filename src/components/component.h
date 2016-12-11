@@ -8,10 +8,10 @@
 #include "assets/asset.h"
 #include "types.h"
 
-class Component : Asset
+class Component : public Asset
 {
 public:
-    static void load(EntityHandle entity, const std::string& filename, AssetsHandle assets);
+    static ComponentHandle load(const std::string& filename, AssetsHandle assets);
 
 public:
     Component(EntityHandle entity = nullptr);
@@ -22,6 +22,7 @@ public:
     std::string typeName() const;
 
     EntityHandle entity() const;
+    void setEntity(EntityHandle entity);
 
 private:
     EntityWeakHandle _entity;

@@ -18,42 +18,38 @@ private:
 public:
     ~ComponentContainer() = default;
 
-    template<typename Kind>
-    void add(std::shared_ptr<Kind> item)
+    void add(ComponentHandle component);
+
+    template<typename T>
+    void add(std::shared_ptr<T> component)
     {
-        auto key = std::type_index(typeid(Kind));
-        _map[key].push_back(item);
+        add(std::type_index(typeid(T)), component);
     }
 
-    template<typename Kind>
-    std::shared_ptr<Kind> get()
+    template<typename T>
+    std::shared_ptr<T> get()
     {
-        auto key = std::type_index(typeid(Kind));
-        Map::const_iterator it = _map.find(key);
-        if(it != _map.end() && !it->second.empty())
-        {
-            return std::static_pointer_cast<Kind>(it->second.front());
-        }
-        return std::shared_ptr<Kind>();
+        return std::dynamic_pointer_cast<T>(get(std::type_index(typeid(T))));
     }
 
-    template<typename Kind>
-    std::vector<std::shared_ptr<Kind> > getAll()
+    template<typename T>
+    std::vector<std::shared_ptr<T> > getAll()
     {
-        auto key = std::type_index(typeid(Kind));
-        Map::const_iterator it = _map.find(key);
-        if(it != _map.end() && !it->second.empty())
-        {
-            std::vector<std::shared_ptr<Kind> > out;
-            out.resize(it->second.size());
+        const std::vector<ComponentHandle>& all = getAll(std::type_index(typeid(T)));
 
-            std::transform(std::begin(it->second), std::end(it->second), std::begin(out),
-                [](auto& item){ return std::dynamic_pointer_cast<Kind>(item); });
+        std::vector<std::shared_ptr<T> > out;
+        out.resize(all.size());
 
-            return out;
-        }
-        return std::vector<std::shared_ptr<Kind> >();
+        std::transform(std::begin(all), std::end(all), std::begin(out),
+            [](auto& item){ return std::dynamic_pointer_cast<T>(item); });
+
+        return out;
     }
+
+private:
+    void add(std::type_index type, ComponentHandle component);
+    ComponentHandle get(std::type_index type);
+    const std::vector<ComponentHandle>& getAll(std::type_index type);
 
 private:
     Map _map;

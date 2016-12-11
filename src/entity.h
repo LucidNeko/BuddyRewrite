@@ -24,12 +24,13 @@ public:
 
     Uuid id() const;
 
+    void addComponent(ComponentHandle component);
+
     template<typename T>
     std::shared_ptr<T> addComponent()
     {
-        std::shared_ptr<T> component = std::make_shared<T>(shared_from_this());
-        LOG_INFO("Adding: %s", component->typeName().c_str());
-        _components.add(component);
+        std::shared_ptr<T> component = std::make_shared<T>();
+        addComponent(component);
         return component;
     }
 

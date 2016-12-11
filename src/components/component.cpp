@@ -41,3 +41,8 @@ EntityHandle Component::entity() const
 {
     return _entity.lock();
 }
+
+void Component::setEntity(EntityHandle entity)
+{
+    _entity = entity;
+}

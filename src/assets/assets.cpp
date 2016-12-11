@@ -13,6 +13,7 @@
 #include "assets/shaderprogram.h"
 #include "assets/texture.h"
 #include "assets/spritesheet.h"
+#include "components/component.h"
 #include "entity.h"
 #include "scenes/scene.h"
 
@@ -31,10 +32,14 @@ Assets::Assets()
     setLoader<ShaderProgram>(ShaderProgram::load);
     setLoader<Texture>(Texture::load);
     setLoader<SpriteSheet>(SpriteSheet::load);
-//    setLoader<Entity>(Entity::load); //TODO: add Entity and Component
-    setLoader<Scene>(Scene::load);
 
     _doNotCache.emplace(std::type_index(typeid(Scene)));
+    _doNotCache.emplace(std::type_index(typeid(Entity)));
+    _doNotCache.emplace(std::type_index(typeid(Component)));
+
+    setLoader<Scene>(Scene::load);
+    setLoader<Entity>(Entity::load);
+    setLoader<Component>(Component::load);
 }
 
 Assets::~Assets()
