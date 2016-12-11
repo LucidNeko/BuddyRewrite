@@ -3,7 +3,7 @@
 
 #include <glm/vec2.hpp>
 
-#include "component.h"
+#include "assets/component.h"
 #include "types.h"
 
 class Transform : public Component

@@ -1,4 +1,4 @@
-#include "components/component.h"
+#include "assets/component.h"
 
 #include <functional>
 #include <stdexcept>
@@ -13,7 +13,7 @@
 #include "components/rigidbody.h"
 #include "components/sprite.h"
 #include "components/animation.h"
-#include "entity.h"
+#include "assets/entity.h"
 #include "jsonutil.h"
 #include "logging.h"
 

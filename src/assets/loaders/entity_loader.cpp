@@ -1,4 +1,4 @@
-#include "entity.h"
+#include "assets/entity.h"
 
 #include <stdexcept>
 

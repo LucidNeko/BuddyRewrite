@@ -1,6 +1,6 @@
 #include "components/componentcontainer.h"
 
-#include "components/component.h"
+#include "assets/component.h"
 
 void ComponentContainer::add(ComponentHandle component)
 {

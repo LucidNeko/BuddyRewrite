@@ -2,7 +2,7 @@
 
 #include "components/animation.h"
 #include "components/sprite.h"
-#include "entity.h"
+#include "assets/entity.h"
 
 AnimationSystem::AnimationSystem()
 {

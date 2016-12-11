@@ -13,7 +13,7 @@
 
 #include "components/transform.h"
 #include "components/sprite.h"
-#include "entity.h"
+#include "assets/entity.h"
 #include "logging.h"
 #include "services.h"
 #include "assets/shaderprogram.h"

@@ -2,7 +2,7 @@
 
 #include <algorithm>
 
-#include "entity.h"
+#include "assets/entity.h"
 
 EntityCollection::EntityCollection()
 {

@@ -4,14 +4,14 @@
 
 #include "assets/assets.h"
 #include "assets/shaderprogram.h"
-#include "entity.h"
+#include "assets/entity.h"
 #include "subsystems/physicssystem.h"
 #include "subsystems/animationsystem.h"
 #include "subsystems/spriterenderer.h"
 
 #include "logging.h"
 
-#include "scenes/scene.h"
+#include "assets/scene.h"
 #include "services.h"
 #include "input.h"
 

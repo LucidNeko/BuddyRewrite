@@ -1,7 +1,7 @@
 #ifndef ANIMATION_H
 #define ANIMATION_H
 
-#include "component.h"
+#include "assets/component.h"
 #include "assets/spritesheet.h"
 #include "utilities/time/time.h"
 #include "types.h"

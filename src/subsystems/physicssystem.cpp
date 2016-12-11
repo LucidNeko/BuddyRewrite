@@ -5,7 +5,7 @@
 
 #include "components/rigidbody.h"
 #include "components/transform.h"
-#include "entity.h"
+#include "assets/entity.h"
 
 PhysicsSystem::PhysicsSystem()
 {

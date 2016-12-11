@@ -13,9 +13,9 @@
 #include "assets/shaderprogram.h"
 #include "assets/texture.h"
 #include "assets/spritesheet.h"
-#include "components/component.h"
+#include "assets/component.h"
 #include "entity.h"
-#include "scenes/scene.h"
+#include "assets/scene.h"
 
 #include "logging.h"
 

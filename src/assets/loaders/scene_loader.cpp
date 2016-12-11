@@ -1,4 +1,4 @@
-#include "scenes/scene.h"
+#include "assets/scene.h"
 
 #include <stdexcept>
 #include <vector>
@@ -8,7 +8,7 @@
 #include "assets/assets.h"
 #include "assets/spritesheet.h"
 #include "assets/texture.h"
-#include "entity.h"
+#include "assets/entity.h"
 #include "jsonutil.h"
 #include "logging.h"
 

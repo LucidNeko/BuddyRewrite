@@ -1,7 +1,7 @@
 #ifndef SCRIPT_H
 #define SCRIPT_H
 
-#include "components/component.h"
+#include "assets/component.h"
 
 class Script : public Component
 {

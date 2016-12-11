@@ -1,4 +1,4 @@
-#include "components/component.h"
+#include "assets/component.h"
 
 #include <unordered_map>
 

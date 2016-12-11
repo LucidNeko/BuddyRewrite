@@ -7,7 +7,7 @@
 #include <vector>
 
 #include "assets/asset.h"
-#include "components/component.h"
+#include "assets/component.h"
 #include "components/componentcontainer.h"
 #include "logging.h"
 #include "types.h"

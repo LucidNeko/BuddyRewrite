@@ -9,7 +9,7 @@
 #include <glm/vec2.hpp>
 
 #include "assets/spritesheet.h"
-#include "component.h"
+#include "assets/component.h"
 #include "types.h"
 
 class Texture;
