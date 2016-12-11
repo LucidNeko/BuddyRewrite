@@ -67,7 +67,7 @@ namespace
     }
 }
 
-SpriteSheetHandle SpriteSheet::load(const std::string& filepath, Assets* loader)
+SpriteSheetHandle SpriteSheet::load(const std::string& filepath, AssetsHandle loader)
 {
     const std::string configFile = "/spritesheet.json";
     std::string fullpath(loader->assetDirectory() + filepath + configFile);

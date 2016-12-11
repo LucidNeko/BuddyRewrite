@@ -1,0 +1,23 @@
+{
+  "asset_type": "Scene",
+  "asset_dependencies": [
+    {
+      "asset_type": "SpriteSheet",
+      "asset": "images/characters"
+    },
+    {
+      "asset_type": "SpriteSheet",
+      "asset": "images/tiles"
+    },
+    {
+      "asset_type": "Texture",
+      "asset": "images/debug"
+    }
+  ],
+  "entities": [
+    "entities/player",
+    "entities/sign_left",
+    "entities/sign_right",
+    "entities/enemy"
+  ]
+}

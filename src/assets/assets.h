@@ -2,20 +2,22 @@
 #define ASSETS_H
 
 #include <functional>
+#include <memory>
 #include <string>
 #include <typeinfo>
 #include <typeindex>
 #include <unordered_map>
+#include <unordered_set>
 
 #include "types.h"
 
-class Assets
+class Assets : public std::enable_shared_from_this<Assets>
 {
 public:
     static std::string assetDirPath();
 
 private:
-    typedef std::function<AssetHandle(const std::string&, Assets*)> LoaderFunction;
+    typedef std::function<AssetHandle(const std::string&, AssetsHandle)> LoaderFunction;
     typedef std::unordered_map<std::string, AssetHandle> AssetCollection;
 
 public:
@@ -61,6 +63,7 @@ private:
     std::string _assetDirectory;
     std::unordered_map<std::type_index, LoaderFunction> _loaders;
     std::unordered_map<std::type_index, AssetCollection> _assets;
+    std::unordered_set<std::type_index> _doNotCache;
 };
 
 #endif // ASSETS_H

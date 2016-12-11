@@ -13,7 +13,7 @@
 class Texture : public Asset
 {
 public:
-    static TextureHandle load(const std::string& filepath, class Assets* loader);
+    static TextureHandle load(const std::string& filepath, AssetsHandle loader);
 
 public:
     ~Texture();

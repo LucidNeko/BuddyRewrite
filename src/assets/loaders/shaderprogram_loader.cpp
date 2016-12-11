@@ -10,7 +10,7 @@
 
 #include "logging.h"
 
-ShaderProgramHandle ShaderProgram::load(const std::string& filepath, Assets* loader)
+ShaderProgramHandle ShaderProgram::load(const std::string& filepath, AssetsHandle loader)
 {
     const std::string configFile = "/program.json";
     std::string fullpath(loader->assetDirectory() + filepath + configFile);

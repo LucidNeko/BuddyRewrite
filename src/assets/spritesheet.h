@@ -54,7 +54,7 @@ public:
     typedef std::unordered_map<std::string, SpriteSheetSequence> SequenceMap;
 
 public:
-    static SpriteSheetHandle load(const std::string& filepath, class Assets* loader);
+    static SpriteSheetHandle load(const std::string& filepath, AssetsHandle loader);
 
 public:
     ~SpriteSheet();

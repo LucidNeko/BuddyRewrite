@@ -66,3 +66,13 @@ std::vector<EntityHandle> Scene::getAll()
     std::transform(std::begin(_entities), std::end(_entities), std::back_inserter(out), [](auto& pair){ return pair.second; });
     return out;
 }
+
+void Scene::onEnter()
+{
+
+}
+
+void Scene::onExit()
+{
+//    removeAll();
+}

@@ -8,7 +8,7 @@
 #include "jsonutil.h"
 #include "logging.h"
 
-EntityHandle Entity::load(const std::string& filename, Assets* assets)
+EntityHandle Entity::load(const std::string& filename, AssetsHandle assets)
 {
     const std::string configFile = "/entity.json";
     std::string fullpath(assets->assetDirectory() + filename + configFile);

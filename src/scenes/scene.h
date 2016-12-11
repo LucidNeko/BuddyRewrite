@@ -1,13 +1,18 @@
 #ifndef SCENE_H
 #define SCENE_H
 
+#include <string>
 #include <unordered_map>
 #include <vector>
 
+#include "assets/asset.h"
 #include "types.h"
 
-class Scene
+class Scene : public Asset
 {
+public:
+    static SceneHandle load(const std::string& filepath, AssetsHandle loader);
+
 public:
     Scene(AssetsHandle assets);
     virtual ~Scene();
@@ -23,8 +28,8 @@ public:
     std::vector<EntityHandle> getAll();
 
 public:
-    virtual void onEnter() = 0;
-    virtual void onExit() = 0;
+    virtual void onEnter();
+    virtual void onExit();
 
 protected:
     AssetsHandle _assets;

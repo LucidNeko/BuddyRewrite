@@ -19,7 +19,7 @@
 
 namespace
 {
-    ComponentHandle loadTransform(EntityHandle entity, nlohmann::json& json, Assets*)
+    ComponentHandle loadTransform(EntityHandle entity, nlohmann::json& json, AssetsHandle)
     {
         std::shared_ptr<Transform> transform = entity->addComponent<Transform>();
 
@@ -33,14 +33,14 @@ namespace
         return transform;
     }
 
-    ComponentHandle loadRigidBody(EntityHandle entity, nlohmann::json&, Assets*)
+    ComponentHandle loadRigidBody(EntityHandle entity, nlohmann::json&, AssetsHandle)
     {
         std::shared_ptr<RigidBody> rigidBody = entity->addComponent<RigidBody>();
 
         return rigidBody;
     }
 
-    ComponentHandle loadSprite(EntityHandle entity, nlohmann::json& json, Assets* assets)
+    ComponentHandle loadSprite(EntityHandle entity, nlohmann::json& json, AssetsHandle assets)
     {
         std::shared_ptr<Sprite> sprite = entity->addComponent<Sprite>();
 
@@ -68,7 +68,7 @@ namespace
         return sprite;
     }
 
-    ComponentHandle loadAnimation(EntityHandle entity, nlohmann::json& json, Assets* assets)
+    ComponentHandle loadAnimation(EntityHandle entity, nlohmann::json& json, AssetsHandle assets)
     {
         std::shared_ptr<Animation> animation = entity->addComponent<Animation>();
 
@@ -89,9 +89,9 @@ namespace
 }
 
 
-ComponentHandle Component::load(EntityHandle entity, const std::string& filename, Assets* assets)
+ComponentHandle Component::load(EntityHandle entity, const std::string& filename, AssetsHandle assets)
 {
-    static std::unordered_map<std::string, std::function<ComponentHandle(EntityHandle, nlohmann::json&, Assets*)> > _loaders(
+    static std::unordered_map<std::string, std::function<ComponentHandle(EntityHandle, nlohmann::json&, AssetsHandle)> > _loaders(
             {
                 {"Transform", loadTransform},
                 {"RigidBody", loadRigidBody},

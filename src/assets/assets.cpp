@@ -14,6 +14,7 @@
 #include "assets/texture.h"
 #include "assets/spritesheet.h"
 #include "entity.h"
+#include "scenes/scene.h"
 
 #include "logging.h"
 
@@ -30,7 +31,10 @@ Assets::Assets()
     setLoader<ShaderProgram>(ShaderProgram::load);
     setLoader<Texture>(Texture::load);
     setLoader<SpriteSheet>(SpriteSheet::load);
-    setLoader<Entity>(Entity::load);
+//    setLoader<Entity>(Entity::load); //TODO: add Entity and Component
+    setLoader<Scene>(Scene::load);
+
+    _doNotCache.emplace(std::type_index(typeid(Scene)));
 }
 
 Assets::~Assets()
@@ -93,7 +97,7 @@ bool Assets::load(std::type_index type, const std::string& name)
     auto it = _loaders.find(type);
     if(it != _loaders.end())
     {
-        if(AssetHandle asset = it->second(name, this))
+        if(AssetHandle asset = it->second(name, shared_from_this()))
         {
             _assets[type][name] = asset;
             return true;
@@ -132,7 +136,14 @@ AssetHandle Assets::get(std::type_index type, const std::string& name)
         auto it = assets.find(name);
         if(it != assets.end())
         {
-            return it->second;
+            AssetHandle asset = it->second;
+
+            if(_doNotCache.find(type) != _doNotCache.end())
+            {
+                _assets[type].erase(name);
+            }
+
+            return asset;
         }
     }
     LOG_ERROR("Failed to get asset: %s", name.c_str());

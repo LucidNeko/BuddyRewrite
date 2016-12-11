@@ -11,7 +11,7 @@
 #include "jsonutil.h"
 #include "logging.h"
 
-TextureHandle Texture::load(const std::string& filepath, Assets* loader)
+TextureHandle Texture::load(const std::string& filepath, AssetsHandle loader)
 {
     const std::string configFile = "/texture.json";
     std::string fullpath(loader->assetDirectory() + filepath + configFile);

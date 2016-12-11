@@ -36,7 +36,6 @@ SOURCES += src/glad/glad.c \
     src/subsystems/spriterenderer.cpp \
     src/utilities/time/systemclock.cpp \
     src/utilities/time/time.cpp \
-    src/scenes/testscene.cpp \
     src/scenes/scene.cpp \
     src/input.cpp \
     src/components/script.cpp \
@@ -52,7 +51,8 @@ SOURCES += src/glad/glad.c \
     src/components/animation.cpp \
     src/subsystems/animationsystem.cpp \
     src/assets/loaders/component_loader.cpp \
-    src/assets/loaders/entity_loader.cpp
+    src/assets/loaders/entity_loader.cpp \
+    src/assets/loaders/scene_loader.cpp
 
 HEADERS  += src/glad/glad.h \
     src/services.h \
@@ -79,7 +79,6 @@ HEADERS  += src/glad/glad.h \
     src/subsystems/spriterenderer.h \
     src/utilities/time/systemclock.h \
     src/utilities/time/time.h \
-    src/scenes/testscene.h \
     src/scenes/scene.h \
     src/assets/assettype.h \
     src/utilities/time/gametime.h \

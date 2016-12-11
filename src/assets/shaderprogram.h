@@ -11,7 +11,7 @@
 class ShaderProgram : public Asset
 {
 public:
-    static ShaderProgramHandle load(const std::string& filepath, class Assets* loader);
+    static ShaderProgramHandle load(const std::string& filepath, AssetsHandle loader);
 
 public:
     ~ShaderProgram();

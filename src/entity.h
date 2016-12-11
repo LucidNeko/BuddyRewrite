@@ -14,7 +14,7 @@
 class Entity : public Asset, public std::enable_shared_from_this<Entity>
 {
 public:
-    static EntityHandle load(const std::string& filename, class Assets* assets);
+    static EntityHandle load(const std::string& filename, AssetsHandle assets);
 
 public:
     Entity(U64 id);

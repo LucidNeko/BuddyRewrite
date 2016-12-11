@@ -1,30 +1,19 @@
 #include "game.h"
 
-#include <string>
-
 #include "systemopengl.h"
 
-#include <QCoreApplication>
-#include <QImage>
-#include <QOpenGLTexture>
-#include <QDebug>
-#include <QLabel>
-
-#include "entityfactory.h"
+#include "assets/assets.h"
+#include "assets/shaderprogram.h"
 #include "entity.h"
-
-#include "components/transform.h"
-#include "components/rigidbody.h"
-#include "components/sprite.h"
-#include "components/animation.h"
-#include "logging.h"
-#include "services.h"
-#include "scenes/testscene.h"
 #include "subsystems/physicssystem.h"
 #include "subsystems/animationsystem.h"
 #include "subsystems/spriterenderer.h"
+
+#include "logging.h"
+
+#include "scenes/scene.h"
+#include "services.h"
 #include "input.h"
-#include "assets/shaderprogram.h"
 
 Game::Game()
     : _assets(nullptr),
@@ -62,7 +51,7 @@ bool Game::initialize()
     _animationSystem = new AnimationSystem();
     _spriteRenderer = new SpriteRenderer(_assets->get<ShaderProgram>("shaders/sprite"));
 
-    queueScene(std::make_shared<TestScene>(_assets));
+    queueScene(_assets->get<Scene>("scenes/test_scene"));
     _processNextScene();
 
     return true;
@@ -105,7 +94,7 @@ void Game::_processNextScene()
 {
     if(Services::get<Input>()->isKeyDownOnce(Qt::Key_N))
     {
-        queueScene(std::make_shared<TestScene>(_assets));
+        queueScene(_assets->get<Scene>("scenes/test_scene"));
     }
 
     if(!_nextScene) { return; }

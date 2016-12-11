@@ -19,7 +19,7 @@ public:
         Animation
     };
 
-    static ComponentHandle load(EntityHandle entity, const std::string& filename, class Assets* assets);
+    static ComponentHandle load(EntityHandle entity, const std::string& filename, AssetsHandle assets);
 
 public:
     Component(EntityHandle entity = nullptr);
