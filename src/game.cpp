@@ -43,7 +43,6 @@ bool Game::initialize()
     }
 
     _assets = std::make_shared<Assets>();
-    _assets->setAssetDirectory(Assets::assetDirPath());
 
     glClearColor(0.0, 0.0, 0.0, 1.0);
 

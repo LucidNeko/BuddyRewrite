@@ -3,9 +3,6 @@
 #include <fstream>
 #include <sstream>
 
-#include <QCoreApplication>
-#include <QString>
-
 #include "json.hpp"
 
 // Assets
@@ -18,13 +15,6 @@
 #include "assets/scene.h"
 
 #include "logging.h"
-
-std::string Assets::assetDirPath()
-{
-    //TODO: Get rid of this function.
-    const QString assetDir = QCoreApplication::applicationDirPath().append("/../../Buddy/assets/");
-    return assetDir.toStdString();
-}
 
 Assets::Assets()
     : _assetDirectory("assets/")

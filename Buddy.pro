@@ -10,97 +10,100 @@ CONFIG   += c++11
 TARGET = Buddy
 TEMPLATE = app
 
+VPATH += src/
+
 INCLUDEPATH += $$PWD/src \
                $$PWD/thirdparty/glm/include \
-               $$PWD/thirdparty/stb/include \
-DEPENDPATH += $$PWD/src \
-              $$PWD/thirdparty/glm/include \
-              $$PWD/thirdparty/json/include \
-              $$PWD/thirdparty/stb/include \
+               $$PWD/thirdparty/json/include \
+               $$PWD/thirdparty/stb/include
 
-SOURCES += src/glad/glad.c \
-           src/main.cpp \
-    src/assets/assets.cpp \
-    src/assets/component.cpp \
-    src/assets/entity.cpp \
-    src/assets/scene.cpp \
-    src/assets/shaderprogram.cpp \
-    src/assets/spritesheet.cpp \
-    src/assets/texture.cpp \
-    src/assets/loaders/component_loader.cpp \
-    src/assets/loaders/entity_loader.cpp \
-    src/assets/loaders/scene_loader.cpp \
-    src/assets/loaders/shaderprogram_loader.cpp \
-    src/assets/loaders/spritesheet_loader.cpp \
-    src/assets/loaders/texture_loader.cpp \
-    src/components/animation.cpp \
-    src/components/collider.cpp \
-    src/components/rigidbody.cpp \
-    src/components/script.cpp \
-    src/components/sprite.cpp \
-    src/components/transform.cpp \
-    src/subsystems/animationsystem.cpp \
-    src/subsystems/physicssystem.cpp \
-    src/subsystems/spriterenderer.cpp \
-    src/gamewindow.cpp \
-    src/game.cpp \
-    src/entitycollection.cpp \
-    src/input.cpp \
-    src/jsonutil.cpp \
-    src/stb/stb_image_impl.cpp \
-    src/uuid.cpp \
-    src/logging/consolelogger.cpp \
-    src/logging/logger.cpp \
-    src/gametime.cpp
+SOURCES += glad/glad.c \
+           main.cpp \
+    assets/assets.cpp \
+    assets/component.cpp \
+    assets/entity.cpp \
+    assets/scene.cpp \
+    assets/shaderprogram.cpp \
+    assets/spritesheet.cpp \
+    assets/texture.cpp \
+    assets/loaders/component_loader.cpp \
+    assets/loaders/entity_loader.cpp \
+    assets/loaders/scene_loader.cpp \
+    assets/loaders/shaderprogram_loader.cpp \
+    assets/loaders/spritesheet_loader.cpp \
+    assets/loaders/texture_loader.cpp \
+    components/animation.cpp \
+    components/collider.cpp \
+    components/rigidbody.cpp \
+    components/script.cpp \
+    components/sprite.cpp \
+    components/transform.cpp \
+    logging/consolelogger.cpp \
+    logging/logger.cpp \
+    subsystems/animationsystem.cpp \
+    subsystems/physicssystem.cpp \
+    subsystems/spriterenderer.cpp \
+    gamewindow.cpp \
+    game.cpp \
+    entitycollection.cpp \
+    input.cpp \
+    jsonutil.cpp \
+    stb/stb_image_impl.cpp \
+    uuid.cpp \
+    gametime.cpp
 
-HEADERS  += src/glad/glad.h \
-    src/assets/asset.h \
-    src/assets/assets.h \
-    src/assets/assettype.h \
-    src/assets/component.h \
-    src/assets/entity.h \
-    src/assets/scene.h \
-    src/assets/shaderprogram.h \
-    src/assets/spritesheet.h \
-    src/assets/texture.h \
-    src/components/animation.h \
-    src/components/collider.h \
-    src/components/rigidbody.h \
-    src/components/script.h \
-    src/components/sprite.h \
-    src/components/transform.h \
-    src/subsystems/animationsystem.h \
-    src/subsystems/physicssystem.h \
-    src/subsystems/spriterenderer.h \
-    src/services.h \
-    src/types.h \
-    src/systemopengl.h \
-    src/gamewindow.h \
-    src/game.h \
-    src/property.h \
-    src/entitycollection.h \
-    src/typemap.h \
-    src/logging.h \
-    src/input.h \
-    src/jsonutil.h \
-    src/uuid.h \
-    src/logging/consolelogger.h \
-    src/logging/logger.h \
-    src/logging/nulllogger.h \
-    src/gametime.h
+HEADERS  += glad/glad.h \
+    assets/asset.h \
+    assets/assets.h \
+    assets/assettype.h \
+    assets/component.h \
+    assets/entity.h \
+    assets/scene.h \
+    assets/shaderprogram.h \
+    assets/spritesheet.h \
+    assets/texture.h \
+    components/animation.h \
+    components/collider.h \
+    components/rigidbody.h \
+    components/script.h \
+    components/sprite.h \
+    components/transform.h \
+    logging/consolelogger.h \
+    logging/logger.h \
+    logging/nulllogger.h \
+    subsystems/animationsystem.h \
+    subsystems/physicssystem.h \
+    subsystems/spriterenderer.h \
+    services.h \
+    types.h \
+    systemopengl.h \
+    gamewindow.h \
+    game.h \
+    property.h \
+    entitycollection.h \
+    typemap.h \
+    logging.h \
+    input.h \
+    jsonutil.h \
+    uuid.h \
+    gametime.h
 
-DISTFILES += \
-    assets/fonts/kenpixel_mini_square.ttf \
-    assets/audio/a_bannanas_ages.wav \
-    assets/audio/coin.wav \
-    assets/audio/jump.wav \
-    assets/textures/debug.png \
-    assets/textures/enemy.png \
-    assets/textures/player.png \
-    assets/textures/tiles.png \
-    assets/shaders/sprite.frag \
-    assets/shaders/text.frag \
-    assets/shaders/sprite.vert \
-    assets/shaders/text.vert \
-    assets/textures/player.png.config
+#Copy assets folder to build directory
+
+CONFIG(debug, debug|release) {
+    DESTDIR = build/debug
+}
+
+CONFIG(release, debug|release) {
+    DESTDIR = build/release
+}
+
+#Link asset directory to one in the build directory so we can see our assets
+windows {
+    !exists($$OUT_PWD/$$DESTDIR/assets) {
+        !build_pass:message("Will create a link for assets directory")
+        QMAKE_POST_LINK += $$quote(mklink /j \"$$DESTDIR/assets\" \"$$PWD/assets\")
+    }
+}
+#TODO: Make work on linux builds
 
