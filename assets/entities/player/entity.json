@@ -4,6 +4,7 @@
   "components": [
     "/components/transform.json",
     "/components/rigidbody.json",
+    "/components/testscript.json",
     "/components/sprite.json",
     "/components/animation.json"
   ]

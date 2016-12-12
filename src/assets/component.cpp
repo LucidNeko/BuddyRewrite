@@ -17,10 +17,6 @@ Component::Component(EntityHandle entity)
 {
 }
 
-Component::~Component()
-{
-}
-
 // TODO: Can't use typeName in the destructor because it calls type() on extended class.
 std::string Component::typeName() const
 {

@@ -11,11 +11,14 @@
 #include "assets/spritesheet.h"
 #include "components/transform.h"
 #include "components/rigidbody.h"
+#include "components/script.h"
 #include "components/sprite.h"
 #include "components/animation.h"
 #include "assets/entity.h"
 #include "jsonutil.h"
 #include "logging.h"
+
+#include "scripts/testscript.h"
 
 namespace
 {
@@ -86,6 +89,23 @@ namespace
 
         return animation;
     }
+
+    std::shared_ptr<Script> loadScript(nlohmann::json& json, AssetsHandle)
+    {
+        static std::unordered_map<std::string, std::function<std::shared_ptr<Script>()> > scripts({
+            {"TestScript", [](){ return std::make_shared<TestScript>(); }}
+        });
+
+        std::string script_name = json["script_name"];
+
+        auto it = scripts.find(script_name);
+        if(it != scripts.end())
+        {
+            return it->second();
+        }
+
+        return std::shared_ptr<Script>();
+    }
 }
 
 
@@ -94,6 +114,7 @@ ComponentHandle Component::load(const std::string& filename, AssetsHandle assets
     static std::unordered_map<std::string, std::function<ComponentHandle(nlohmann::json&, AssetsHandle)> > _loaders({
         {"Transform", loadTransform},
         {"RigidBody", loadRigidBody},
+        {"Script",    loadScript},
         {"Sprite",    loadSprite},
         {"Animation", loadAnimation}
     });

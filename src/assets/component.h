@@ -15,7 +15,7 @@ public:
 
 public:
     Component(EntityHandle entity = nullptr);
-    virtual ~Component();
+    virtual ~Component() {}
 
     virtual std::type_index type() const = 0;
 

@@ -7,6 +7,7 @@
 #include "assets/entity.h"
 #include "subsystems/physicssystem.h"
 #include "subsystems/animationsystem.h"
+#include "subsystems/scriptsystem.h"
 #include "subsystems/spriterenderer.h"
 
 #include "logging.h"
@@ -16,10 +17,6 @@
 #include "input.h"
 
 Game::Game()
-    : _assets(nullptr),
-      _physicsSystem(nullptr),
-      _animationSystem(nullptr),
-      _spriteRenderer(nullptr)
 {
 }
 
@@ -29,10 +26,6 @@ Game::~Game()
     {
         _currentScene->onExit();
     }
-
-    delete _physicsSystem;
-    delete _animationSystem;
-    delete _spriteRenderer;
 }
 
 bool Game::initialize()
@@ -46,9 +39,10 @@ bool Game::initialize()
 
     glClearColor(0.0, 0.0, 0.0, 1.0);
 
-    _physicsSystem = new PhysicsSystem();
-    _animationSystem = new AnimationSystem();
-    _spriteRenderer = new SpriteRenderer(_assets->get<ShaderProgram>("shaders/sprite"));
+    _physicsSystem.reset(new PhysicsSystem());
+    _animationSystem.reset(new AnimationSystem());
+    _scriptSystem.reset(new ScriptSystem());
+    _spriteRenderer.reset(new SpriteRenderer(_assets->get<ShaderProgram>("shaders/sprite")));
 
     queueScene(_assets->get<Scene>("scenes/test_scene"));
     _processNextScene();
@@ -84,6 +78,8 @@ void Game::_processSubSystems(GameTime time)
     _physicsSystem->update(time, entities);
 
     _animationSystem->update(time, entities);
+
+    _scriptSystem->update(time, entities);
 
     _spriteRenderer->render(entities);
     _spriteRenderer->flush();

@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "assets/assets.h"
+#include "components/script.h"
 #include "entity.h"
 #include "logging.h"
 
@@ -74,5 +75,11 @@ void Scene::onEnter()
 
 void Scene::onExit()
 {
-//    removeAll();
+    for(auto pair : _entities)
+    {
+        for(auto script : pair.second->getComponents<Script>())
+        {
+            script->onExit();
+        }
+    }
 }

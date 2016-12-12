@@ -50,7 +50,9 @@ SOURCES += glad/glad.c \
     jsonutil.cpp \
     stb/stb_image_impl.cpp \
     uuid.cpp \
-    gametime.cpp
+    gametime.cpp \
+    src/scripts/testscript.cpp \
+    src/subsystems/scriptsystem.cpp
 
 HEADERS  += glad/glad.h \
     assets/asset.h \
@@ -86,7 +88,9 @@ HEADERS  += glad/glad.h \
     input.h \
     jsonutil.h \
     uuid.h \
-    gametime.h
+    gametime.h \
+    src/subsystems/scriptsystem.h \
+    src/scripts/testscript.h
 
 #Copy assets folder to build directory
 
