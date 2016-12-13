@@ -1,11 +1,20 @@
 #include "scripts/testscript.h"
 
+#include <cmath>
+#include <memory>
+
 #include "assets/entity.h"
+#include "components/rigidbody.h"
+#include "components/transform.h"
 #include "logging.h"
+
+#include "services.h"
+#include "input.h"
 
 TestScript::TestScript(EntityHandle entity)
     : Script(entity),
-      _first(true)
+      _first(true),
+      _elapsed(0)
 {
 }
 
@@ -30,6 +39,26 @@ void TestScript::onUpdate(GameTime time)
         LOG_INFO("TestScript::onUpdate(%.5f)", time.seconds());
         _first = false;
     }
+
+    _elapsed += time.seconds();
+
+//    F32 amt = std::sin(_elapsed) * 100;
+
+//    if(auto transform = entity()->getComponent<Transform>())
+//    {
+//        glm::vec2 pos = transform->position();
+//        pos.y -= amt * time.seconds();
+//        transform->setPosition(pos);
+//    }
+
+    if(auto rb = entity()->getComponent<RigidBody>())
+    {
+        if(Services::get<Input>()->isKeyDownOnce(Qt::Key_Space))
+        {
+            rb->setVelocity(glm::vec2(0, -900));
+        }
+    }
+
 
 }
 

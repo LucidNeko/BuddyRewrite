@@ -52,7 +52,8 @@ SOURCES += glad/glad.c \
     uuid.cpp \
     gametime.cpp \
     src/scripts/testscript.cpp \
-    src/subsystems/scriptsystem.cpp
+    src/subsystems/scriptsystem.cpp \
+    src/inputstate.cpp
 
 HEADERS  += glad/glad.h \
     assets/asset.h \
@@ -90,7 +91,9 @@ HEADERS  += glad/glad.h \
     uuid.h \
     gametime.h \
     src/subsystems/scriptsystem.h \
-    src/scripts/testscript.h
+    src/scripts/testscript.h \
+    src/inputstate.h \
+    src/subsystems/inputsystem.h
 
 #Copy assets folder to build directory
 

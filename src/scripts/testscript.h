@@ -17,6 +17,7 @@ public:
 
 private:
     bool _first;
+    F32 _elapsed;
 };
 
 #endif // TESTSCRIPT_H

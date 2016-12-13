@@ -12,6 +12,26 @@
 #include "components/sprite.h"
 #include "components/transform.h"
 
+ComponentHandle Component::create(std::string type)
+{
+    typedef std::function<ComponentHandle(void)> ComponentLoader;
+    static std::unordered_map<std::string, ComponentLoader> loaders({
+        { "Animation", [](){ return std::make_shared<Animation>(); } },
+        { "Collider",  [](){ return std::make_shared<Collider>(); } },
+        { "RigidBody", [](){ return std::make_shared<RigidBody>(); } },
+        { "Sprite",    [](){ return std::make_shared<Sprite>(); } },
+        { "Transform", [](){ return std::make_shared<Transform>(); } }
+    });
+
+    auto it = loaders.find(type);
+    if(it != loaders.end())
+    {
+        return it->second();
+    }
+
+    return Script::create(type);
+}
+
 Component::Component(EntityHandle entity)
     : _entity(entity)
 {

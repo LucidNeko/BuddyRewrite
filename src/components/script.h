@@ -1,7 +1,10 @@
 #ifndef SCRIPT_H
 #define SCRIPT_H
 
+#include <functional>
+#include <memory>
 #include <string>
+#include <unordered_map>
 
 #include "assets/component.h"
 #include "gametime.h"
@@ -15,6 +18,13 @@ public:
         ENTER,
         UPDATE
     };
+
+    template<typename T>
+    static std::shared_ptr<T> create(std::string type)
+    {
+        return std::dynamic_pointer_cast<T>(create(type));
+    }
+    static std::shared_ptr<Script> create(std::string type);
 
 public:
     Script(EntityHandle entity = nullptr);

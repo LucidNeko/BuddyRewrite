@@ -7,46 +7,54 @@
 
 #include "json.hpp"
 
-#include "assets/assets.h"
-#include "assets/spritesheet.h"
-#include "components/transform.h"
+// Components
+#include "components/animation.h"
+#include "components/collider.h"
 #include "components/rigidbody.h"
 #include "components/script.h"
 #include "components/sprite.h"
-#include "components/animation.h"
+#include "components/transform.h"
+
+// Scripts
+#include "scripts/testscript.h"
+
+#include "assets/assets.h"
+#include "assets/spritesheet.h"
 #include "assets/entity.h"
 #include "jsonutil.h"
 #include "logging.h"
 
-#include "scripts/testscript.h"
-
 namespace
 {
-    std::shared_ptr<Transform> loadTransform(nlohmann::json& json, AssetsHandle)
+    bool setup(std::shared_ptr<Animation> animation, nlohmann::json& json, AssetsHandle assets)
     {
-        std::shared_ptr<Transform> transform(new Transform());
+        std::string spritesheet_file = json["spritesheet"];
+        std::string sequence_name = json["sequence"];
 
-        JsonUtil jsonUtil;
+        if(SpriteSheetHandle spritesheet = assets->get<SpriteSheet>(spritesheet_file))
+        {
+            SpriteSheetSequence sequence;
+            if(spritesheet->sequence(sequence_name, sequence))
+            {
+                animation->setSequence(sequence);
+            }
+        }
 
-        I32 x = jsonUtil.get(json, {"position", "x"});
-        I32 y = jsonUtil.get(json, {"position", "y"});
-
-        transform->setPosition(glm::vec2(x, y));
-
-        return transform;
+        return true;
     }
 
-    std::shared_ptr<RigidBody> loadRigidBody(nlohmann::json&, AssetsHandle)
+    bool setup(std::shared_ptr<Collider>, nlohmann::json&, AssetsHandle)
     {
-        std::shared_ptr<RigidBody> rigidBody(new RigidBody());
-
-        return rigidBody;
+        return true;
     }
 
-    std::shared_ptr<Sprite> loadSprite(nlohmann::json& json, AssetsHandle assets)
+    bool setup(std::shared_ptr<RigidBody>, nlohmann::json&, AssetsHandle)
     {
-        std::shared_ptr<Sprite> sprite(new Sprite());
+        return true;
+    }
 
+    bool setup(std::shared_ptr<Sprite> sprite, nlohmann::json& json, AssetsHandle assets)
+    {
         JsonUtil jsonUtil;
 
         std::string spritesheet = json["spritesheet"];
@@ -68,57 +76,62 @@ namespace
             }
         }
 
-        return sprite;
+        return true;
     }
 
-    std::shared_ptr<Animation> loadAnimation(nlohmann::json& json, AssetsHandle assets)
+    bool setup(std::shared_ptr<Transform> transform, nlohmann::json& json, AssetsHandle)
     {
-        std::shared_ptr<Animation> animation(new Animation());
+        JsonUtil jsonUtil;
 
-        std::string spritesheet_file = json["spritesheet"];
-        std::string sequence_name = json["sequence"];
+        I32 x = jsonUtil.get(json, {"position", "x"});
+        I32 y = jsonUtil.get(json, {"position", "y"});
 
-        if(SpriteSheetHandle spritesheet = assets->get<SpriteSheet>(spritesheet_file))
-        {
-            SpriteSheetSequence sequence;
-            if(spritesheet->sequence(sequence_name, sequence))
-            {
-                animation->setSequence(sequence);
-            }
-        }
+        transform->setPosition(glm::vec2(x, y));
 
-        return animation;
+        return true;
     }
 
-    std::shared_ptr<Script> loadScript(nlohmann::json& json, AssetsHandle)
+    bool setup(std::shared_ptr<TestScript>, nlohmann::json&, AssetsHandle)
     {
-        static std::unordered_map<std::string, std::function<std::shared_ptr<Script>()> > scripts({
-            {"TestScript", [](){ return std::make_shared<TestScript>(); }}
-        });
+        return true;
+    }
 
-        std::string script_name = json["script_name"];
-
-        auto it = scripts.find(script_name);
-        if(it != scripts.end())
+    bool setupComponent(std::shared_ptr<Component> component, nlohmann::json& json, AssetsHandle assets)
+    {
+        // Components
+        if(std::shared_ptr<Animation> subtype = std::dynamic_pointer_cast<Animation>(component))
         {
-            return it->second();
+            return setup(subtype, json, assets);
+        }
+        else if(std::shared_ptr<Collider> subtype = std::dynamic_pointer_cast<Collider>(component))
+        {
+            return setup(subtype, json, assets);
+        }
+        else if(std::shared_ptr<RigidBody> subtype = std::dynamic_pointer_cast<RigidBody>(component))
+        {
+            return setup(subtype, json, assets);
+        }
+        else if(std::shared_ptr<Sprite> subtype = std::dynamic_pointer_cast<Sprite>(component))
+        {
+            return setup(subtype, json, assets);
+        }
+        else if(std::shared_ptr<Transform> subtype = std::dynamic_pointer_cast<Transform>(component))
+        {
+            return setup(subtype, json, assets);
         }
 
-        return std::shared_ptr<Script>();
+        // Scripts
+        if(std::shared_ptr<TestScript> subtype = std::dynamic_pointer_cast<TestScript>(component))
+        {
+            return setup(subtype, json, assets);
+        }
+
+        return false;
     }
 }
 
-
 ComponentHandle Component::load(const std::string& filename, AssetsHandle assets)
 {
-    static std::unordered_map<std::string, std::function<ComponentHandle(nlohmann::json&, AssetsHandle)> > _loaders({
-        {"Transform", loadTransform},
-        {"RigidBody", loadRigidBody},
-        {"Script",    loadScript},
-        {"Sprite",    loadSprite},
-        {"Animation", loadAnimation}
-    });
-
     std::string fullpath(assets->assetDirectory() + filename);
 
     try
@@ -130,19 +143,18 @@ ComponentHandle Component::load(const std::string& filename, AssetsHandle assets
 
         std::string asset_type = json["asset_type"];
 
-        auto it = _loaders.find(asset_type);
-        if(it != _loaders.end())
+        ComponentHandle component = Component::create(asset_type);
+
+        if(!setupComponent(component, json, assets))
         {
-            return it->second(json, assets);
+            throw std::invalid_argument("Could not setup Component: " + asset_type);
         }
-        else
-        {
-            throw std::invalid_argument("No loader to handle Component: " + asset_type);
-        }
+
+        return component;
     }
     catch(const std::exception& e)
     {
         LOG_ERROR("Failed to load Component: %s", e.what());
-        return ComponentHandle();
+        return nullptr;
     }
 }

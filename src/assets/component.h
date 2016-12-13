@@ -13,6 +13,13 @@ class Component : public Asset
 public:
     static ComponentHandle load(const std::string& filename, AssetsHandle assets);
 
+    template<typename T>
+    static std::shared_ptr<T> create(std::string type)
+    {
+        return std::dynamic_pointer_cast<T>(create(type));
+    }
+    static ComponentHandle create(std::string type);
+
 public:
     Component(EntityHandle entity = nullptr);
     virtual ~Component() {}

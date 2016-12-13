@@ -3,6 +3,25 @@
 #include <unordered_map>
 #include <functional>
 
+// Scripts
+#include "scripts/testscript.h"
+
+std::shared_ptr<Script> Script::create(std::string type)
+{
+    typedef std::function<std::shared_ptr<Script>(void)> ScriptLoader;
+    static std::unordered_map<std::string, ScriptLoader> loaders({
+        { "TestScript", [](){ return std::make_shared<TestScript>(); } }
+    });
+
+    auto it = loaders.find(type);
+    if(it != loaders.end())
+    {
+        return it->second();
+    }
+
+    return nullptr;
+}
+
 Script::Script(EntityHandle entity)
     : Component(entity),
       _stage(Stage::START)
