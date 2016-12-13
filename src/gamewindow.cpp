@@ -6,8 +6,7 @@
 #include "logging.h"
 #include "game.h"
 
-#include "services.h"
-#include "input.h"
+#include "subsystems/inputsystem.h"
 
 #include "assets/spritesheet.h"
 #include "assets/assets.h"
@@ -18,8 +17,8 @@ GameWindow::GameWindow(QWidget *parent)
       _game(new Game())
 {
     //TODO: Probably unsafe if installEventFilter is meant to take ownership
-//    this->installEventFilter(Services::get<Input>().get());
-    this->installEventFilter(Services::get<Input>());
+    this->setMouseTracking(true);
+    this->installEventFilter(_game->inputSystem());
 }
 
 GameWindow::~GameWindow()

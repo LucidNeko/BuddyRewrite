@@ -46,14 +46,14 @@ SOURCES += glad/glad.c \
     gamewindow.cpp \
     game.cpp \
     entitycollection.cpp \
-    input.cpp \
     jsonutil.cpp \
     stb/stb_image_impl.cpp \
     uuid.cpp \
     gametime.cpp \
     src/scripts/testscript.cpp \
     src/subsystems/scriptsystem.cpp \
-    src/inputstate.cpp
+    src/inputstate.cpp \
+    src/subsystems/inputsystem.cpp
 
 HEADERS  += glad/glad.h \
     assets/asset.h \
@@ -86,7 +86,6 @@ HEADERS  += glad/glad.h \
     entitycollection.h \
     typemap.h \
     logging.h \
-    input.h \
     jsonutil.h \
     uuid.h \
     gametime.h \

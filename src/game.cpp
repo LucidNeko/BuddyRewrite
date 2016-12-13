@@ -3,20 +3,19 @@
 #include "systemopengl.h"
 
 #include "assets/assets.h"
+#include "assets/scene.h"
 #include "assets/shaderprogram.h"
 #include "assets/entity.h"
 #include "subsystems/physicssystem.h"
 #include "subsystems/animationsystem.h"
 #include "subsystems/scriptsystem.h"
 #include "subsystems/spriterenderer.h"
+#include "subsystems/inputsystem.h"
 
 #include "logging.h"
 
-#include "assets/scene.h"
-#include "services.h"
-#include "input.h"
-
 Game::Game()
+    : _inputSystem(new InputSystem())
 {
 }
 
@@ -54,10 +53,21 @@ void Game::tick()
 {
     GameTime time(16666667);
 
+    //Todo: Pass InputState to update functions?
+    InputState input = _inputSystem->state();
+
+    if(input.isKeyDown(Qt::Key_A)) LOG_INFO("InputState DOWN: Key_A");
+    if(input.isKeyDownOnce(Qt::Key_S)) LOG_INFO("InputState ONCE: Key_S");
+
+    if(input.isMouseButtonDown(Qt::MouseButton::LeftButton)) LOG_INFO("InputState DOWN: MouseButton::LeftButton");
+    if(input.isMouseButtonDownOnce(Qt::MouseButton::RightButton)) LOG_INFO("InputState ONCE: MouseButton::RightButton");
+
+    glm::vec2 p = input.mousePosition();
+    glm::vec2 d = input.mouseDelta();
+    if(input.mouseDelta() != glm::vec2()) LOG_INFO("Mouse: (%.4f, %.4f) Delta: (%.4f, %.4f)", p.x, p.y, d.x, d.y);
+
     _processSubSystems(time);
     _processNextScene();
-
-    Services::get<Input>()->update();
 }
 
 void Game::resize(I32 width, I32 height)
@@ -69,6 +79,11 @@ void Game::resize(I32 width, I32 height)
 void Game::queueScene(SceneHandle scene)
 {
     _nextScene = scene;
+}
+
+InputSystem* Game::inputSystem() const
+{
+    return _inputSystem.get();
 }
 
 void Game::_processSubSystems(GameTime time)
@@ -87,10 +102,7 @@ void Game::_processSubSystems(GameTime time)
 
 void Game::_processNextScene()
 {
-    if(Services::get<Input>()->isKeyDownOnce(Qt::Key_N))
-    {
-        queueScene(_assets->get<Scene>("scenes/test_scene"));
-    }
+//  queueScene(_assets->get<Scene>("scenes/test_scene"));
 
     if(!_nextScene) { return; }
 

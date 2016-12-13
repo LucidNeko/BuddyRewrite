@@ -19,6 +19,8 @@ public:
 
     void queueScene(SceneHandle scene);
 
+    class InputSystem* inputSystem() const;
+
 private:
     void _processSubSystems(GameTime time);
     void _processNextScene();
@@ -28,6 +30,8 @@ private:
 
     SceneHandle _currentScene;
     SceneHandle _nextScene;
+
+    std::shared_ptr<class InputSystem>   _inputSystem;
 
     std::shared_ptr<class PhysicsSystem>   _physicsSystem;
     std::shared_ptr<class AnimationSystem> _animationSystem;

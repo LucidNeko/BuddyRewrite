@@ -24,10 +24,12 @@ private:
     mutable std::unordered_set<I32> _keysOnce;
 
     glm::vec2 _mousePosition;
-    glm::vec2 _lastMousePosition;
+    glm::vec2 _mouseDelta;
 
     std::unordered_set<I32> _mouseButtons;
     mutable std::unordered_set<I32> _mouseButtonsOnce;
+
+    friend class InputSystem;
 };
 
 #endif // INPUTSTATE_H

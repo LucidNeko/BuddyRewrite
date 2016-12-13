@@ -27,5 +27,5 @@ glm::vec2 InputState::mousePosition() const
 
 glm::vec2 InputState::mouseDelta() const
 {
-    return _mousePosition - _lastMousePosition;
+    return _mouseDelta;
 }

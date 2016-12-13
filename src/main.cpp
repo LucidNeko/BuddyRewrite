@@ -10,7 +10,6 @@
 #include "logging/consolelogger.h"
 #include "logging/nulllogger.h"
 #include "services.h"
-#include "input.h"
 #include "gametime.h"
 
 #include "uuid.h"
@@ -23,7 +22,6 @@ int main(int argc, char *argv[])
 
     QApplication app(argc, argv);
 
-    Services::set<Input>(new Input);
     Services::set<Logger>(new ConsoleLogger());
 
     LOG_INFO("argc=%d argv=%s", argc, argv[0]);

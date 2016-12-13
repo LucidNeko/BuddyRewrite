@@ -8,9 +8,6 @@
 #include "components/transform.h"
 #include "logging.h"
 
-#include "services.h"
-#include "input.h"
-
 TestScript::TestScript(EntityHandle entity)
     : Script(entity),
       _first(true),
@@ -42,22 +39,22 @@ void TestScript::onUpdate(GameTime time)
 
     _elapsed += time.seconds();
 
-//    F32 amt = std::sin(_elapsed) * 100;
+    F32 amt = std::sin(_elapsed) * 100;
 
-//    if(auto transform = entity()->getComponent<Transform>())
-//    {
-//        glm::vec2 pos = transform->position();
-//        pos.y -= amt * time.seconds();
-//        transform->setPosition(pos);
-//    }
-
-    if(auto rb = entity()->getComponent<RigidBody>())
+    if(auto transform = entity()->getComponent<Transform>())
     {
-        if(Services::get<Input>()->isKeyDownOnce(Qt::Key_Space))
-        {
-            rb->setVelocity(glm::vec2(0, -900));
-        }
+        glm::vec2 pos = transform->position();
+        pos.y -= amt * time.seconds();
+        transform->setPosition(pos);
     }
+
+//    if(auto rb = entity()->getComponent<RigidBody>())
+//    {
+//        if(input.isKeyDownOnce(Qt::Key_Space))
+//        {
+//            rb->setVelocity(glm::vec2(0, -900));
+//        }
+//    }
 
 
 }
