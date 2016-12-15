@@ -2,6 +2,8 @@
 
 #include "systemopengl.h"
 
+#include <QGamepad>
+
 #include "assets/assets.h"
 #include "assets/scene.h"
 #include "assets/shaderprogram.h"
@@ -53,20 +55,7 @@ void Game::tick()
 {
     GameTime time(16666667);
 
-    //Todo: Pass InputState to update functions?
-    InputState input = _inputSystem->state();
-
-    if(input.isKeyDown(Qt::Key_A)) LOG_INFO("InputState DOWN: Key_A");
-    if(input.isKeyDownOnce(Qt::Key_S)) LOG_INFO("InputState ONCE: Key_S");
-
-    if(input.isMouseButtonDown(Qt::MouseButton::LeftButton)) LOG_INFO("InputState DOWN: MouseButton::LeftButton");
-    if(input.isMouseButtonDownOnce(Qt::MouseButton::RightButton)) LOG_INFO("InputState ONCE: MouseButton::RightButton");
-
-    glm::vec2 p = input.mousePosition();
-    glm::vec2 d = input.mouseDelta();
-    if(input.mouseDelta() != glm::vec2()) LOG_INFO("Mouse: (%.4f, %.4f) Delta: (%.4f, %.4f)", p.x, p.y, d.x, d.y);
-
-    _processSubSystems(time);
+    _processSubSystems(time, _inputSystem->state());
     _processNextScene();
 }
 
@@ -86,7 +75,7 @@ InputSystem* Game::inputSystem() const
     return _inputSystem.get();
 }
 
-void Game::_processSubSystems(GameTime time)
+void Game::_processSubSystems(GameTime time, const Input& input)
 {
     std::vector<EntityHandle> entities = _currentScene->getAll();
 
@@ -94,7 +83,7 @@ void Game::_processSubSystems(GameTime time)
 
     _animationSystem->update(time, entities);
 
-    _scriptSystem->update(time, entities);
+    _scriptSystem->update(time, input, entities);
 
     _spriteRenderer->render(entities);
     _spriteRenderer->flush();

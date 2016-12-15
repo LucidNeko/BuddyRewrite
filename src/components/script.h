@@ -39,7 +39,7 @@ public:
 
     virtual void onStart() {}
     virtual void onEnter() {}
-    virtual void onUpdate(GameTime) {}
+    virtual void onUpdate(GameTime, const class Input&) {}
     virtual void onExit() {}
 
 private:

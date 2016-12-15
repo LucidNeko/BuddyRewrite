@@ -4,6 +4,7 @@
 
 #include "assets/entity.h"
 #include "components/script.h"
+#include "input/input.h"
 
 ScriptSystem::ScriptSystem()
 {
@@ -15,25 +16,25 @@ ScriptSystem::~ScriptSystem()
 
 }
 
-void ScriptSystem::update(GameTime time, const std::vector<EntityHandle>& entities)
+void ScriptSystem::update(GameTime time, const Input& input, const std::vector<EntityHandle>& entities)
 {
     for(EntityHandle entity : entities)
     {
-        _update(time, entity);
+        _update(time, input, entity);
     }
 }
 
-void ScriptSystem::_update(GameTime time, EntityHandle entity)
+void ScriptSystem::_update(GameTime time, const Input& input, EntityHandle entity)
 {
     std::vector<std::shared_ptr<Script> > scripts = entity->getComponents<Script>();
 
     for(std::shared_ptr<Script> script : scripts)
     {
-        _updateScript(time, script);
+        _updateScript(time, input, script);
     }
 }
 
-void ScriptSystem::_updateScript(GameTime time, std::shared_ptr<Script> script)
+void ScriptSystem::_updateScript(GameTime time, const Input& input, std::shared_ptr<Script> script)
 {
     switch(script->stage())
     {
@@ -47,7 +48,7 @@ void ScriptSystem::_updateScript(GameTime time, std::shared_ptr<Script> script)
         script->setStage(Script::Stage::UPDATE);
         break;
     case Script::Stage::UPDATE:
-        script->onUpdate(time);
+        script->onUpdate(time, input);
         break;
     }
 }

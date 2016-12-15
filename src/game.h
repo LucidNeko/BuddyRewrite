@@ -22,7 +22,7 @@ public:
     class InputSystem* inputSystem() const;
 
 private:
-    void _processSubSystems(GameTime time);
+    void _processSubSystems(GameTime time, const class Input& input);
     void _processNextScene();
 
 private:

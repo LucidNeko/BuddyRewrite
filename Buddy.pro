@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui widgets
+QT       += core gui widgets gamepad
 CONFIG   += c++11
 
 TARGET = Buddy
@@ -52,8 +52,11 @@ SOURCES += glad/glad.c \
     gametime.cpp \
     src/scripts/testscript.cpp \
     src/subsystems/scriptsystem.cpp \
-    src/inputstate.cpp \
-    src/subsystems/inputsystem.cpp
+    src/subsystems/inputsystem.cpp \
+    src/input/keyboard.cpp \
+    src/input/mouse.cpp \
+    src/input/gamepad.cpp \
+    src/input/input.cpp
 
 HEADERS  += glad/glad.h \
     assets/asset.h \
@@ -91,8 +94,11 @@ HEADERS  += glad/glad.h \
     gametime.h \
     src/subsystems/scriptsystem.h \
     src/scripts/testscript.h \
-    src/inputstate.h \
-    src/subsystems/inputsystem.h
+    src/subsystems/inputsystem.h \
+    src/input/gamepad.h \
+    src/input/keyboard.h \
+    src/input/mouse.h \
+    src/input/input.h
 
 #Copy assets folder to build directory
 

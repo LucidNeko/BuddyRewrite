@@ -43,7 +43,7 @@ void PhysicsSystem::_update(GameTime time, EntityHandle entity)
 
     //TODO: Gravity
     static const glm::vec2 GRAVITY(0, 1600);
-    static const float MAX_FALLSPEED = 300;
+    static const float MAX_FALLSPEED = 2000;//300;
 
     glm::vec2 velocity = body->velocity();
     velocity.y = std::min(velocity.y, MAX_FALLSPEED);
