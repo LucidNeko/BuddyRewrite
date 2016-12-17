@@ -2,6 +2,13 @@
 
 #include "logging.h"
 
+Input::Input(const Keyboard& keyboard, const Mouse& mouse, const std::vector<Gamepad>& gamepads)
+    : _keyboard(keyboard),
+      _mouse(mouse),
+      _gamepads(gamepads)
+{
+}
+
 const Gamepad& Input::gamepad(size_t index) const
 {
     if(index < _gamepads.size())

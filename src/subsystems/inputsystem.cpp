@@ -8,17 +8,32 @@
 #include "logging.h"
 
 InputSystem::InputSystem()
-    : QObject(nullptr)
+    : QObject(nullptr),
+      _keyboardWatcher(nullptr),
+      _mouseWatcher(nullptr),
+      _player1Watcher(nullptr),
+      _player2Watcher(nullptr),
+      _player3Watcher(nullptr),
+      _player4Watcher(nullptr)
 {
-    const I32 MAX_CONTROLLERS = 8;
-    for(I32 i = 0; i < MAX_CONTROLLERS; i++)
-    {
-        _gamepads.push_back(std::make_shared<QGamepad>(i));
-        hookup(_gamepads.back().get());
-    }
-
-    _state._gamepads.resize(MAX_CONTROLLERS);
-    _lastState = _state;
+    KeyboardWatcherImpl* keyboardWatcher = new KeyboardWatcherImpl(this);
+    MouseWatcherImpl* mouseWatcher = new MouseWatcherImpl(this);
+    GamepadWatcherImpl* player1Watcher = new GamepadWatcherImpl(0, this);
+    GamepadWatcherImpl* player2Watcher = new GamepadWatcherImpl(1, this);
+    GamepadWatcherImpl* player3Watcher = new GamepadWatcherImpl(2, this);
+    GamepadWatcherImpl* player4Watcher = new GamepadWatcherImpl(3, this);
+    this->installEventFilter(keyboardWatcher);
+    this->installEventFilter(mouseWatcher);
+    this->installEventFilter(player1Watcher);
+    this->installEventFilter(player2Watcher);
+    this->installEventFilter(player3Watcher);
+    this->installEventFilter(player4Watcher);
+    _keyboardWatcher = keyboardWatcher;
+    _mouseWatcher = mouseWatcher;
+    _player1Watcher = player1Watcher;
+    _player2Watcher = player2Watcher;
+    _player3Watcher = player3Watcher;
+    _player4Watcher = player4Watcher;
 }
 
 InputSystem::~InputSystem()
@@ -27,43 +42,64 @@ InputSystem::~InputSystem()
 
 Input InputSystem::state()
 {
-    Input out = _state;
+    Keyboard keyboard = _keyboardWatcher->state();
+    Mouse mouse = _mouseWatcher->state();
+    std::vector<Gamepad> gamepads = {
+        _player1Watcher->state(),
+        _player2Watcher->state(),
+        _player3Watcher->state(),
+        _player4Watcher->state(),
+    };
 
-    for(I32 key : out._keyboard._keys)
-    {
-        if(!_lastState.keyboard().isKeyDown(key))
-        {
-            out._keyboard._keysOnce.insert(key);
-        }
-    }
-
-    for(I32 button : out._mouse._buttons)
-    {
-        if(!_lastState.mouse().isButtonDown(button))
-        {
-            out._mouse._buttonsOnce.insert(button);
-        }
-    }
-
-    out._mouse._delta = out._mouse._position - _lastState._mouse._position;
-
-    for(size_t i = 0; i < out._gamepads.size(); i++)
-    {
-        for(I32 button : out._gamepads[i]._buttons)
-        {
-            if(!_lastState._gamepads[i].isButtonDown(button))
-            {
-                out._gamepads[i]._buttonsOnce.insert(button);
-            }
-        }
-    }
-
-    _lastState = _state;
-
-    return out;
+    return Input(keyboard, mouse, gamepads);
 }
 
-bool InputSystem::eventFilter(QObject*, QEvent* event)
+MouseWatcherImpl::MouseWatcherImpl(QObject* parent)
+    : QObject(parent)
+{
+}
+
+Mouse MouseWatcherImpl::state() const
+{
+    Mouse state(_position, _buttons, _lastState);
+    _lastState = state;
+    return state;
+}
+
+bool MouseWatcherImpl::eventFilter(QObject*, QEvent* event)
+{
+    if(event->type() == QEvent::MouseButtonPress)
+    {
+        QMouseEvent* mouseEvent = static_cast<QMouseEvent*>(event);
+        _buttons.insert(mouseEvent->button());
+    }
+    else if(event->type() == QEvent::MouseButtonRelease)
+    {
+        QMouseEvent* mouseEvent = static_cast<QMouseEvent*>(event);
+        _buttons.erase(mouseEvent->button());
+    }
+    else if(event->type() == QEvent::MouseMove)
+    {
+        QMouseEvent* mouseEvent = static_cast<QMouseEvent*>(event);
+        _position = glm::vec2(mouseEvent->x(), mouseEvent->y());
+    }
+
+    return false;
+}
+
+KeyboardWatcherImpl::KeyboardWatcherImpl(QObject* parent)
+    : QObject(parent)
+{
+}
+
+Keyboard KeyboardWatcherImpl::state() const
+{
+    Keyboard state(_keys, _lastState);
+    _lastState = state;
+    return state;
+}
+
+bool KeyboardWatcherImpl::eventFilter(QObject*, QEvent* event)
 {
     if(event->type() == QEvent::KeyPress)
     {
@@ -71,9 +107,7 @@ bool InputSystem::eventFilter(QObject*, QEvent* event)
 
         if(!keyEvent->isAutoRepeat())
         {
-            I32 key = keyEvent->key();
-
-            _state._keyboard._keys.insert(key);
+            _keys.insert(keyEvent->key());
         }
     }
     else if(event->type() == QEvent::KeyRelease)
@@ -82,349 +116,336 @@ bool InputSystem::eventFilter(QObject*, QEvent* event)
 
         if(!keyEvent->isAutoRepeat())
         {
-            I32 key = keyEvent->key();
-
-            _state._keyboard._keys.erase(key);
+            _keys.erase(keyEvent->key());
         }
-    }
-    else if(event->type() == QEvent::MouseButtonPress)
-    {
-        QMouseEvent* mouseEvent = static_cast<QMouseEvent*>(event);
-
-        I32 button = mouseEvent->button();
-        _state._mouse._buttons.insert(button);
-    }
-    else if(event->type() == QEvent::MouseButtonRelease)
-    {
-        QMouseEvent* mouseEvent = static_cast<QMouseEvent*>(event);
-
-        I32 button = mouseEvent->button();
-        _state._mouse._buttons.erase(button);
-    }
-    else if(event->type() == QEvent::MouseMove)
-    {
-        QMouseEvent* mouseEvent = static_cast<QMouseEvent*>(event);
-
-        I32 x = mouseEvent->x();
-        I32 y = mouseEvent->y();
-
-        _state._mouse._position = glm::vec2(x, y);
     }
 
     return false;
 }
 
-void InputSystem::hookup(QGamepad* gamepad)
+GamepadWatcherImpl::GamepadWatcherImpl(I32 controllerIndex, QObject* parent)
+    : QObject(parent),
+      _deviceId(0)
 {
-    connect(gamepad, &QGamepad::axisLeftXChanged,    this, &InputSystem::axisLeftXChanged);
-    connect(gamepad, &QGamepad::axisLeftYChanged,    this, &InputSystem::axisLeftYChanged);
-    connect(gamepad, &QGamepad::axisRightXChanged,   this, &InputSystem::axisRightXChanged);
-    connect(gamepad, &QGamepad::axisRightYChanged,   this, &InputSystem::axisRightYChanged);
-    connect(gamepad, &QGamepad::buttonAChanged,      this, &InputSystem::buttonAChanged);
-    connect(gamepad, &QGamepad::buttonBChanged,      this, &InputSystem::buttonBChanged);
-    connect(gamepad, &QGamepad::buttonXChanged,      this, &InputSystem::buttonXChanged);
-    connect(gamepad, &QGamepad::buttonYChanged,      this, &InputSystem::buttonYChanged);
-    connect(gamepad, &QGamepad::buttonL1Changed,     this, &InputSystem::buttonL1Changed);
-    connect(gamepad, &QGamepad::buttonR1Changed,     this, &InputSystem::buttonR1Changed);
-    connect(gamepad, &QGamepad::buttonL2Changed,     this, &InputSystem::buttonL2Changed);
-    connect(gamepad, &QGamepad::buttonR2Changed,     this, &InputSystem::buttonR2Changed);
-    connect(gamepad, &QGamepad::buttonSelectChanged, this, &InputSystem::buttonSelectChanged);
-    connect(gamepad, &QGamepad::buttonStartChanged,  this, &InputSystem::buttonStartChanged);
-    connect(gamepad, &QGamepad::buttonL3Changed,     this, &InputSystem::buttonL3Changed);
-    connect(gamepad, &QGamepad::buttonR3Changed,     this, &InputSystem::buttonR3Changed);
-    connect(gamepad, &QGamepad::buttonUpChanged,     this, &InputSystem::buttonUpChanged);
-    connect(gamepad, &QGamepad::buttonDownChanged,   this, &InputSystem::buttonDownChanged);
-    connect(gamepad, &QGamepad::buttonLeftChanged,   this, &InputSystem::buttonLeftChanged);
-    connect(gamepad, &QGamepad::buttonRightChanged,  this, &InputSystem::buttonRightChanged);
-    connect(gamepad, &QGamepad::buttonCenterChanged, this, &InputSystem::buttonCenterChanged);
-    connect(gamepad, &QGamepad::buttonGuideChanged,  this, &InputSystem::buttonGuideChanged);
+    //TODO: Does the destructor get called because of parent connections?
+    QGamepad* qtGamepad = new QGamepad(controllerIndex, this);
+    _deviceId = qtGamepad->deviceId(); //TODO: Listen for deviceIdChanged?
+
+    connect(qtGamepad, &QGamepad::axisLeftXChanged,    this, &GamepadWatcherImpl::axisLeftXChanged);
+    connect(qtGamepad, &QGamepad::axisLeftYChanged,    this, &GamepadWatcherImpl::axisLeftYChanged);
+    connect(qtGamepad, &QGamepad::axisRightXChanged,   this, &GamepadWatcherImpl::axisRightXChanged);
+    connect(qtGamepad, &QGamepad::axisRightYChanged,   this, &GamepadWatcherImpl::axisRightYChanged);
+    connect(qtGamepad, &QGamepad::buttonAChanged,      this, &GamepadWatcherImpl::buttonAChanged);
+    connect(qtGamepad, &QGamepad::buttonBChanged,      this, &GamepadWatcherImpl::buttonBChanged);
+    connect(qtGamepad, &QGamepad::buttonXChanged,      this, &GamepadWatcherImpl::buttonXChanged);
+    connect(qtGamepad, &QGamepad::buttonYChanged,      this, &GamepadWatcherImpl::buttonYChanged);
+    connect(qtGamepad, &QGamepad::buttonL1Changed,     this, &GamepadWatcherImpl::buttonL1Changed);
+    connect(qtGamepad, &QGamepad::buttonR1Changed,     this, &GamepadWatcherImpl::buttonR1Changed);
+    connect(qtGamepad, &QGamepad::buttonL2Changed,     this, &GamepadWatcherImpl::buttonL2Changed);
+    connect(qtGamepad, &QGamepad::buttonR2Changed,     this, &GamepadWatcherImpl::buttonR2Changed);
+    connect(qtGamepad, &QGamepad::buttonSelectChanged, this, &GamepadWatcherImpl::buttonSelectChanged);
+    connect(qtGamepad, &QGamepad::buttonStartChanged,  this, &GamepadWatcherImpl::buttonStartChanged);
+    connect(qtGamepad, &QGamepad::buttonL3Changed,     this, &GamepadWatcherImpl::buttonL3Changed);
+    connect(qtGamepad, &QGamepad::buttonR3Changed,     this, &GamepadWatcherImpl::buttonR3Changed);
+    connect(qtGamepad, &QGamepad::buttonUpChanged,     this, &GamepadWatcherImpl::buttonUpChanged);
+    connect(qtGamepad, &QGamepad::buttonDownChanged,   this, &GamepadWatcherImpl::buttonDownChanged);
+    connect(qtGamepad, &QGamepad::buttonLeftChanged,   this, &GamepadWatcherImpl::buttonLeftChanged);
+    connect(qtGamepad, &QGamepad::buttonRightChanged,  this, &GamepadWatcherImpl::buttonRightChanged);
+    connect(qtGamepad, &QGamepad::buttonCenterChanged, this, &GamepadWatcherImpl::buttonCenterChanged);
+    connect(qtGamepad, &QGamepad::buttonGuideChanged,  this, &GamepadWatcherImpl::buttonGuideChanged);
 }
 
-void InputSystem::axisLeftXChanged(double value)
+Gamepad GamepadWatcherImpl::state() const
 {
-    if(QGamepad* gamepad = dynamic_cast<QGamepad*>(sender()))
+    Gamepad state(_buttons, _axisMap, _lastState);
+    _lastState = state;
+    return state;
+}
+
+void GamepadWatcherImpl::axisLeftXChanged(double value)
+{
+    if(_deviceId == static_cast<QGamepad*>(sender())->deviceId())
     {
-        _state._gamepads[gamepad->deviceId()]._axisMap[QGamepadManager::AxisLeftX] = value;
+        _axisMap[QGamepadManager::AxisLeftX] = value;
     }
 }
 
-void InputSystem::axisLeftYChanged(double value)
+void GamepadWatcherImpl::axisLeftYChanged(double value)
 {
-    if(QGamepad* gamepad = dynamic_cast<QGamepad*>(sender()))
+    if(_deviceId == static_cast<QGamepad*>(sender())->deviceId())
     {
-        _state._gamepads[gamepad->deviceId()]._axisMap[QGamepadManager::AxisLeftY] = value;
+        _axisMap[QGamepadManager::AxisLeftY] = value;
     }
 }
 
-void InputSystem::axisRightXChanged(double value)
+void GamepadWatcherImpl::axisRightXChanged(double value)
 {
-    if(QGamepad* gamepad = dynamic_cast<QGamepad*>(sender()))
+    if(_deviceId == static_cast<QGamepad*>(sender())->deviceId())
     {
-        _state._gamepads[gamepad->deviceId()]._axisMap[QGamepadManager::AxisRightX] = value;
+        _axisMap[QGamepadManager::AxisRightX] = value;
     }
 }
 
-void InputSystem::axisRightYChanged(double value)
+void GamepadWatcherImpl::axisRightYChanged(double value)
 {
-    if(QGamepad* gamepad = dynamic_cast<QGamepad*>(sender()))
+    if(_deviceId == static_cast<QGamepad*>(sender())->deviceId())
     {
-        _state._gamepads[gamepad->deviceId()]._axisMap[QGamepadManager::AxisRightY] = value;
+        _axisMap[QGamepadManager::AxisRightY] = value;
     }
 }
 
-void InputSystem::buttonAChanged(bool value)
+void GamepadWatcherImpl::buttonAChanged(bool value)
 {
-    if(QGamepad* gamepad = dynamic_cast<QGamepad*>(sender()))
+    if(_deviceId == static_cast<QGamepad*>(sender())->deviceId())
     {
         if(value)
         {
-            _state._gamepads[gamepad->deviceId()]._buttons.insert(QGamepadManager::ButtonA);
+            _buttons.insert(QGamepadManager::ButtonA);
         }
         else
         {
-            _state._gamepads[gamepad->deviceId()]._buttons.erase(QGamepadManager::ButtonA);
+            _buttons.erase(QGamepadManager::ButtonA);
         }
     }
 }
 
-void InputSystem::buttonBChanged(bool value)
+void GamepadWatcherImpl::buttonBChanged(bool value)
 {
-    if(QGamepad* gamepad = dynamic_cast<QGamepad*>(sender()))
+    if(_deviceId == static_cast<QGamepad*>(sender())->deviceId())
     {
         if(value)
         {
-            _state._gamepads[gamepad->deviceId()]._buttons.insert(QGamepadManager::ButtonB);
+            _buttons.insert(QGamepadManager::ButtonB);
         }
         else
         {
-            _state._gamepads[gamepad->deviceId()]._buttons.erase(QGamepadManager::ButtonB);
+            _buttons.erase(QGamepadManager::ButtonB);
         }
     }
 }
 
-void InputSystem::buttonXChanged(bool value)
+void GamepadWatcherImpl::buttonXChanged(bool value)
 {
-    if(QGamepad* gamepad = dynamic_cast<QGamepad*>(sender()))
+    if(_deviceId == static_cast<QGamepad*>(sender())->deviceId())
     {
         if(value)
         {
-            _state._gamepads[gamepad->deviceId()]._buttons.insert(QGamepadManager::ButtonX);
+            _buttons.insert(QGamepadManager::ButtonX);
         }
         else
         {
-            _state._gamepads[gamepad->deviceId()]._buttons.erase(QGamepadManager::ButtonX);
+            _buttons.erase(QGamepadManager::ButtonX);
         }
     }
 }
 
-void InputSystem::buttonYChanged(bool value)
+void GamepadWatcherImpl::buttonYChanged(bool value)
 {
-    if(QGamepad* gamepad = dynamic_cast<QGamepad*>(sender()))
+    if(_deviceId == static_cast<QGamepad*>(sender())->deviceId())
     {
         if(value)
         {
-            _state._gamepads[gamepad->deviceId()]._buttons.insert(QGamepadManager::ButtonY);
+            _buttons.insert(QGamepadManager::ButtonY);
         }
         else
         {
-            _state._gamepads[gamepad->deviceId()]._buttons.erase(QGamepadManager::ButtonY);
+            _buttons.erase(QGamepadManager::ButtonY);
         }
     }
 }
 
-void InputSystem::buttonL1Changed(bool value)
+void GamepadWatcherImpl::buttonL1Changed(bool value)
 {
-    if(QGamepad* gamepad = dynamic_cast<QGamepad*>(sender()))
+    if(_deviceId == static_cast<QGamepad*>(sender())->deviceId())
     {
         if(value)
         {
-            _state._gamepads[gamepad->deviceId()]._buttons.insert(QGamepadManager::ButtonL1);
+            _buttons.insert(QGamepadManager::ButtonL1);
         }
         else
         {
-            _state._gamepads[gamepad->deviceId()]._buttons.erase(QGamepadManager::ButtonL1);
+            _buttons.erase(QGamepadManager::ButtonL1);
         }
     }
 }
 
-void InputSystem::buttonR1Changed(bool value)
+void GamepadWatcherImpl::buttonR1Changed(bool value)
 {
-    if(QGamepad* gamepad = dynamic_cast<QGamepad*>(sender()))
+    if(_deviceId == static_cast<QGamepad*>(sender())->deviceId())
     {
         if(value)
         {
-            _state._gamepads[gamepad->deviceId()]._buttons.insert(QGamepadManager::ButtonR1);
+            _buttons.insert(QGamepadManager::ButtonR1);
         }
         else
         {
-            _state._gamepads[gamepad->deviceId()]._buttons.erase(QGamepadManager::ButtonR1);
+            _buttons.erase(QGamepadManager::ButtonR1);
         }
     }
 }
 
-void InputSystem::buttonL2Changed(double value)
+void GamepadWatcherImpl::buttonL2Changed(double value)
 {
-    if(QGamepad* gamepad = dynamic_cast<QGamepad*>(sender()))
+    if(_deviceId == static_cast<QGamepad*>(sender())->deviceId())
     {
-        _state._gamepads[gamepad->deviceId()]._axisMap[QGamepadManager::ButtonL2] = value;
+        _axisMap[QGamepadManager::ButtonL2] = value;
     }
 }
 
-void InputSystem::buttonR2Changed(double value)
+void GamepadWatcherImpl::buttonR2Changed(double value)
 {
-    if(QGamepad* gamepad = dynamic_cast<QGamepad*>(sender()))
+    if(_deviceId == static_cast<QGamepad*>(sender())->deviceId())
     {
-        _state._gamepads[gamepad->deviceId()]._axisMap[QGamepadManager::ButtonR2] = value;
+        _axisMap[QGamepadManager::ButtonR2] = value;
     }
 }
 
-void InputSystem::buttonSelectChanged(bool value)
+void GamepadWatcherImpl::buttonSelectChanged(bool value)
 {
-    if(QGamepad* gamepad = dynamic_cast<QGamepad*>(sender()))
+    if(_deviceId == static_cast<QGamepad*>(sender())->deviceId())
     {
         if(value)
         {
-            _state._gamepads[gamepad->deviceId()]._buttons.insert(QGamepadManager::ButtonSelect);
+            _buttons.insert(QGamepadManager::ButtonSelect);
         }
         else
         {
-            _state._gamepads[gamepad->deviceId()]._buttons.erase(QGamepadManager::ButtonSelect);
+            _buttons.erase(QGamepadManager::ButtonSelect);
         }
     }
 }
 
-void InputSystem::buttonStartChanged(bool value)
+void GamepadWatcherImpl::buttonStartChanged(bool value)
 {
-    if(QGamepad* gamepad = dynamic_cast<QGamepad*>(sender()))
+    if(_deviceId == static_cast<QGamepad*>(sender())->deviceId())
     {
         if(value)
         {
-            _state._gamepads[gamepad->deviceId()]._buttons.insert(QGamepadManager::ButtonStart);
+            _buttons.insert(QGamepadManager::ButtonStart);
         }
         else
         {
-            _state._gamepads[gamepad->deviceId()]._buttons.erase(QGamepadManager::ButtonStart);
+            _buttons.erase(QGamepadManager::ButtonStart);
         }
     }
 }
 
-void InputSystem::buttonL3Changed(bool value)
+void GamepadWatcherImpl::buttonL3Changed(bool value)
 {
-    if(QGamepad* gamepad = dynamic_cast<QGamepad*>(sender()))
+    if(_deviceId == static_cast<QGamepad*>(sender())->deviceId())
     {
         if(value)
         {
-            _state._gamepads[gamepad->deviceId()]._buttons.insert(QGamepadManager::ButtonL3);
+            _buttons.insert(QGamepadManager::ButtonL3);
         }
         else
         {
-            _state._gamepads[gamepad->deviceId()]._buttons.erase(QGamepadManager::ButtonL3);
+            _buttons.erase(QGamepadManager::ButtonL3);
         }
     }
 }
 
-void InputSystem::buttonR3Changed(bool value)
+void GamepadWatcherImpl::buttonR3Changed(bool value)
 {
-    if(QGamepad* gamepad = dynamic_cast<QGamepad*>(sender()))
+    if(_deviceId == static_cast<QGamepad*>(sender())->deviceId())
     {
         if(value)
         {
-            _state._gamepads[gamepad->deviceId()]._buttons.insert(QGamepadManager::ButtonR3);
+            _buttons.insert(QGamepadManager::ButtonR3);
         }
         else
         {
-            _state._gamepads[gamepad->deviceId()]._buttons.erase(QGamepadManager::ButtonR3);
+            _buttons.erase(QGamepadManager::ButtonR3);
         }
     }
 }
 
-void InputSystem::buttonUpChanged(bool value)
+void GamepadWatcherImpl::buttonUpChanged(bool value)
 {
-    if(QGamepad* gamepad = dynamic_cast<QGamepad*>(sender()))
+    if(_deviceId == static_cast<QGamepad*>(sender())->deviceId())
     {
         if(value)
         {
-            _state._gamepads[gamepad->deviceId()]._buttons.insert(QGamepadManager::ButtonUp);
+            _buttons.insert(QGamepadManager::ButtonUp);
         }
         else
         {
-            _state._gamepads[gamepad->deviceId()]._buttons.erase(QGamepadManager::ButtonUp);
+            _buttons.erase(QGamepadManager::ButtonUp);
         }
     }
 }
 
-void InputSystem::buttonDownChanged(bool value)
+void GamepadWatcherImpl::buttonDownChanged(bool value)
 {
-    if(QGamepad* gamepad = dynamic_cast<QGamepad*>(sender()))
+    if(_deviceId == static_cast<QGamepad*>(sender())->deviceId())
     {
         if(value)
         {
-            _state._gamepads[gamepad->deviceId()]._buttons.insert(QGamepadManager::ButtonDown);
+            _buttons.insert(QGamepadManager::ButtonDown);
         }
         else
         {
-            _state._gamepads[gamepad->deviceId()]._buttons.erase(QGamepadManager::ButtonDown);
+            _buttons.erase(QGamepadManager::ButtonDown);
         }
     }
 }
 
-void InputSystem::buttonLeftChanged(bool value)
+void GamepadWatcherImpl::buttonLeftChanged(bool value)
 {
-    if(QGamepad* gamepad = dynamic_cast<QGamepad*>(sender()))
+    if(_deviceId == static_cast<QGamepad*>(sender())->deviceId())
     {
         if(value)
         {
-            _state._gamepads[gamepad->deviceId()]._buttons.insert(QGamepadManager::ButtonLeft);
+            _buttons.insert(QGamepadManager::ButtonLeft);
         }
         else
         {
-            _state._gamepads[gamepad->deviceId()]._buttons.erase(QGamepadManager::ButtonLeft);
+            _buttons.erase(QGamepadManager::ButtonLeft);
         }
     }
 }
 
-void InputSystem::buttonRightChanged(bool value)
+void GamepadWatcherImpl::buttonRightChanged(bool value)
 {
-    if(QGamepad* gamepad = dynamic_cast<QGamepad*>(sender()))
+    if(_deviceId == static_cast<QGamepad*>(sender())->deviceId())
     {
         if(value)
         {
-            _state._gamepads[gamepad->deviceId()]._buttons.insert(QGamepadManager::ButtonRight);
+            _buttons.insert(QGamepadManager::ButtonRight);
         }
         else
         {
-            _state._gamepads[gamepad->deviceId()]._buttons.erase(QGamepadManager::ButtonRight);
+            _buttons.erase(QGamepadManager::ButtonRight);
         }
     }
 }
 
-void InputSystem::buttonCenterChanged(bool value)
+void GamepadWatcherImpl::buttonCenterChanged(bool value)
 {
-    if(QGamepad* gamepad = dynamic_cast<QGamepad*>(sender()))
+    if(_deviceId == static_cast<QGamepad*>(sender())->deviceId())
     {
         if(value)
         {
-            _state._gamepads[gamepad->deviceId()]._buttons.insert(QGamepadManager::ButtonCenter);
+            _buttons.insert(QGamepadManager::ButtonCenter);
         }
         else
         {
-            _state._gamepads[gamepad->deviceId()]._buttons.erase(QGamepadManager::ButtonCenter);
+            _buttons.erase(QGamepadManager::ButtonCenter);
         }
     }
 }
 
-void InputSystem::buttonGuideChanged(bool value)
+void GamepadWatcherImpl::buttonGuideChanged(bool value)
 {
-    if(QGamepad* gamepad = dynamic_cast<QGamepad*>(sender()))
+    if(_deviceId == static_cast<QGamepad*>(sender())->deviceId())
     {
-        _state.gamepad(gamepad->deviceId());
         if(value)
         {
-            _state._gamepads[gamepad->deviceId()]._buttons.insert(QGamepadManager::ButtonGuide);
+            _buttons.insert(QGamepadManager::ButtonGuide);
         }
         else
         {
-            _state._gamepads[gamepad->deviceId()]._buttons.erase(QGamepadManager::ButtonGuide);
+            _buttons.erase(QGamepadManager::ButtonGuide);
         }
     }
 }

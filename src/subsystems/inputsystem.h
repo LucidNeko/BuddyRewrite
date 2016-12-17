@@ -9,21 +9,51 @@
 #include "input/input.h"
 #include "types.h"
 
-class InputSystem : public QObject
+#include "input/gamepad.h"
+#include "input/keyboard.h"
+#include "input/mouse.h"
+
+class MouseWatcherImpl : public QObject, public MouseWatcher
 {
     Q_OBJECT
 
 public:
-    InputSystem();
-    ~InputSystem();
+    MouseWatcherImpl(QObject* parent = nullptr);
 
-    Input state();
+    Mouse state() const override;
 
-public:
     bool eventFilter(QObject*, class QEvent* event);
 
 private:
-    void hookup(class QGamepad* gamepad);
+    glm::vec2 _position;
+    std::unordered_set<I32> _buttons;
+    mutable Mouse _lastState;
+};
+
+class KeyboardWatcherImpl : public QObject, public KeyboardWatcher
+{
+    Q_OBJECT
+
+public:
+    KeyboardWatcherImpl(QObject* parent = nullptr);
+
+    Keyboard state() const override;
+
+    bool eventFilter(QObject*, class QEvent* event);
+
+private:
+    std::unordered_set<I32> _keys;
+    mutable Keyboard _lastState;
+};
+
+class GamepadWatcherImpl : public QObject, public GamepadWatcher
+{
+    Q_OBJECT
+
+public:
+    GamepadWatcherImpl(I32 controllerIndex, QObject* parent = nullptr);
+
+    Gamepad state() const override;
 
 private slots:
     void axisLeftXChanged(double value);
@@ -50,10 +80,29 @@ private slots:
     void buttonGuideChanged(bool value);
 
 private:
-    Input _lastState;
-    Input _state;
+    I32 _deviceId;
+    std::unordered_set<I32> _buttons;
+    std::unordered_map<I32, F32> _axisMap;
+    mutable Gamepad _lastState;
+};
 
-    std::vector<std::shared_ptr<class QGamepad> > _gamepads;
+class InputSystem : public QObject
+{
+    Q_OBJECT
+
+public:
+    InputSystem();
+    ~InputSystem();
+
+    Input state();
+
+private:
+    KeyboardWatcher* _keyboardWatcher;
+    MouseWatcher* _mouseWatcher;
+    GamepadWatcher* _player1Watcher;
+    GamepadWatcher* _player2Watcher;
+    GamepadWatcher* _player3Watcher;
+    GamepadWatcher* _player4Watcher;
 };
 
 #endif // INPUTSYSTEM_H
