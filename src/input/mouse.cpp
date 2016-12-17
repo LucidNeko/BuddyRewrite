@@ -1,14 +1,19 @@
 #include "input/mouse.h"
 
+Mouse::Button Mouse::buttonFromQtMouseButton(I32 button)
+{
+    return static_cast<Button>(button);
+}
+
 Mouse::Mouse()
 {
 }
 
-Mouse::Mouse(glm::vec2 position, std::unordered_set<I32> buttons, Mouse previous)
+Mouse::Mouse(glm::vec2 position, std::unordered_set<Button> buttons, Mouse previous)
     : _position(position),
       _buttons(buttons)
 {
-    for(I32 button : _buttons)
+    for(Button button : _buttons)
     {
         if(!previous.isButtonDown(button))
         {
@@ -27,12 +32,12 @@ Mouse::Mouse(const Mouse& source)
 {
 }
 
-bool Mouse::isButtonDown(I32 button) const
+bool Mouse::isButtonDown(Button button) const
 {
     return _buttons.find(button) != _buttons.end();
 }
 
-bool Mouse::isButtonDownOnce(I32 button) const
+bool Mouse::isButtonDownOnce(Button button) const
 {
     return _buttonsOnce.find(button) != _buttonsOnce.end();
 }

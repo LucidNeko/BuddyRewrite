@@ -26,7 +26,7 @@ public:
 
 private:
     glm::vec2 _position;
-    std::unordered_set<I32> _buttons;
+    std::unordered_set<Mouse::Button> _buttons;
     mutable Mouse _lastState;
 };
 
@@ -42,7 +42,7 @@ public:
     bool eventFilter(QObject*, class QEvent* event);
 
 private:
-    std::unordered_set<I32> _keys;
+    std::unordered_set<Keyboard::Key> _keys;
     mutable Keyboard _lastState;
 };
 

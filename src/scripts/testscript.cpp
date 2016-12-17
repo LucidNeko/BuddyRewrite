@@ -3,8 +3,9 @@
 #include <cmath>
 #include <memory>
 
-#include <Qt>
 #include <QGamepad>
+
+#include <glm/geometric.hpp>
 
 #include "assets/entity.h"
 #include "components/rigidbody.h"
@@ -57,8 +58,28 @@ void TestScript::onUpdate(GameTime time, const Input& input)
         glm::vec2 velocity = rb->velocity();
         glm::vec2 leftStick = glm::vec2(gp.getAxis(Gamepad::Axis::LeftX), gp.getAxis(Gamepad::Axis::LeftY));
 
-        if(gp.isButtonDownOnce(Gamepad::Button::A))
+        if(input.keyboard().isKeyDown(Keyboard::Key::Left))
         {
+            leftStick.x -= 1;
+        }
+
+        if(input.keyboard().isKeyDown(Keyboard::Key::Right))
+        {
+            leftStick.x += 1;
+        }
+
+        glm::vec2 mouse = input.mouse().delta();
+        if(mouse != glm::vec2())
+        {
+//            leftStick = glm::normalize(mouse);
+            entity()->getComponent<Transform>()->setPosition(input.mouse().position());
+        }
+
+        if(gp.isButtonDownOnce(Gamepad::Button::A) ||
+           input.keyboard().isKeyDownOnce(Keyboard::Key::Space) ||
+           input.mouse().isButtonDownOnce(Mouse::Button::Left))
+        {
+            LOG_INFO("Jump: %.5f", time.seconds());
             velocity.y = -750;
         }
         velocity.x = leftStick.x * 300;

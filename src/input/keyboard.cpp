@@ -1,14 +1,19 @@
 #include "input/keyboard.h"
 
 
+Keyboard::Key Keyboard::keyFromQtKey(I32 key)
+{
+    return static_cast<Key>(key);
+}
+
 Keyboard::Keyboard()
 {
 }
 
-Keyboard::Keyboard(std::unordered_set<I32> keys, Keyboard previous)
+Keyboard::Keyboard(std::unordered_set<Key> keys, Keyboard previous)
     : _keys(keys)
 {
-    for(I32 key : _keys)
+    for(Key key : _keys)
     {
         if(!previous.isKeyDown(key))
         {
@@ -23,12 +28,12 @@ Keyboard::Keyboard(const Keyboard& source)
 {
 }
 
-bool Keyboard::isKeyDown(I32 key) const
+bool Keyboard::isKeyDown(Key key) const
 {
     return _keys.find(key) != _keys.end();
 }
 
-bool Keyboard::isKeyDownOnce(I32 key) const
+bool Keyboard::isKeyDownOnce(Key key) const
 {
     return _keysOnce.find(key) != _keysOnce.end();
 }

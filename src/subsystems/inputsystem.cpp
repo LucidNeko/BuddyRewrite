@@ -1,5 +1,6 @@
 #include "inputsystem.h"
 
+#include <QApplication>
 #include <QEvent>
 #include <QKeyEvent>
 #include <QMouseEvent>
@@ -9,31 +10,13 @@
 
 InputSystem::InputSystem()
     : QObject(nullptr),
-      _keyboardWatcher(nullptr),
-      _mouseWatcher(nullptr),
-      _player1Watcher(nullptr),
-      _player2Watcher(nullptr),
-      _player3Watcher(nullptr),
-      _player4Watcher(nullptr)
+      _keyboardWatcher(new KeyboardWatcherImpl(this)),
+      _mouseWatcher(new MouseWatcherImpl(this)),
+      _player1Watcher(new GamepadWatcherImpl(0, this)),
+      _player2Watcher(new GamepadWatcherImpl(1, this)),
+      _player3Watcher(new GamepadWatcherImpl(2, this)),
+      _player4Watcher(new GamepadWatcherImpl(3, this))
 {
-    KeyboardWatcherImpl* keyboardWatcher = new KeyboardWatcherImpl(this);
-    MouseWatcherImpl* mouseWatcher = new MouseWatcherImpl(this);
-    GamepadWatcherImpl* player1Watcher = new GamepadWatcherImpl(0, this);
-    GamepadWatcherImpl* player2Watcher = new GamepadWatcherImpl(1, this);
-    GamepadWatcherImpl* player3Watcher = new GamepadWatcherImpl(2, this);
-    GamepadWatcherImpl* player4Watcher = new GamepadWatcherImpl(3, this);
-    this->installEventFilter(keyboardWatcher);
-    this->installEventFilter(mouseWatcher);
-    this->installEventFilter(player1Watcher);
-    this->installEventFilter(player2Watcher);
-    this->installEventFilter(player3Watcher);
-    this->installEventFilter(player4Watcher);
-    _keyboardWatcher = keyboardWatcher;
-    _mouseWatcher = mouseWatcher;
-    _player1Watcher = player1Watcher;
-    _player2Watcher = player2Watcher;
-    _player3Watcher = player3Watcher;
-    _player4Watcher = player4Watcher;
 }
 
 InputSystem::~InputSystem()
@@ -57,6 +40,7 @@ Input InputSystem::state()
 MouseWatcherImpl::MouseWatcherImpl(QObject* parent)
     : QObject(parent)
 {
+    qApp->installEventFilter(this);
 }
 
 Mouse MouseWatcherImpl::state() const
@@ -71,12 +55,12 @@ bool MouseWatcherImpl::eventFilter(QObject*, QEvent* event)
     if(event->type() == QEvent::MouseButtonPress)
     {
         QMouseEvent* mouseEvent = static_cast<QMouseEvent*>(event);
-        _buttons.insert(mouseEvent->button());
+        _buttons.insert(Mouse::buttonFromQtMouseButton(mouseEvent->button()));
     }
     else if(event->type() == QEvent::MouseButtonRelease)
     {
         QMouseEvent* mouseEvent = static_cast<QMouseEvent*>(event);
-        _buttons.erase(mouseEvent->button());
+        _buttons.erase(Mouse::buttonFromQtMouseButton(mouseEvent->button()));
     }
     else if(event->type() == QEvent::MouseMove)
     {
@@ -90,6 +74,7 @@ bool MouseWatcherImpl::eventFilter(QObject*, QEvent* event)
 KeyboardWatcherImpl::KeyboardWatcherImpl(QObject* parent)
     : QObject(parent)
 {
+    qApp->installEventFilter(this);
 }
 
 Keyboard KeyboardWatcherImpl::state() const
@@ -107,7 +92,7 @@ bool KeyboardWatcherImpl::eventFilter(QObject*, QEvent* event)
 
         if(!keyEvent->isAutoRepeat())
         {
-            _keys.insert(keyEvent->key());
+            _keys.insert(Keyboard::keyFromQtKey(keyEvent->key()));
         }
     }
     else if(event->type() == QEvent::KeyRelease)
@@ -116,7 +101,7 @@ bool KeyboardWatcherImpl::eventFilter(QObject*, QEvent* event)
 
         if(!keyEvent->isAutoRepeat())
         {
-            _keys.erase(keyEvent->key());
+            _keys.erase(Keyboard::keyFromQtKey(keyEvent->key()));
         }
     }
 

@@ -17,7 +17,6 @@
 #include "logging.h"
 
 Game::Game()
-    : _inputSystem(new InputSystem())
 {
 }
 
@@ -40,6 +39,7 @@ bool Game::initialize()
 
     glClearColor(0.0, 0.0, 0.0, 1.0);
 
+    _inputSystem.reset(new InputSystem());
     _physicsSystem.reset(new PhysicsSystem());
     _animationSystem.reset(new AnimationSystem());
     _scriptSystem.reset(new ScriptSystem());
@@ -68,11 +68,6 @@ void Game::resize(I32 width, I32 height)
 void Game::queueScene(SceneHandle scene)
 {
     _nextScene = scene;
-}
-
-InputSystem* Game::inputSystem() const
-{
-    return _inputSystem.get();
 }
 
 void Game::_processSubSystems(GameTime time, const Input& input)

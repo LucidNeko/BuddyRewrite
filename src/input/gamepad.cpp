@@ -1,6 +1,5 @@
 #include "input/gamepad.h"
 
-
 Gamepad::Gamepad()
 {
 }

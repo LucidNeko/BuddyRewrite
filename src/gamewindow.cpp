@@ -6,8 +6,6 @@
 #include "logging.h"
 #include "game.h"
 
-#include "subsystems/inputsystem.h"
-
 #include "assets/spritesheet.h"
 #include "assets/assets.h"
 #include "assets/asset.h"
@@ -16,9 +14,7 @@ GameWindow::GameWindow(QWidget *parent)
     : QOpenGLWidget(parent),
       _game(new Game())
 {
-    //TODO: Probably unsafe if installEventFilter is meant to take ownership
     this->setMouseTracking(true);
-    this->installEventFilter(_game->inputSystem());
 }
 
 GameWindow::~GameWindow()

@@ -10,6 +10,7 @@ class Gamepad
 {
 public:
     enum class Button {
+        // Same as Qt values
         Invalid = -1,
         A = 0,
         B,
@@ -17,6 +18,8 @@ public:
         Y,
         L1,
         R1,
+        L2,
+        R2,
         Select,
         Start,
         L3,
@@ -30,11 +33,13 @@ public:
     };
 
     enum class Axis {
+        // Same as Qt values
         Invalid = -1,
         LeftX = 0,
         LeftY,
         RightX,
         RightY,
+        // Extra because L2/R2 behave like axis
         L2,
         R2
     };
