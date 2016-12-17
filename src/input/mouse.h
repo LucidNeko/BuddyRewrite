@@ -74,6 +74,7 @@ private:
 class MouseWatcher
 {
 public:
+    virtual ~MouseWatcher() {}
     virtual Mouse state() const = 0;
 };
 

@@ -19,6 +19,7 @@ class MouseWatcherImpl : public QObject, public MouseWatcher
 
 public:
     MouseWatcherImpl(QObject* parent = nullptr);
+    ~MouseWatcherImpl();
 
     Mouse state() const override;
 
@@ -36,6 +37,7 @@ class KeyboardWatcherImpl : public QObject, public KeyboardWatcher
 
 public:
     KeyboardWatcherImpl(QObject* parent = nullptr);
+    ~KeyboardWatcherImpl();
 
     Keyboard state() const override;
 
@@ -86,10 +88,8 @@ private:
     mutable Gamepad _lastState;
 };
 
-class InputSystem : public QObject
+class InputSystem
 {
-    Q_OBJECT
-
 public:
     InputSystem();
     ~InputSystem();
@@ -97,12 +97,12 @@ public:
     Input state();
 
 private:
-    KeyboardWatcher* _keyboardWatcher;
-    MouseWatcher* _mouseWatcher;
-    GamepadWatcher* _player1Watcher;
-    GamepadWatcher* _player2Watcher;
-    GamepadWatcher* _player3Watcher;
-    GamepadWatcher* _player4Watcher;
+    std::unique_ptr<KeyboardWatcher> _keyboardWatcher;
+    std::unique_ptr<MouseWatcher> _mouseWatcher;
+    std::unique_ptr<GamepadWatcher> _player1Watcher;
+    std::unique_ptr<GamepadWatcher> _player2Watcher;
+    std::unique_ptr<GamepadWatcher> _player3Watcher;
+    std::unique_ptr<GamepadWatcher> _player4Watcher;
 };
 
 #endif // INPUTSYSTEM_H

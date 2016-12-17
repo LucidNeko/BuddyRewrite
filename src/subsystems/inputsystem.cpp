@@ -9,13 +9,12 @@
 #include "logging.h"
 
 InputSystem::InputSystem()
-    : QObject(nullptr),
-      _keyboardWatcher(new KeyboardWatcherImpl(this)),
-      _mouseWatcher(new MouseWatcherImpl(this)),
-      _player1Watcher(new GamepadWatcherImpl(0, this)),
-      _player2Watcher(new GamepadWatcherImpl(1, this)),
-      _player3Watcher(new GamepadWatcherImpl(2, this)),
-      _player4Watcher(new GamepadWatcherImpl(3, this))
+    : _keyboardWatcher(new KeyboardWatcherImpl()),
+      _mouseWatcher(new MouseWatcherImpl()),
+      _player1Watcher(new GamepadWatcherImpl(0)),
+      _player2Watcher(new GamepadWatcherImpl(1)),
+      _player3Watcher(new GamepadWatcherImpl(2)),
+      _player4Watcher(new GamepadWatcherImpl(3))
 {
 }
 
@@ -41,6 +40,11 @@ MouseWatcherImpl::MouseWatcherImpl(QObject* parent)
     : QObject(parent)
 {
     qApp->installEventFilter(this);
+}
+
+MouseWatcherImpl::~MouseWatcherImpl()
+{
+    qApp->removeEventFilter(this);
 }
 
 Mouse MouseWatcherImpl::state() const
@@ -75,6 +79,11 @@ KeyboardWatcherImpl::KeyboardWatcherImpl(QObject* parent)
     : QObject(parent)
 {
     qApp->installEventFilter(this);
+}
+
+KeyboardWatcherImpl::~KeyboardWatcherImpl()
+{
+    qApp->removeEventFilter(this);
 }
 
 Keyboard KeyboardWatcherImpl::state() const

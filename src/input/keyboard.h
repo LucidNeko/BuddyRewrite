@@ -172,6 +172,7 @@ private:
 class KeyboardWatcher
 {
 public:
+    virtual ~KeyboardWatcher() {}
     virtual Keyboard state() const = 0;
 };
 

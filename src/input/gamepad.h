@@ -66,6 +66,7 @@ private:
 class GamepadWatcher
 {
 public:
+    virtual ~GamepadWatcher() {}
     virtual Gamepad state() const = 0;
 };
 
