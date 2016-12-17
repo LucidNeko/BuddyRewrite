@@ -81,8 +81,8 @@ private slots:
 
 private:
     I32 _deviceId;
-    std::unordered_set<I32> _buttons;
-    std::unordered_map<I32, F32> _axisMap;
+    std::unordered_set<Gamepad::Button> _buttons;
+    std::unordered_map<Gamepad::Axis, F32> _axisMap;
     mutable Gamepad _lastState;
 };
 

@@ -5,11 +5,11 @@ Gamepad::Gamepad()
 {
 }
 
-Gamepad::Gamepad(std::unordered_set<I32> buttons, std::unordered_map<I32, F32> axisMap, Gamepad previous)
+Gamepad::Gamepad(std::unordered_set<Button> buttons, std::unordered_map<Axis, F32> axisMap, Gamepad previous)
     : _buttons(buttons),
       _axisMap(axisMap)
 {
-    for(I32 button : _buttons)
+    for(Button button : _buttons)
     {
         if(!previous.isButtonDown(button))
         {
@@ -25,17 +25,17 @@ Gamepad::Gamepad(const Gamepad& source)
 {
 }
 
-bool Gamepad::isButtonDown(I32 button) const
+bool Gamepad::isButtonDown(Button button) const
 {
     return _buttons.find(button) != _buttons.end();
 }
 
-bool Gamepad::isButtonDownOnce(I32 button) const
+bool Gamepad::isButtonDownOnce(Button button) const
 {
     return _buttonsOnce.find(button) != _buttonsOnce.end();
 }
 
-F32 Gamepad::getAxis(I32 axis) const
+F32 Gamepad::getAxis(Axis axis) const
 {
     auto it = _axisMap.find(axis);
     if(it != _axisMap.end())

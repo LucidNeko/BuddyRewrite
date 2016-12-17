@@ -55,9 +55,9 @@ void TestScript::onUpdate(GameTime time, const Input& input)
         const Gamepad& gp = input.gamepad(0);
 
         glm::vec2 velocity = rb->velocity();
-        glm::vec2 leftStick = glm::vec2(gp.getAxis(QGamepadManager::AxisLeftX), gp.getAxis(QGamepadManager::AxisLeftY));
+        glm::vec2 leftStick = glm::vec2(gp.getAxis(Gamepad::Axis::LeftX), gp.getAxis(Gamepad::Axis::LeftY));
 
-        if(gp.isButtonDownOnce(QGamepadManager::ButtonA))
+        if(gp.isButtonDownOnce(Gamepad::Button::A))
         {
             velocity.y = -750;
         }

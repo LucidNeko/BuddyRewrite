@@ -166,7 +166,7 @@ void GamepadWatcherImpl::axisLeftXChanged(double value)
 {
     if(_deviceId == static_cast<QGamepad*>(sender())->deviceId())
     {
-        _axisMap[QGamepadManager::AxisLeftX] = value;
+        _axisMap[Gamepad::Axis::LeftX] = value;
     }
 }
 
@@ -174,7 +174,7 @@ void GamepadWatcherImpl::axisLeftYChanged(double value)
 {
     if(_deviceId == static_cast<QGamepad*>(sender())->deviceId())
     {
-        _axisMap[QGamepadManager::AxisLeftY] = value;
+        _axisMap[Gamepad::Axis::LeftY] = value;
     }
 }
 
@@ -182,7 +182,7 @@ void GamepadWatcherImpl::axisRightXChanged(double value)
 {
     if(_deviceId == static_cast<QGamepad*>(sender())->deviceId())
     {
-        _axisMap[QGamepadManager::AxisRightX] = value;
+        _axisMap[Gamepad::Axis::RightX] = value;
     }
 }
 
@@ -190,7 +190,7 @@ void GamepadWatcherImpl::axisRightYChanged(double value)
 {
     if(_deviceId == static_cast<QGamepad*>(sender())->deviceId())
     {
-        _axisMap[QGamepadManager::AxisRightY] = value;
+        _axisMap[Gamepad::Axis::RightY] = value;
     }
 }
 
@@ -200,11 +200,11 @@ void GamepadWatcherImpl::buttonAChanged(bool value)
     {
         if(value)
         {
-            _buttons.insert(QGamepadManager::ButtonA);
+            _buttons.insert(Gamepad::Button::A);
         }
         else
         {
-            _buttons.erase(QGamepadManager::ButtonA);
+            _buttons.erase(Gamepad::Button::A);
         }
     }
 }
@@ -215,11 +215,11 @@ void GamepadWatcherImpl::buttonBChanged(bool value)
     {
         if(value)
         {
-            _buttons.insert(QGamepadManager::ButtonB);
+            _buttons.insert(Gamepad::Button::B);
         }
         else
         {
-            _buttons.erase(QGamepadManager::ButtonB);
+            _buttons.erase(Gamepad::Button::B);
         }
     }
 }
@@ -230,11 +230,11 @@ void GamepadWatcherImpl::buttonXChanged(bool value)
     {
         if(value)
         {
-            _buttons.insert(QGamepadManager::ButtonX);
+            _buttons.insert(Gamepad::Button::X);
         }
         else
         {
-            _buttons.erase(QGamepadManager::ButtonX);
+            _buttons.erase(Gamepad::Button::X);
         }
     }
 }
@@ -245,11 +245,11 @@ void GamepadWatcherImpl::buttonYChanged(bool value)
     {
         if(value)
         {
-            _buttons.insert(QGamepadManager::ButtonY);
+            _buttons.insert(Gamepad::Button::Y);
         }
         else
         {
-            _buttons.erase(QGamepadManager::ButtonY);
+            _buttons.erase(Gamepad::Button::Y);
         }
     }
 }
@@ -260,11 +260,11 @@ void GamepadWatcherImpl::buttonL1Changed(bool value)
     {
         if(value)
         {
-            _buttons.insert(QGamepadManager::ButtonL1);
+            _buttons.insert(Gamepad::Button::L1);
         }
         else
         {
-            _buttons.erase(QGamepadManager::ButtonL1);
+            _buttons.erase(Gamepad::Button::L1);
         }
     }
 }
@@ -275,11 +275,11 @@ void GamepadWatcherImpl::buttonR1Changed(bool value)
     {
         if(value)
         {
-            _buttons.insert(QGamepadManager::ButtonR1);
+            _buttons.insert(Gamepad::Button::R1);
         }
         else
         {
-            _buttons.erase(QGamepadManager::ButtonR1);
+            _buttons.erase(Gamepad::Button::R1);
         }
     }
 }
@@ -288,7 +288,7 @@ void GamepadWatcherImpl::buttonL2Changed(double value)
 {
     if(_deviceId == static_cast<QGamepad*>(sender())->deviceId())
     {
-        _axisMap[QGamepadManager::ButtonL2] = value;
+        _axisMap[Gamepad::Axis::L2] = value;
     }
 }
 
@@ -296,7 +296,7 @@ void GamepadWatcherImpl::buttonR2Changed(double value)
 {
     if(_deviceId == static_cast<QGamepad*>(sender())->deviceId())
     {
-        _axisMap[QGamepadManager::ButtonR2] = value;
+        _axisMap[Gamepad::Axis::R2] = value;
     }
 }
 
@@ -306,11 +306,11 @@ void GamepadWatcherImpl::buttonSelectChanged(bool value)
     {
         if(value)
         {
-            _buttons.insert(QGamepadManager::ButtonSelect);
+            _buttons.insert(Gamepad::Button::Select);
         }
         else
         {
-            _buttons.erase(QGamepadManager::ButtonSelect);
+            _buttons.erase(Gamepad::Button::Select);
         }
     }
 }
@@ -321,11 +321,11 @@ void GamepadWatcherImpl::buttonStartChanged(bool value)
     {
         if(value)
         {
-            _buttons.insert(QGamepadManager::ButtonStart);
+            _buttons.insert(Gamepad::Button::Start);
         }
         else
         {
-            _buttons.erase(QGamepadManager::ButtonStart);
+            _buttons.erase(Gamepad::Button::Start);
         }
     }
 }
@@ -336,11 +336,11 @@ void GamepadWatcherImpl::buttonL3Changed(bool value)
     {
         if(value)
         {
-            _buttons.insert(QGamepadManager::ButtonL3);
+            _buttons.insert(Gamepad::Button::L3);
         }
         else
         {
-            _buttons.erase(QGamepadManager::ButtonL3);
+            _buttons.erase(Gamepad::Button::L3);
         }
     }
 }
@@ -351,11 +351,11 @@ void GamepadWatcherImpl::buttonR3Changed(bool value)
     {
         if(value)
         {
-            _buttons.insert(QGamepadManager::ButtonR3);
+            _buttons.insert(Gamepad::Button::R3);
         }
         else
         {
-            _buttons.erase(QGamepadManager::ButtonR3);
+            _buttons.erase(Gamepad::Button::R3);
         }
     }
 }
@@ -366,11 +366,11 @@ void GamepadWatcherImpl::buttonUpChanged(bool value)
     {
         if(value)
         {
-            _buttons.insert(QGamepadManager::ButtonUp);
+            _buttons.insert(Gamepad::Button::Up);
         }
         else
         {
-            _buttons.erase(QGamepadManager::ButtonUp);
+            _buttons.erase(Gamepad::Button::Up);
         }
     }
 }
@@ -381,11 +381,11 @@ void GamepadWatcherImpl::buttonDownChanged(bool value)
     {
         if(value)
         {
-            _buttons.insert(QGamepadManager::ButtonDown);
+            _buttons.insert(Gamepad::Button::Down);
         }
         else
         {
-            _buttons.erase(QGamepadManager::ButtonDown);
+            _buttons.erase(Gamepad::Button::Down);
         }
     }
 }
@@ -396,11 +396,11 @@ void GamepadWatcherImpl::buttonLeftChanged(bool value)
     {
         if(value)
         {
-            _buttons.insert(QGamepadManager::ButtonLeft);
+            _buttons.insert(Gamepad::Button::Left);
         }
         else
         {
-            _buttons.erase(QGamepadManager::ButtonLeft);
+            _buttons.erase(Gamepad::Button::Left);
         }
     }
 }
@@ -411,11 +411,11 @@ void GamepadWatcherImpl::buttonRightChanged(bool value)
     {
         if(value)
         {
-            _buttons.insert(QGamepadManager::ButtonRight);
+            _buttons.insert(Gamepad::Button::Right);
         }
         else
         {
-            _buttons.erase(QGamepadManager::ButtonRight);
+            _buttons.erase(Gamepad::Button::Right);
         }
     }
 }
@@ -426,11 +426,11 @@ void GamepadWatcherImpl::buttonCenterChanged(bool value)
     {
         if(value)
         {
-            _buttons.insert(QGamepadManager::ButtonCenter);
+            _buttons.insert(Gamepad::Button::Center);
         }
         else
         {
-            _buttons.erase(QGamepadManager::ButtonCenter);
+            _buttons.erase(Gamepad::Button::Center);
         }
     }
 }
@@ -441,11 +441,11 @@ void GamepadWatcherImpl::buttonGuideChanged(bool value)
     {
         if(value)
         {
-            _buttons.insert(QGamepadManager::ButtonGuide);
+            _buttons.insert(Gamepad::Button::Guide);
         }
         else
         {
-            _buttons.erase(QGamepadManager::ButtonGuide);
+            _buttons.erase(Gamepad::Button::Guide);
         }
     }
 }

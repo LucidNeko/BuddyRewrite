@@ -9,31 +9,53 @@
 class Gamepad
 {
 public:
-    enum class Button
-    {
+    enum class Button {
+        Invalid = -1,
+        A = 0,
+        B,
+        X,
+        Y,
+        L1,
+        R1,
+        Select,
+        Start,
+        L3,
+        R3,
+        Up,
+        Down,
+        Right,
+        Left,
+        Center,
+        Guide
     };
 
-    enum class Axis
-    {
+    enum class Axis {
+        Invalid = -1,
+        LeftX = 0,
+        LeftY,
+        RightX,
+        RightY,
+        L2,
+        R2
     };
 
 public:
     Gamepad();
-    Gamepad(std::unordered_set<I32> buttons,
-            std::unordered_map<I32, F32> axisMap,
+    Gamepad(std::unordered_set<Button> buttons,
+            std::unordered_map<Axis, F32> axisMap,
             Gamepad previous = Gamepad());
     Gamepad(const Gamepad& source);
 
-    bool isButtonDown(I32 button) const;
-    bool isButtonDownOnce(I32 button) const;
+    bool isButtonDown(Button button) const;
+    bool isButtonDownOnce(Button button) const;
 
-    F32 getAxis(I32 axis) const;
+    F32 getAxis(Axis axis) const;
 
 private:
-    std::unordered_set<I32> _buttons;
-    std::unordered_set<I32> _buttonsOnce;
+    std::unordered_set<Button> _buttons;
+    std::unordered_set<Button> _buttonsOnce;
 
-    std::unordered_map<I32, F32> _axisMap;
+    std::unordered_map<Axis, F32> _axisMap;
 };
 
 class GamepadWatcher
