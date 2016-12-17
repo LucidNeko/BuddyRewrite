@@ -56,7 +56,10 @@ SOURCES += glad/glad.c \
     src/input/keyboard.cpp \
     src/input/mouse.cpp \
     src/input/gamepad.cpp \
-    src/input/input.cpp
+    src/input/input.cpp \
+    src/input/gamepad_watcher.cpp \
+    src/input/keyboard_watcher.cpp \
+    src/input/mouse_watcher.cpp
 
 HEADERS  += glad/glad.h \
     assets/asset.h \
@@ -98,7 +101,10 @@ HEADERS  += glad/glad.h \
     src/input/gamepad.h \
     src/input/keyboard.h \
     src/input/mouse.h \
-    src/input/input.h
+    src/input/input.h \
+    src/input/gamepad_watcher.h \
+    src/input/keyboard_watcher.h \
+    src/input/mouse_watcher.h
 
 #Copy assets folder to build directory
 
