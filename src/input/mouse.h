@@ -5,6 +5,7 @@
 
 #include <glm/vec2.hpp>
 
+#include "enumclasshash.h"
 #include "types.h"
 
 class Mouse
@@ -53,7 +54,7 @@ public:
 public:
     Mouse();
     Mouse(glm::vec2 position,
-          std::unordered_set<Button> buttons,
+          std::unordered_set<Button, EnumClassHash> buttons,
           Mouse previous = Mouse());
     Mouse(const Mouse& source);
 
@@ -67,8 +68,8 @@ private:
     glm::vec2 _position;
     glm::vec2 _delta;
 
-    std::unordered_set<Button> _buttons;
-    std::unordered_set<Button> _buttonsOnce;
+    std::unordered_set<Button, EnumClassHash> _buttons;
+    std::unordered_set<Button, EnumClassHash> _buttonsOnce;
 };
 
 class MouseWatcher

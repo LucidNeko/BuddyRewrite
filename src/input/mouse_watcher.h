@@ -4,6 +4,7 @@
 #include <unordered_set>
 #include <QObject>
 #include <glm/vec2.hpp>
+#include "enumclasshash.h"
 #include "input/mouse.h"
 
 class MouseWatcherImpl : public QObject, public MouseWatcher
@@ -20,7 +21,7 @@ public:
 
 private:
     glm::vec2 _position;
-    std::unordered_set<Mouse::Button> _buttons;
+    std::unordered_set<Mouse::Button, EnumClassHash> _buttons;
     mutable Mouse _lastState;
 };
 

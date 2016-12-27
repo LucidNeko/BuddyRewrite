@@ -64,7 +64,8 @@ EntityHandle Scene::get(Uuid entityId)
 std::vector<EntityHandle> Scene::getAll()
 {
     std::vector<EntityHandle> out;
-    std::transform(std::begin(_entities), std::end(_entities), std::back_inserter(out), [](auto& pair){ return pair.second; });
+    std::transform(std::begin(_entities), std::end(_entities), std::back_inserter(out),
+        [](const std::pair<Uuid, EntityHandle>& pair){ return pair.second; });
     return out;
 }
 

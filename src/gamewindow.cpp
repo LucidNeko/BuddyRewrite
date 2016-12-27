@@ -15,6 +15,11 @@ GameWindow::GameWindow(QWidget *parent)
       _game(new Game())
 {
     this->setMouseTracking(true);
+
+    // TODO: This is a hack to make floating in i3-wm
+    Qt::WindowFlags flags = this->windowFlags();
+    flags |= Qt::Dialog;
+    this->setWindowFlags(flags);
 }
 
 GameWindow::~GameWindow()

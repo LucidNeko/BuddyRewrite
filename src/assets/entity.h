@@ -54,7 +54,7 @@ public:
         out.resize(all.size());
 
         std::transform(std::begin(all), std::end(all), std::begin(out),
-            [](auto& item){ return std::dynamic_pointer_cast<T>(item); });
+            [](const ComponentHandle& item){ return std::dynamic_pointer_cast<T>(item); });
 
         return out;
     }

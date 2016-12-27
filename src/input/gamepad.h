@@ -4,6 +4,7 @@
 #include <unordered_map>
 #include <unordered_set>
 
+#include "enumclasshash.h"
 #include "types.h"
 
 class Gamepad
@@ -46,8 +47,8 @@ public:
 
 public:
     Gamepad();
-    Gamepad(std::unordered_set<Button> buttons,
-            std::unordered_map<Axis, F32> axisMap,
+    Gamepad(std::unordered_set<Button, EnumClassHash> buttons,
+            std::unordered_map<Axis, F32, EnumClassHash> axisMap,
             Gamepad previous = Gamepad());
     Gamepad(const Gamepad& source);
 
@@ -57,10 +58,10 @@ public:
     F32 getAxis(Axis axis) const;
 
 private:
-    std::unordered_set<Button> _buttons;
-    std::unordered_set<Button> _buttonsOnce;
+    std::unordered_set<Button, EnumClassHash> _buttons;
+    std::unordered_set<Button, EnumClassHash> _buttonsOnce;
 
-    std::unordered_map<Axis, F32> _axisMap;
+    std::unordered_map<Axis, F32, EnumClassHash> _axisMap;
 };
 
 class GamepadWatcher

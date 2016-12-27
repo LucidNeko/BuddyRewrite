@@ -46,7 +46,10 @@ SceneHandle Scene::load(const std::string& filepath, AssetsHandle loader)
             }
         }
 
-        entities = json["entities"];
+        for(const nlohmann::json& obj : json["entities"])
+        {
+            entities.push_back(obj);
+        }
     }
     catch(const std::exception& e)
     {

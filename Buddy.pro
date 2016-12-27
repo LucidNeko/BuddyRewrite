@@ -17,6 +17,13 @@ INCLUDEPATH += $$PWD/src \
                $$PWD/thirdparty/json/include \
                $$PWD/thirdparty/stb/include
 
+linux {
+    INCLUDEPATH += /usr/include/GL        \
+                   /usr/include
+
+    LIBS += -lGL -lGLU -ldl
+}
+
 SOURCES += glad/glad.c \
            main.cpp \
     assets/assets.cpp \
@@ -104,7 +111,8 @@ HEADERS  += glad/glad.h \
     src/input/input.h \
     src/input/gamepad_watcher.h \
     src/input/keyboard_watcher.h \
-    src/input/mouse_watcher.h
+    src/input/mouse_watcher.h \
+    src/enumclasshash.h
 
 #Copy assets folder to build directory
 
@@ -123,5 +131,10 @@ windows {
         QMAKE_POST_LINK += $$quote(mklink /j \"$$DESTDIR/assets\" \"$$PWD/assets\")
     }
 }
-#TODO: Make work on linux builds
 
+linux {
+    !exists($$OUT_PWD/$$DESTDIR/assets) {
+        !build_pass:message("Will create a link for assets directory")
+        QMAKE_POST_LINK += $$quote(ln -s \"$$PWD/assets\" \"$$DESTDIR/assets\")
+    }
+}

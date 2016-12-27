@@ -10,7 +10,7 @@ Keyboard::Keyboard()
 {
 }
 
-Keyboard::Keyboard(std::unordered_set<Key> keys, Keyboard previous)
+Keyboard::Keyboard(std::unordered_set<Key, EnumClassHash> keys, Keyboard previous)
     : _keys(keys)
 {
     for(Key key : _keys)

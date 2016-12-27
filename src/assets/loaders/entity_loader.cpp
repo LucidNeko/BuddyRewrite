@@ -27,7 +27,10 @@ EntityHandle Entity::load(const std::string& filename, AssetsHandle assets)
 
         asset_type = json["asset_type"];
         id = json["id"];
-        components = json["components"];
+        for(const nlohmann::json& obj : json["components"])
+        {
+            components.push_back(obj);
+        }
     }
     catch(const std::exception& e)
     {

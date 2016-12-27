@@ -9,7 +9,7 @@ Mouse::Mouse()
 {
 }
 
-Mouse::Mouse(glm::vec2 position, std::unordered_set<Button> buttons, Mouse previous)
+Mouse::Mouse(glm::vec2 position, std::unordered_set<Button, EnumClassHash> buttons, Mouse previous)
     : _position(position),
       _buttons(buttons)
 {

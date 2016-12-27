@@ -3,6 +3,7 @@
 
 #include <unordered_set>
 
+#include "enumclasshash.h"
 #include "types.h"
 
 class Keyboard
@@ -157,7 +158,7 @@ public:
 
 public:
     Keyboard();
-    Keyboard(std::unordered_set<Key> keys,
+    Keyboard(std::unordered_set<Key, EnumClassHash> keys,
              Keyboard previous = Keyboard());
     Keyboard(const Keyboard& source);
 
@@ -165,8 +166,8 @@ public:
     bool isKeyDownOnce(Key key) const;
 
 private:
-    std::unordered_set<Key> _keys;
-    std::unordered_set<Key> _keysOnce;
+    std::unordered_set<Key, EnumClassHash> _keys;
+    std::unordered_set<Key, EnumClassHash> _keysOnce;
 };
 
 class KeyboardWatcher

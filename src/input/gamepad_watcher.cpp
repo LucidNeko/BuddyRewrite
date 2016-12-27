@@ -168,6 +168,15 @@ void GamepadWatcherImpl::buttonL2Changed(double value)
     if(_deviceId == static_cast<QGamepad*>(sender())->deviceId())
     {
         _axisMap[Gamepad::Axis::L2] = value;
+
+        if(value > 0.0)
+        {
+            _buttons.insert(Gamepad::Button::L2);
+        }
+        else
+        {
+            _buttons.erase(Gamepad::Button::L2);
+        }
     }
 }
 
@@ -176,6 +185,15 @@ void GamepadWatcherImpl::buttonR2Changed(double value)
     if(_deviceId == static_cast<QGamepad*>(sender())->deviceId())
     {
         _axisMap[Gamepad::Axis::R2] = value;
+
+        if(value > 0.0)
+        {
+            _buttons.insert(Gamepad::Button::R2);
+        }
+        else
+        {
+            _buttons.erase(Gamepad::Button::R2);
+        }
     }
 }
 

@@ -3,6 +3,7 @@
 
 #include <unordered_set>
 #include <QObject>
+#include "enumclasshash.h"
 #include "input/keyboard.h"
 
 class KeyboardWatcherImpl : public QObject, public KeyboardWatcher
@@ -18,7 +19,7 @@ public:
     bool eventFilter(QObject*, class QEvent* event);
 
 private:
-    std::unordered_set<Keyboard::Key> _keys;
+    std::unordered_set<Keyboard::Key, EnumClassHash> _keys;
     mutable Keyboard _lastState;
 };
 

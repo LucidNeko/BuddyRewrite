@@ -4,7 +4,7 @@ Gamepad::Gamepad()
 {
 }
 
-Gamepad::Gamepad(std::unordered_set<Button> buttons, std::unordered_map<Axis, F32> axisMap, Gamepad previous)
+Gamepad::Gamepad(std::unordered_set<Button, EnumClassHash> buttons, std::unordered_map<Axis, F32, EnumClassHash> axisMap, Gamepad previous)
     : _buttons(buttons),
       _axisMap(axisMap)
 {

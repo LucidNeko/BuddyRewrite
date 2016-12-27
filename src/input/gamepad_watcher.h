@@ -6,6 +6,7 @@
 
 #include <QObject>
 
+#include "enumclasshash.h"
 #include "input/gamepad.h"
 #include "types.h"
 
@@ -44,8 +45,8 @@ private slots:
 
 private:
     I32 _deviceId;
-    std::unordered_set<Gamepad::Button> _buttons;
-    std::unordered_map<Gamepad::Axis, F32> _axisMap;
+    std::unordered_set<Gamepad::Button, EnumClassHash> _buttons;
+    std::unordered_map<Gamepad::Axis, F32, EnumClassHash> _axisMap;
     mutable Gamepad _lastState;
 };
 

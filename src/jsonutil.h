@@ -20,7 +20,12 @@ public:
     T get(const nlohmann::json& json, const std::vector<std::string>& keys, T defaultValue = T())
     {
         nlohmann::json object = get(json, keys);
-        return object.is_null() ? defaultValue : object;
+
+        if(!object.is_null())
+        {
+            return object;
+        }
+        return defaultValue;
     }
 };
 
