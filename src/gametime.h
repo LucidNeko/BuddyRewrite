@@ -22,6 +22,7 @@ public:
     U64 microseconds() const;
     U64 nanoseconds() const;
 
+    // TODO: unsigned going negative from operators will wrap.
     GameTime operator+(const GameTime& rhs) const;
     GameTime operator-(const GameTime& rhs) const;
     GameTime operator*(const F32& rhs) const;

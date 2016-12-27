@@ -1,10 +1,14 @@
 #include "gamewindow.h"
 
+#include <QCoreApplication>
+#include <QThread>
+
 #include <cstdlib>
 
 #include "types.h"
 #include "logging.h"
 #include "game.h"
+#include "gametime.h"
 
 #include "assets/spritesheet.h"
 #include "assets/assets.h"
@@ -12,7 +16,8 @@
 
 GameWindow::GameWindow(QWidget *parent)
     : QOpenGLWidget(parent),
-      _game(new Game())
+      _game(new Game()),
+      _closing(false)
 {
     this->setMouseTracking(true);
 
@@ -29,6 +34,26 @@ GameWindow::~GameWindow()
     delete _game;
 
     doneCurrent();
+}
+
+I32 GameWindow::exec()
+{
+    while(!_closing)
+    {
+        GameTime start = GameTime::now();
+        QCoreApplication::sendPostedEvents();
+        QCoreApplication::processEvents();
+        GameTime duration = GameTime::now() - start;
+
+        I32 sleep = 16666 - duration.microseconds();
+
+        if(sleep > 0)
+        {
+            QThread::usleep(sleep);
+        }
+    }
+
+    return 0;
 }
 
 void GameWindow::initializeGL()
@@ -59,4 +84,10 @@ void GameWindow::resizeGL(int w, int h)
     LOG_INFO("resizeGL(%d, %d)", w, h);
 
     _game->resize((I32)w, (I32)h);
+}
+
+void GameWindow::closeEvent(QCloseEvent* event)
+{
+    QOpenGLWidget::closeEvent(event);
+    _closing = true;
 }

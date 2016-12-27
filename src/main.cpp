@@ -42,6 +42,5 @@ int main(int argc, char *argv[])
 
     GameWindow w;
     w.show();
-
-    return app.exec();
+    return w.exec();
 }
