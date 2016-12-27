@@ -3,6 +3,7 @@
 
 #include <cstddef>
 
+// Credit: http://stackoverflow.com/a/24847480
 struct EnumClassHash
 {
     template <typename T>
