@@ -7,10 +7,13 @@
 
 #include "logging.h"
 
-ShaderProgram::ShaderProgram()
+ShaderProgram::ShaderProgram(const ShaderProgramDefinition& definition)
     : Asset(),
-      _programId(0)
+      _programId(0),
+      _vertextPath(definition.vertextPath),
+      _fragmentPath(definition.fragmentPath)
 {
+    reload();
     LOG_INFO("ShaderProgram Created");
 }
 
@@ -19,6 +22,11 @@ ShaderProgram::~ShaderProgram()
     LOG_INFO("ShaderProgram Destroyed");
     glDeleteProgram(_programId);
     _programId = 0;
+}
+
+bool ShaderProgram::isValid()
+{
+    return _programId != 0;
 }
 
 bool ShaderProgram::reload()

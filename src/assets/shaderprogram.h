@@ -8,13 +8,23 @@
 #include "types.h"
 #include "assets/asset.h"
 
+struct ShaderProgramDefinition
+{
+public:
+    std::string vertextPath;
+    std::string fragmentPath;
+};
+
 class ShaderProgram : public Asset
 {
 public:
     static ShaderProgramHandle load(const std::string& filepath, AssetsHandle loader);
 
 public:
+    ShaderProgram(const ShaderProgramDefinition& definition);
     ~ShaderProgram();
+
+    bool isValid();
 
     bool reload();
 
@@ -26,8 +36,6 @@ public:
     GLint getUniformLocation(const char* name);
 
 private:
-    ShaderProgram();
-
     std::string loadShaderSource(std::string filepath);
     GLuint compileShader(GLenum type, std::string shaderSource);
 

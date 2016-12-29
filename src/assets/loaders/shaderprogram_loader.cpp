@@ -36,12 +36,13 @@ ShaderProgramHandle ShaderProgram::load(const std::string& filepath, AssetsHandl
         return ShaderProgramHandle();
     }
 
-    ShaderProgramHandle handle(new ShaderProgram());
+    ShaderProgramDefinition def;
+    def.vertextPath = loader->assetDirectory() + vertex_shader;
+    def.fragmentPath = loader->assetDirectory() + fragment_shader;
 
-    handle->_vertextPath = loader->assetDirectory() + vertex_shader;
-    handle->_fragmentPath = loader->assetDirectory() + fragment_shader;
+    ShaderProgramHandle handle = std::make_shared<ShaderProgram>(def);
 
-    if(handle->reload())
+    if(handle->isValid())
     {
         return handle;
     }
