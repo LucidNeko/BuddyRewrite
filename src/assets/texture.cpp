@@ -2,45 +2,20 @@
 
 #include "logging.h"
 
-Texture::Texture()
+Texture::Texture(const TextureDefinition& definition)
     : _textureId(0),
-      _target(GL_TEXTURE_2D),
-      _level(0),
-      _internalFormat(GL_RGBA8),
-      _width(0),
-      _height(0),
-      _border(0),
-      _format(GL_RGBA),
-      _type(GL_UNSIGNED_BYTE),
-      _data(0),
-      _minFilter(GL_NEAREST),
-      _maxFilter(GL_NEAREST)
-{
-    LOG_INFO("Texture Created");
-}
-
-Texture::~Texture()
-{
-    LOG_INFO("Texture Destroyed");
-    glDeleteTextures(1, &_textureId);
-    _textureId = 0;
-}
-
-bool Texture::isCreated()
-{
-    return _textureId != 0;
-}
-
-void Texture::create()
+      _target(definition.target),
+      _level(definition.level),
+      _internalFormat(definition.internalFormat),
+      _width(definition.width),
+      _height(definition.height),
+      _format(definition.format),
+      _type(definition.type),
+      _minFilter(definition.minFilter),
+      _maxFilter(definition.maxFilter),
+      _data(definition.data)
 {
     //TODO: Check that _data contains _width * _height bytes taking into account _format
-
-    if(isCreated())
-    {
-        LOG_INFO("Recreating Texture");
-        glDeleteTextures(1, &_textureId);
-        _textureId = 0;
-    }
 
     glGenTextures(1, &_textureId);
     glBindTexture(_target, _textureId);
@@ -50,7 +25,7 @@ void Texture::create()
                  _internalFormat,
                  _width,
                  _height,
-                 _border,
+                 0,
                  _format,
                  _type,
                  &_data[0]);
@@ -59,6 +34,15 @@ void Texture::create()
     glTexParameteri(_target, GL_TEXTURE_MAG_FILTER, _maxFilter);
 
     glBindTexture(_target, 0);
+
+    LOG_INFO("Texture Created from definition");
+}
+
+Texture::~Texture()
+{
+    LOG_INFO("Texture Destroyed");
+    glDeleteTextures(1, &_textureId);
+    _textureId = 0;
 }
 
 void Texture::bind()

@@ -51,19 +51,16 @@ TextureHandle Texture::load(const std::string& filepath, AssetsHandle loader)
         return TextureHandle();
     }
 
-    TextureHandle handle(new Texture());
-
-    handle->_width = image_width;
-    handle->_height = image_height;
+    TextureDefinition def;
+    def.width = image_width;
+    def.height = image_height;
+    def.internalFormat = has_alpha ? GL_RGBA8 : GL_RGB8;
+    def.format = has_alpha ? GL_RGBA : GL_RGB;
 
     const I32 byteCount = image_width * image_height * image_channels;
-
-    handle->_data.reserve(byteCount);
-    handle->_data = std::vector<GLubyte>(image_data, image_data + byteCount);
+    def.data = std::move(std::vector<GLubyte>(image_data, image_data + byteCount));
 
     stbi_image_free(image_data);
 
-    handle->create();
-
-    return handle;
+    return std::make_shared<Texture>(def);
 }

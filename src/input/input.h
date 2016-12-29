@@ -19,9 +19,9 @@ public:
     const Mouse& mouse() const;
 
 private:
-    std::vector<Gamepad> _gamepads;
     Keyboard _keyboard;
     Mouse _mouse;
+    std::vector<Gamepad> _gamepads;
 };
 
 #endif // INPUT_H

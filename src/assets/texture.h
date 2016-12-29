@@ -10,12 +10,28 @@
 #include "types.h"
 #include "assets/asset.h"
 
+struct TextureDefinition
+{
+public:
+    GLenum target = GL_TEXTURE_2D;
+    GLint level = 0;
+    GLint internalFormat = GL_RGBA8;
+    GLsizei width = 0;
+    GLsizei height = 0;
+    GLenum format = GL_RGBA;
+    GLenum type = GL_UNSIGNED_BYTE;
+    GLint minFilter = GL_NEAREST;
+    GLint maxFilter = GL_NEAREST;
+    std::vector<GLubyte> data;
+};
+
 class Texture : public Asset
 {
 public:
     static TextureHandle load(const std::string& filepath, AssetsHandle loader);
 
 public:
+    Texture(const TextureDefinition& definition);
     ~Texture();
 
     void bind();
@@ -26,12 +42,6 @@ public:
     GLuint height() const;
 
 private:
-    Texture();
-
-    bool isCreated();
-    void create();
-
-private:
     GLuint _textureId;
 
     GLenum  _target;
@@ -39,14 +49,12 @@ private:
     GLint   _internalFormat;
     GLsizei _width;
     GLsizei _height;
-    GLint   _border;
     GLenum  _format;
     GLenum  _type;
+    GLint   _minFilter;
+    GLint   _maxFilter;
 
     std::vector<GLubyte> _data;
-
-    GLint _minFilter;
-    GLint _maxFilter;
 };
 
 #endif // TEXTURE_H
