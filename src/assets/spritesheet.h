@@ -47,6 +47,19 @@ private:
     bool _flipHorizontal;
 };
 
+struct SpriteSheetDefinition
+{
+public:
+    // TODO: Not duplicate these typedefs?
+    typedef std::unordered_map<std::string, SpriteSheetFrame> FrameMap;
+    typedef std::unordered_map<std::string, SpriteSheetSequence> SequenceMap;
+
+public:
+    TextureHandle texture;
+    FrameMap frames;
+    SequenceMap sequences;
+};
+
 class SpriteSheet : public Asset
 {
 public:
@@ -57,6 +70,7 @@ public:
     static SpriteSheetHandle load(const std::string& filepath, AssetsHandle loader);
 
 public:
+    SpriteSheet(const SpriteSheetDefinition& definition);
     ~SpriteSheet();
 
     TextureHandle texture() const;
@@ -65,9 +79,6 @@ public:
     bool sequence(const std::string& name, SpriteSheetSequence& out);
 
 private:
-    SpriteSheet();
-    SpriteSheet(TextureHandle texture);
-
     TextureHandle _texture;
 
     FrameMap _frames;

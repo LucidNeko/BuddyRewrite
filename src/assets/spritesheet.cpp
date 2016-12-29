@@ -2,17 +2,12 @@
 
 #include "logging.h"
 
-/**
- * @brief SpriteSheet::SpriteSheet
- */
-SpriteSheet::SpriteSheet()
+SpriteSheet::SpriteSheet(const SpriteSheetDefinition &definition)
+    : _texture(definition.texture),
+      _frames(definition.frames),
+      _sequences(definition.sequences)
 {
     LOG_INFO("SpriteSheet Created");
-}
-
-SpriteSheet::SpriteSheet(TextureHandle texture)
-    : _texture(texture)
-{
 }
 
 SpriteSheet::~SpriteSheet()

@@ -119,11 +119,10 @@ SpriteSheetHandle SpriteSheet::load(const std::string& filepath, AssetsHandle lo
         return SpriteSheetHandle();
     }
 
-    SpriteSheetHandle handle(new SpriteSheet());
+    SpriteSheetDefinition def;
+    def.texture = texture;
+    def.frames = std::move(frames);
+    def.sequences = std::move(sequences);
 
-    handle->_texture = texture;
-    handle->_frames = frames;       //TODO: std::move?
-    handle->_sequences = sequences; //TODO: std::move?
-
-    return handle;
+    return std::make_shared<SpriteSheet>(def);
 }
