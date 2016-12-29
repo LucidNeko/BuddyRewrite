@@ -15,7 +15,8 @@ VPATH += src/
 INCLUDEPATH += $$PWD/src \
                $$PWD/thirdparty/glm/include \
                $$PWD/thirdparty/json/include \
-               $$PWD/thirdparty/stb/include
+               $$PWD/thirdparty/stb/include \
+               $$PWD/thirdparty/yaml-cpp/include
 
 linux {
     INCLUDEPATH += /usr/include/GL        \
@@ -23,6 +24,8 @@ linux {
 
     LIBS += -lGL -lGLU -ldl
 }
+
+LIBS += -L$$PWD/thirdparty/yaml-cpp/bin -lyaml-cpp
 
 SOURCES += glad/glad.c \
            main.cpp \

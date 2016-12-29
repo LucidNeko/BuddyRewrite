@@ -14,6 +14,8 @@
 
 #include "uuid.h"
 
+#include "yaml-cpp/yaml.h"
+
 std::string ASSETS_DIRECTORY;
 
 int main(int argc, char *argv[])
@@ -28,7 +30,8 @@ int main(int argc, char *argv[])
 
     LOG_INFO("Time: %f", GameTime::now().seconds());
 
-
+    YAML::Node node = YAML::Load("[1,2,3]");
+    LOG_INFO("%d", node.IsSequence());
 
     Uuid uuid;
     LOG_INFO("UUID1: %s", uuid.toString().c_str());
